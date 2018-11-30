@@ -11,9 +11,9 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Park_DACE
 {
-    public partial class Form1 : Form
+    public partial class FormDACE : Form
     {
-        public Form1()
+        public FormDACE()
         {
             InitializeComponent();
         }
