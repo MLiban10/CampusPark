@@ -46,6 +46,7 @@
             this.buttonPath.TabIndex = 0;
             this.buttonPath.Text = "Config Path";
             this.buttonPath.UseVisualStyleBackColor = true;
+            this.buttonPath.Click += new System.EventHandler(this.buttonPath_Click);
             // 
             // richTextBox1
             // 

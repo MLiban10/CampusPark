@@ -13,14 +13,17 @@ namespace Park_DACE
 {
     public partial class FormDACE : Form
     {
+        private String strConfigurations;
+
         public FormDACE()
         {
             InitializeComponent();
+            getConfiguration();
         }
 
         public static string getGeolocationForGivenID(string ID)
         {
-            
+
             var excelApp = new Excel.Application();
             excelApp.Visible = false;
 
@@ -51,6 +54,21 @@ namespace Park_DACE
 
 
             return "";
+        }
+
+        private void buttonPath_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                getConfiguration();
+                MessageBox.Show(fbd.SelectedPath);
+            }
+        }
+
+        private void getConfiguration()
+        {
+
         }
     }
 }
