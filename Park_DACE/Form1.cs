@@ -16,11 +16,13 @@ namespace Park_DACE
         public FormDACE()
         {
             InitializeComponent();
+            //variable declaration and console.Write for testing
+            String geolocation = getGeolocationForGivenIDParkA("A-30");
+            Console.WriteLine(geolocation);
         }
 
-        public static string getGeolocationForGivenID(string ID)
+        public static string getGeolocationForGivenIDParkA(string ID)
         {
-            
             var excelApp = new Excel.Application();
             excelApp.Visible = false;
 
@@ -30,27 +32,48 @@ namespace Park_DACE
             Excel.Workbook excellWorkbook = excelApp.Workbooks.Open(filename);
             Excel.Worksheet excellWorksheet = (Excel.Worksheet)excellWorkbook.ActiveSheet;
 
-            /*
+
             int primeiraColuna = 1;
             int segundaColuna = 2;
             int indicePrimeiraLinha = 6;
+            int numberOfSpots =(int) excellWorksheet.Cells[2, 2].Value;
 
             //Here we need to read the cells of the ID's and check if anyone matches 
             //If match, read geolocation
             //If not, show error maybe?
 
-            if(excellWorksheet.Cells[indicePrimeiraLinha, primeiraColuna].Value2 != null)
-            {
-               
-                return excellWorksheet.Cells[indicePrimeiraLinha, primeiraColuna].Value2;
-            }
-            */
-
             List<String> idsFromExcel = new List<string>();
 
+            Excel.Range namedRangeFirstCollumn = excellWorksheet.get_Range("A"+indicePrimeiraLinha, "A"+((indicePrimeiraLinha+numberOfSpots)-1));
 
+            foreach (Excel.Range cell in namedRangeFirstCollumn.Cells)
+            {
+                idsFromExcel.Add(cell.Value);
+            }
 
-            return "";
+            foreach (string id in idsFromExcel)
+            {
+                if (id.Equals(ID))
+                {
+                    string[] parts = id.Split('-');
+                    int index1 = Int32.Parse(parts[1]);
+                    try
+                    {
+                        string geoLocation = excellWorksheet.Cells[index1 + 5, 2].Value;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                    
+                    
+                }
+            }
+
+            excellWorkbook.Close();
+            excelApp.Quit();
+            
+            return "There is no id with that value";
         }
     }
 }
