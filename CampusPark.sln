@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkDashboard", "ParkDashbo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartPark", "SmartPark\SmartPark.csproj", "{3D4D96B6-F569-4031-B762-419FA52E9E90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BOT-SpotSensors", "BOT-SpotSensors\BOT-SpotSensors.csproj", "{DD504FFD-A1C1-462D-A0ED-ADF800D0FCF2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfServiceBotSpotSensors", "BOT-SpotSensors\WcfServiceBotSpotSensors.csproj", "{DD504FFD-A1C1-462D-A0ED-ADF800D0FCF2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkSS", "ParkSS\ParkSS.csproj", "{7A890355-C35F-4A18-941A-3F0265ED923A}"
 EndProject
