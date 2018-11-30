@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ParkDACE")]
+[assembly: AssemblyTitle("Park_DACE")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ParkDACE")]
+[assembly: AssemblyProduct("Park_DACE")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("2e4f25f2-75d3-45ca-b5e2-506a886fb583")]
+[assembly: Guid("d778c4cf-820a-4e9d-9f01-2e06aa67038e")]
 
 // Version information for an assembly consists of the following four values:
 //
