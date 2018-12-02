@@ -11,11 +11,11 @@ using System.Xml;
 namespace BOT_SpotSensors
 {
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
-    public class ServiceBOTSpotSensors : IServiceBOTSpotSensors
+    public class ServiceBOTSpotSensors : IBOTSpotSensors
     {
         string m_strPath = AppDomain.CurrentDomain.BaseDirectory.ToString() + "App_Data\\xml_example_for_the_soap_BOT.xml";
 
-        public void AddParkingSpot(ParkingSpot c_new_parkingSpot)
+        void AddParkingSpot(ParkingSpot c_new_parkingSpot)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(m_strPath);
@@ -31,13 +31,13 @@ namespace BOT_SpotSensors
             XmlElement timeStamp = doc.CreateElement("timeStamp");
             XmlElement batteryStatus = doc.CreateElement("batteryStatus");
 
-            id.InnerText = c_new_parkingSpot.StrId;
-            type.InnerText = c_new_parkingSpot.StrType;
-            name.InnerText = c_new_parkingSpot.StrName;
-            location.InnerText = c_new_parkingSpot.StrLocation;
-            value.InnerText = c_new_parkingSpot.StrValue;
-            timeStamp.InnerText = Convert.ToString(c_new_parkingSpot.DateTimeStamp, NumberFormatInfo.InvariantInfo);
-            batteryStatus.InnerText = Convert.ToString(c_new_parkingSpot.IntBatteryStatus, NumberFormatInfo.InvariantInfo);
+            id.InnerText = c_new_parkingSpot.strId;
+            type.InnerText = c_new_parkingSpot.strType;
+            name.InnerText = c_new_parkingSpot.strName;
+            location.InnerText = c_new_parkingSpot.strLocation;
+            value.InnerText = c_new_parkingSpot.strValue;
+            timeStamp.InnerText = Convert.ToString(c_new_parkingSpot.dateTimeStamp, NumberFormatInfo.InvariantInfo);
+            batteryStatus.InnerText = Convert.ToString(c_new_parkingSpot.intBatteryStatus, NumberFormatInfo.InvariantInfo);
 
             elem.AppendChild(id);
             elem.AppendChild(type);
@@ -51,12 +51,12 @@ namespace BOT_SpotSensors
             doc.Save(m_strPath);
         }
 
-        public bool DeleteParkingSpots(string Id)
+        bool DeleteParkingSpots(string Id)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(m_strPath);
 
-            XmlNode n = doc.SelectSingleNode("/parkingSpot/id='" + Id + "']");
+            XmlNode n = doc.SelectSingleNode("/parkingSpot/id='" + id + "']");
             if (n == null)
             {
                 return false;
@@ -68,7 +68,7 @@ namespace BOT_SpotSensors
             return true;
         }
 
-        public List<ParkingSpot> GetParkingSpots()
+        List<ParkingSpot> GetParkingSpots()
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(m_strPath);

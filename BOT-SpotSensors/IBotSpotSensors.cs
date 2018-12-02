@@ -8,40 +8,56 @@ using System.Text;
 
 namespace BOT_SpotSensors
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IService1" in both code and config file together.
     [ServiceContract]
-    public interface IBotSpotSensors
+    public interface IServiceBOTSpotSensors
     {
+        [OperationContract]
+        void AddParkingSpot(ParkingSpot parkingSpot);
 
         [OperationContract]
-        string GetData(int value);
+        bool DeleteParkingSpots(string Id);
 
         [OperationContract]
-        CompositeType GetDataUsingDataContract(CompositeType composite);
+        List<ParkingSpot> GetParkingSpots();
 
-        // TODO: Add your service operations here
     }
 
 
-    // Use a data contract as illustrated in the sample below to add composite types to service operations.
     [DataContract]
-    public class CompositeType
+    public class ParkingSpot
     {
-        bool boolValue = true;
-        string stringValue = "Hello ";
+        private string strId;
+        private string strType;
+        private string strName;
+        private string strLocation;     //está dentro do status
+        private string strValue;
+        private DateTime dateTimeStamp;
+        private int intBatteryStatus;
 
-        [DataMember]
-        public bool BoolValue
+        public ParkingSpot(string id, string type, string name, string location, string value, DateTime timeStamp, int batteryStatus)
         {
-            get { return boolValue; }
-            set { boolValue = value; }
+            this.strId = id;
+            this.strType = type;
+            this.strName = name;
+            this.strLocation = location;
+            this.strValue = value;
+            this.dateTimeStamp = timeStamp;
+            this.intBatteryStatus = batteryStatus;
         }
 
         [DataMember]
-        public string StringValue
-        {
-            get { return stringValue; }
-            set { stringValue = value; }
-        }
+        public string StrId { get => strId; set => strId = value; }
+        [DataMember]
+        public string StrType { get => strType; set => strType = value; }
+        [DataMember]
+        public string StrName { get => strName; set => strName = value; }
+        [DataMember]
+        public string StrLocation { get => strLocation; set => strLocation = value; }
+        [DataMember]
+        public string StrValue { get => strValue; set => strValue = value; }
+        [DataMember]
+        public DateTime DateTimeStamp { get => dateTimeStamp; set => dateTimeStamp = value; }
+        [DataMember]
+        public int IntBatteryStatus { get => intBatteryStatus; set => intBatteryStatus = value; }
     }
 }
