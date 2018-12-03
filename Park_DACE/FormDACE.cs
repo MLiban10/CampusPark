@@ -9,15 +9,36 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 
+
 namespace Park_DACE
 {
     public partial class FormDACE : Form
     {
         private String strConfigurations;
+        private ParkingSensorNodeDll.ParkingSensorNodeDll dll = null;
+        private BackgroundWorker bw = new BackgroundWorker();
+        //private Spot spot;
+
+        public void DoWork(object sender, DoWorkEventArgs e)
+        {
+            dll.Initialize(NewSensorValueFunction, 3000);
+        }
+
+
+
+        public void NewSensorValueFunction(string str)
+        {
+            //To have access to the listbox that is in other thread (Form)
+            this.BeginInvoke((MethodInvoker)delegate
+            {
+                richTextBox1.Text += str + "\n"/* + getGeolocationForGivenIDParkA()*/;
+            });
+        }
 
         public FormDACE()
         {
             InitializeComponent();
+            bw.DoWork += new DoWorkEventHandler(DoWork);
             //variable declaration and console.Write for testing
             String geolocation = getGeolocationForGivenIDParkA("A-30");
             Console.WriteLine(geolocation);
@@ -93,6 +114,12 @@ namespace Park_DACE
         private void getConfiguration()
         {
 
+        }
+
+        private void buttonDLL_Click(object sender, EventArgs e)
+        {
+            dll = new ParkingSensorNodeDll.ParkingSensorNodeDll();
+            bw.RunWorkerAsync();
         }
     }
 }

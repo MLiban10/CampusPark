@@ -41,7 +41,7 @@
             // buttonPath
             // 
             this.buttonPath.Location = new System.Drawing.Point(197, 332);
-            this.buttonPath.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonPath.Margin = new System.Windows.Forms.Padding(2);
             this.buttonPath.Name = "buttonPath";
             this.buttonPath.Size = new System.Drawing.Size(75, 24);
             this.buttonPath.TabIndex = 0;
@@ -52,7 +52,7 @@
             // richTextBox1
             // 
             this.richTextBox1.Location = new System.Drawing.Point(9, 10);
-            this.richTextBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.richTextBox1.Margin = new System.Windows.Forms.Padding(2);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(185, 318);
             this.richTextBox1.TabIndex = 3;
@@ -61,7 +61,7 @@
             // richTextBoxLog
             // 
             this.richTextBoxLog.Location = new System.Drawing.Point(9, 361);
-            this.richTextBoxLog.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.richTextBoxLog.Margin = new System.Windows.Forms.Padding(2);
             this.richTextBoxLog.Name = "richTextBoxLog";
             this.richTextBoxLog.Size = new System.Drawing.Size(268, 84);
             this.richTextBoxLog.TabIndex = 6;
@@ -80,7 +80,7 @@
             // buttonBackground
             // 
             this.buttonBackground.Location = new System.Drawing.Point(197, 79);
-            this.buttonBackground.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonBackground.Margin = new System.Windows.Forms.Padding(2);
             this.buttonBackground.Name = "buttonBackground";
             this.buttonBackground.Size = new System.Drawing.Size(75, 46);
             this.buttonBackground.TabIndex = 8;
@@ -90,17 +90,18 @@
             // buttonDLL
             // 
             this.buttonDLL.Location = new System.Drawing.Point(197, 10);
-            this.buttonDLL.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonDLL.Margin = new System.Windows.Forms.Padding(2);
             this.buttonDLL.Name = "buttonDLL";
             this.buttonDLL.Size = new System.Drawing.Size(75, 24);
             this.buttonDLL.TabIndex = 9;
             this.buttonDLL.Text = "DLL";
             this.buttonDLL.UseVisualStyleBackColor = true;
+            this.buttonDLL.Click += new System.EventHandler(this.buttonDLL_Click);
             // 
             // buttonSOAP
             // 
             this.buttonSOAP.Location = new System.Drawing.Point(197, 38);
-            this.buttonSOAP.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonSOAP.Margin = new System.Windows.Forms.Padding(2);
             this.buttonSOAP.Name = "buttonSOAP";
             this.buttonSOAP.Size = new System.Drawing.Size(75, 24);
             this.buttonSOAP.TabIndex = 10;
@@ -110,7 +111,7 @@
             // buttonReadSOAP
             // 
             this.buttonReadSOAP.Location = new System.Drawing.Point(197, 129);
-            this.buttonReadSOAP.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonReadSOAP.Margin = new System.Windows.Forms.Padding(2);
             this.buttonReadSOAP.Name = "buttonReadSOAP";
             this.buttonReadSOAP.Size = new System.Drawing.Size(75, 24);
             this.buttonReadSOAP.TabIndex = 11;
@@ -130,7 +131,7 @@
             this.Controls.Add(this.richTextBoxLog);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.buttonPath);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormDACE";
             this.Text = "Park DACE";
             this.ResumeLayout(false);

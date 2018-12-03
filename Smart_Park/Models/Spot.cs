@@ -13,6 +13,6 @@ namespace Smart_Park.Models
         public String Location { get; set; }
         public int BateryStatus { get; set; }
         public String Value { get; set; }
-        public String Timestamp { get; set; }
+        public DateTime Timestamp { get; set; }
     }
 }
