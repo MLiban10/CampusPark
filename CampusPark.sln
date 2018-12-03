@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28010.2048
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkDashboard", "ParkDashboard\ParkDashboard.csproj", "{6A1D6C66-E722-4206-8B94-0D23E1D9C59A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfServiceBotSpotSensors", "BOT-SpotSensors\WcfServiceBotSpotSensors.csproj", "{DD504FFD-A1C1-462D-A0ED-ADF800D0FCF2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotSpotSensors", "BOT-SpotSensors\BotSpotSensors.csproj", "{DD504FFD-A1C1-462D-A0ED-ADF800D0FCF2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkSS", "ParkSS\ParkSS.csproj", "{7A890355-C35F-4A18-941A-3F0265ED923A}"
 EndProject

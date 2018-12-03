@@ -63,6 +63,7 @@
     <Compile Include="FormDACE.Designer.cs">
       <DependentUpon>FormDACE.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\ParkingSpot.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormConfig.resx">
