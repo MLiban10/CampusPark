@@ -37,10 +37,8 @@ namespace Park_DACE
             Excel.Worksheet excellWorksheet = (Excel.Worksheet)excellWorkbook.ActiveSheet;
 
 
-            int primeiraColuna = 1;
-            int segundaColuna = 2;
             int indicePrimeiraLinha = 6;
-            int numberOfSpots =(int) excellWorksheet.Cells[2, 2].Value;
+            int numberOfSpots = (int)excellWorksheet.Cells[2, 2].Value;
 
             //Here we need to read the cells of the ID's and check if anyone matches 
             //If match, read geolocation
@@ -48,7 +46,7 @@ namespace Park_DACE
 
             List<String> idsFromExcel = new List<string>();
 
-            Excel.Range namedRangeFirstCollumn = excellWorksheet.get_Range("A"+indicePrimeiraLinha, "A"+((indicePrimeiraLinha+numberOfSpots)-1));
+            Excel.Range namedRangeFirstCollumn = excellWorksheet.get_Range("A" + indicePrimeiraLinha, "A" + ((indicePrimeiraLinha + numberOfSpots) - 1));
 
             foreach (Excel.Range cell in namedRangeFirstCollumn.Cells)
             {
@@ -69,14 +67,14 @@ namespace Park_DACE
                     {
                         Console.WriteLine(e.Message);
                     }
-                    
-                    
+
+
                 }
             }
 
             excellWorkbook.Close();
             excelApp.Quit();
-            
+
             return "There is no id with that value";
         }
 
