@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
@@ -21,17 +22,23 @@ namespace Park_DACE
 
         public void DoWork(object sender, DoWorkEventArgs e)
         {
-            dll.Initialize(NewSensorValueFunction, 3000);
+            dll.Initialize(NewSensorValueFunction, 2000);
         }
-
-
-
+        
         public void NewSensorValueFunction(string str)
         {
             //To have access to the listbox that is in other thread (Form)
             this.BeginInvoke((MethodInvoker)delegate
             {
+                richTextBoxLog.Text += "Receiving spot from DLL..." +"\n";
+                //Thread.Sleep(1500);
                 richTextBox1.Text += str + "\n"/* + getGeolocationForGivenIDParkA()*/;
+                //Thread.Sleep(1500);
+                richTextBoxLog.Text += "Spot received Successfully!!" + "\n";
+                richTextBox1.Text += "-----------------------------------------------------------" + "\n";
+                richTextBoxLog.Text += "-----------------------------------------------------------" +
+                "----------------------" + "\n";
+
             });
         }
 
