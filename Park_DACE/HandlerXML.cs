@@ -1,4 +1,4 @@
-﻿using Smart_Park.Models;
+﻿using Park_DACE.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +18,8 @@ namespace Park_DACE
         public string BotXsdFilePath { get; set; }
         private bool isValid = true;
         private string validationMessage;
+
+        List<Configuration> configurations = new List<Configuration>();
 
         public HandlerXML(string xmlFilePath, string xsdFilePath)
         {
@@ -97,7 +99,7 @@ namespace Park_DACE
         {
             List<ParkingSpot> spots = new List<ParkingSpot>();
             XmlDocument doc = new XmlDocument();
-            doc.Load(ConfigXmlFilePath);
+            doc.Load(BotXmlFilePath);
 
             XmlNodeList filtro = doc.SelectNodes("/spots/parkingSpot");
 
@@ -116,6 +118,55 @@ namespace Park_DACE
             }
 
             return spots;
+        }
+
+        public void LoadConfigurations()
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(ConfigXmlFilePath);
+
+            XmlNodeList filtro = doc.SelectNodes("/parkingLocation/provider");
+            configurations.Clear();
+
+            foreach (XmlNode spot in filtro)
+            {
+                Configuration c = new Configuration();
+                c.connectionType = spot["connectionType"].InnerText;
+                c.endpoint = spot["endpoint"].InnerText;
+                c.id = int.Parse(spot["id"].InnerText);
+                c.description = spot["description"].InnerText;
+                c.numberOfSpots = int.Parse(spot["numberOfSpots"].InnerText);
+                c.operatingHours = spot["operatingHours"].InnerText;
+                c.numberOfSpecialSpots = int.Parse(spot["numberOfSpecialSpots"].InnerText);
+                c.geoLocationFile = spot["geoLocationFile"].InnerText;
+
+                configurations.Add(c);
+            }
+
+        }
+
+        public Configuration getDLLConfiguration()
+        {
+            foreach (Configuration configuration in configurations)
+            {
+                if (configuration.connectionType.Equals("DLL"))
+                {
+                    return configuration;
+                }
+            }
+            return null;
+        }
+
+        public Configuration getSOAPConfiguration()
+        {
+            foreach (Configuration configuration in configurations)
+            {
+                if (configuration.connectionType.Equals("SOAP"))
+                {
+                    return configuration;
+                }
+            }
+            return null;
         }
     }
 }

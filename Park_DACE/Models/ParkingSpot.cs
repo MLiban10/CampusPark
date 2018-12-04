@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Smart_Park.Models
+namespace Park_DACE.Models
 {
     public class ParkingSpot
     {

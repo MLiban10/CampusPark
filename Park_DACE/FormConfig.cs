@@ -46,7 +46,7 @@ namespace Park_DACE
             string xsd = textBoxXsdFile.Text;
 
             HandlerXML handler = new HandlerXML(xml, xsd);
-            bool valid = handler.ValidateXmlFile();
+            bool valid = handler.ValidateXmlConfigFile();
 
             MessageBox.Show(valid + Environment.NewLine + handler.ValidationMessage);
         }

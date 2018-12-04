@@ -31,7 +31,7 @@ namespace Park_DACE
             //To have access to the listbox that is in other thread (Form)
             this.BeginInvoke((MethodInvoker)delegate
             {
-                richTextBox1.Text += str + "\n"/* + getGeolocationForGivenIDParkA()*/;
+                richTextBoxConfig.Text += str + "\n"/* + getGeolocationForGivenIDParkA()*/;
             });
         }
 
@@ -40,8 +40,8 @@ namespace Park_DACE
             InitializeComponent();
             bw.DoWork += new DoWorkEventHandler(DoWork);
             //variable declaration and console.Write for testing
-            String geolocation = getGeolocationForGivenIDParkA("A-30");
-            Console.WriteLine(geolocation);
+            //String geolocation = getGeolocationForGivenIDParkA("A-30");
+            //Console.WriteLine(geolocation);
             getConfiguration();
         }
 
@@ -118,6 +118,11 @@ namespace Park_DACE
         {
             dll = new ParkingSensorNodeDll.ParkingSensorNodeDll();
             bw.RunWorkerAsync();
+        }
+
+        private void buttonBackground_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
         }
     }
 }
