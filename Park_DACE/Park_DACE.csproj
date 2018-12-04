@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExcelHandler.cs" />
     <Compile Include="HandlerXML.cs" />
     <Compile Include="FormConfig.cs">
       <SubType>Form</SubType>
