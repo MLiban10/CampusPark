@@ -1,10 +1,12 @@
-﻿using Smart_Park.Models;
+﻿using Park_DACE.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,24 +18,24 @@ namespace Park_DACE
 {
     public partial class FormDACE : Form
     {
-        
+
         private String strConfigurations;
         private ParkingSensorNodeDll.ParkingSensorNodeDll dll = null;
         private BackgroundWorker bw = new BackgroundWorker();
-        
-        private ParkingSpot spot =null;
+
+        private ParkingSpot spot = null;
 
         public void DoWork(object sender, DoWorkEventArgs e)
         {
             dll.Initialize(NewSensorValueFunction, 2000);
         }
-        
+
         public void NewSensorValueFunction(string str)
         {
             //To have access to the listbox that is in other thread (Form)
             this.BeginInvoke((MethodInvoker)delegate
             {
-                
+
                 String[] partes = str.Split(';');
 
                 if (partes.Length > 0)
@@ -50,21 +52,21 @@ namespace Park_DACE
                     };
                     Console.WriteLine(spot);
                 }
-                                
-                richTextBoxLog.Text += "Receiving spot from DLL..." +"\n";
+
+                richTextBoxLog.Text += "Receiving spot from DLL..." + "\n";
                 //Thread.Sleep(1500);
-                richTextBox1.Text += str + getGeolocationForGivenIDParkA(partes[1]) +"\n";
+                richTextBoxConfig.Text += str + getGeolocationForGivenIDParkA(partes[1]) + "\n";
                 //Console.WriteLine(getGeolocationForGivenIDParkA(partes[1]));
                 //Thread.Sleep(1500);
                 richTextBoxLog.Text += "Spot received Successfully!!" + "\n";
-                richTextBox1.Text += "-----------------------------------------------------------" + "\n";
+                richTextBoxConfig.Text += "-----------------------------------------------------------" + "\n";
                 richTextBoxLog.Text += "-----------------------------------------------------------" +
                 "----------------------" + "\n";
-                
+
             });
-    
+
         }
-        
+
         public FormDACE()
         {
             InitializeComponent();
@@ -79,12 +81,13 @@ namespace Park_DACE
             var excelApp = new Excel.Application();
             excelApp.Visible = false;
 
-            string filename = @"C:\Campus_2_A_Park1.xlsx";
+            string currentDir = Environment.CurrentDirectory;
+            String filename = new DirectoryInfo(Path.GetFullPath(Path.Combine(currentDir, @"..\..\..\Utils\Campus_2_A_Park1.xlsx"))).ToString();
 
             //Open Excel file
             Excel.Workbook excellWorkbook = excelApp.Workbooks.Open(filename);
             Excel.Worksheet excellWorksheet = (Excel.Worksheet)excellWorkbook.ActiveSheet;
-            
+
             int indicePrimeiraLinha = 6;
             int numberOfSpots = (int)excellWorksheet.Cells[2, 2].Value;
 
@@ -127,7 +130,7 @@ namespace Park_DACE
 
             return "There is no id with that value";
         }
-   
+
 
         private void buttonPath_Click(object sender, EventArgs e)
         {
@@ -143,7 +146,7 @@ namespace Park_DACE
         {
 
         }
-        
+
         private void buttonDLL_Click(object sender, EventArgs e)
         {
             dll = new ParkingSensorNodeDll.ParkingSensorNodeDll();

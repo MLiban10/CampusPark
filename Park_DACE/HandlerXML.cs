@@ -13,7 +13,6 @@ namespace Park_DACE
     {
 
         public string ConfigXmlFilePath { get; set; }
-        public string ConfigXsdFilePath { get; set; }
         public string BotXmlFilePath { get; set; }
         public string BotXsdFilePath { get; set; }
         private bool isValid = true;
@@ -21,21 +20,15 @@ namespace Park_DACE
 
         List<Configuration> configurations = new List<Configuration>();
 
-        public HandlerXML(string xmlFilePath, string xsdFilePath)
+        public HandlerXML(string xmlFilePath)
         {
             ConfigXmlFilePath = xmlFilePath;
-            ConfigXsdFilePath = xsdFilePath;
         }
 
         public void HandlerBotXML(string xmlFilePath, string xsdFilePath)
         {
             BotXmlFilePath = xmlFilePath;
             BotXsdFilePath = xsdFilePath;
-        }
-
-        public HandlerXML(string xmlFilePath)
-        {
-            ConfigXmlFilePath = xmlFilePath;
         }
 
         public void LoadBotXML(string xmlFilePath)
@@ -46,21 +39,6 @@ namespace Park_DACE
         public string ValidationMessage
         {
             get { return validationMessage; }
-        }
-
-
-        public bool ValidateXmlConfigFile()
-        {
-            isValid = true;
-            validationMessage = "Document valid!";
-            XmlDocument doc = new XmlDocument();
-            doc.Load(ConfigXmlFilePath);
-            ValidationEventHandler evento = new ValidationEventHandler(myEvent);
-
-            doc.Schemas.Add(null, ConfigXsdFilePath);
-            doc.Validate(evento);
-
-            return isValid;
         }
 
         public bool ValidateXmlBotFile()
