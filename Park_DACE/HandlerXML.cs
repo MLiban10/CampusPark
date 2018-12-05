@@ -18,7 +18,7 @@ namespace Park_DACE
         private bool isValid = true;
         private string validationMessage;
 
-        List<Configuration> configurations = new List<Configuration>();
+        private static List<Configuration> configurations = new List<Configuration>();
 
         public HandlerXML(string xmlFilePath)
         {
@@ -111,37 +111,52 @@ namespace Park_DACE
                 Configuration c = new Configuration();
                 c.connectionType = spot["connectionType"].InnerText;
                 c.endpoint = spot["endpoint"].InnerText;
-                c.id = int.Parse(spot["id"].InnerText);
-                c.description = spot["description"].InnerText;
-                c.numberOfSpots = int.Parse(spot["numberOfSpots"].InnerText);
-                c.operatingHours = spot["operatingHours"].InnerText;
-                c.numberOfSpecialSpots = int.Parse(spot["numberOfSpecialSpots"].InnerText);
-                c.geoLocationFile = spot["geoLocationFile"].InnerText;
+
+                c.id = spot["parkInfo"].SelectSingleNode("id").InnerText;
+                c.description = spot["parkInfo"].SelectSingleNode("description").InnerText;
+                c.numberOfSpots = int.Parse(spot["parkInfo"].SelectSingleNode("numberOfSpots").InnerText);
+                c.operatingHours = spot["parkInfo"].SelectSingleNode("operatingHours").InnerText;
+                c.numberOfSpecialSpots = int.Parse(spot["parkInfo"].SelectSingleNode("numberOfSpecialSpots").InnerText);
+                c.geoLocationFile = spot["parkInfo"].SelectSingleNode("geoLocationFile").InnerText;
 
                 configurations.Add(c);
             }
 
         }
 
-        public Configuration getDLLConfiguration()
+        public static String getDLLConfiguration()
         {
             foreach (Configuration configuration in configurations)
             {
                 if (configuration.connectionType.Equals("DLL"))
                 {
-                    return configuration;
+                    return ("Connection Type: " + configuration.connectionType.ToString() + "\n"
+                        + "Endpoint: " + configuration.endpoint.ToString() + "\n"
+                        + "Id: " + configuration.id.ToString() + "\n"
+                        + "Description: " + configuration.description.ToString() + "\n"
+                        + "Number Of Spots: " + configuration.numberOfSpots.ToString() + "\n"
+                        + "Operating Hours: " + configuration.operatingHours.ToString() + "\n"
+                        + "Number Of Special Spots: " + configuration.numberOfSpecialSpots.ToString() + "\n"
+                        + "GeoLocation File: " + configuration.geoLocationFile.ToString() + "\n");
                 }
             }
             return null;
         }
 
-        public Configuration getSOAPConfiguration()
+        public static String getSOAPConfiguration()
         {
             foreach (Configuration configuration in configurations)
             {
                 if (configuration.connectionType.Equals("SOAP"))
                 {
-                    return configuration;
+                    return ("Connection Type: " + configuration.connectionType.ToString() + "\n"
+                        + "Endpoint: " + configuration.endpoint.ToString() + "\n"
+                        + "Id: " + configuration.id.ToString() + "\n"
+                        + "Description: " + configuration.description.ToString() + "\n"
+                        + "Number Of Spots: " + configuration.numberOfSpots.ToString() + "\n"
+                        + "Operating Hours: " + configuration.operatingHours.ToString() + "\n"
+                        + "Number Of Special Spots: " + configuration.numberOfSpecialSpots.ToString() + "\n"
+                        + "GeoLocation File: " + configuration.geoLocationFile.ToString() + "\n");
                 }
             }
             return null;

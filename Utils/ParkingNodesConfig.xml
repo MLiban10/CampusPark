@@ -1,0 +1,31 @@
+<parkingLocation refreshRate="2" units="minutes">
+
+    <!-- Example for the DLL provider -->
+    <provider>
+        <connectionType>DLL</connectionType>
+        <endpoint>DLLname</endpoint>
+        <parkInfo>
+            <id>Campus_2_A_Park1</id>
+            <description>Parking in the campus 2 near the building A entrance</description>
+            <numberOfSpots>15</numberOfSpots>
+            <operatingHours>Always open</operatingHours>
+            <numberOfSpecialSpots>2</numberOfSpecialSpots>
+            <geoLocationFile>Campus_2_A_Park1.xlsx</geoLocationFile>
+        </parkInfo>
+    </provider>
+
+    <!-- Example for a SOAP provider -->
+    <provider>
+        <connectionType>SOAP</connectionType>
+        <endpoint>http://botservice-dummy-location/ServiceParkingSpots?wsdl</endpoint>
+        <parkInfo>
+            <id>Campus_2_B_Park2</id>
+            <description>Parking between the A and the B building</description>
+            <numberOfSpots>10</numberOfSpots>
+            <operatingHours>Never closes</operatingHours>
+            <numberOfSpecialSpots>1</numberOfSpecialSpots>
+            <geoLocationFile>Campus_2_B_Park2.xlsx</geoLocationFile>
+        </parkInfo>
+    </provider>
+
+</parkingLocation>

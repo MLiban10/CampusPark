@@ -29,28 +29,19 @@ namespace Park_DACE
             }
         }
 
-        private void buttonXsd_Click(object sender, EventArgs e)
-        {
-            openFileDialog.InitialDirectory = Application.StartupPath;
-            openFileDialog.Filter = "Schema files (*.xsd)|*.xsd";
-
-            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                textBoxXsdFile.Text = openFileDialog.FileName;
-            }
-        }
 
         private void buttonValidate_Click(object sender, EventArgs e)
         {
-            /*
+
             string xml = textBoxXmlFile.Text;
-            string xsd = textBoxXsdFile.Text;
 
-            HandlerXML handler = new HandlerXML(xml, xsd);
-            bool valid = handler.ValidateXmlConfigFile();
+            HandlerXML handler = new HandlerXML(xml);
+            handler.LoadConfigurations();
 
-            MessageBox.Show(valid + Environment.NewLine + handler.ValidationMessage);
-            */
+            this.Close();
+            FormDACE.richTextBoxLog.Text += "Reading Configurations from XML... Successfull" + "\n";
+            FormDACE.richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
+
         }
     }
 }

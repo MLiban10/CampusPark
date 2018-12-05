@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.buttonPath = new System.Windows.Forms.Button();
-            this.richTextBoxConfig = new System.Windows.Forms.RichTextBox();
-            this.richTextBoxLog = new System.Windows.Forms.RichTextBox();
+            richTextBoxConfig = new System.Windows.Forms.RichTextBox();
+            richTextBoxLog = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonBackground = new System.Windows.Forms.Button();
             this.buttonDLL = new System.Windows.Forms.Button();
@@ -40,7 +40,7 @@
             // 
             // buttonPath
             // 
-            this.buttonPath.Location = new System.Drawing.Point(263, 409);
+            this.buttonPath.Location = new System.Drawing.Point(338, 317);
             this.buttonPath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonPath.Name = "buttonPath";
             this.buttonPath.Size = new System.Drawing.Size(100, 30);
@@ -51,26 +51,31 @@
             // 
             // richTextBoxConfig
             // 
-            this.richTextBoxConfig.Location = new System.Drawing.Point(12, 12);
-            this.richTextBoxConfig.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.richTextBoxConfig.Name = "richTextBoxConfig";
-            this.richTextBoxConfig.Size = new System.Drawing.Size(245, 390);
-            this.richTextBoxConfig.TabIndex = 3;
-            this.richTextBoxConfig.Text = "";
+            richTextBoxConfig.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            richTextBoxConfig.Location = new System.Drawing.Point(12, 12);
+            richTextBoxConfig.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            richTextBoxConfig.Name = "richTextBoxConfig";
+            richTextBoxConfig.Size = new System.Drawing.Size(320, 301);
+            richTextBoxConfig.TabIndex = 3;
+            richTextBoxConfig.Text = "";
             // 
             // richTextBoxLog
             // 
-            this.richTextBoxLog.Location = new System.Drawing.Point(12, 444);
-            this.richTextBoxLog.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.richTextBoxLog.Name = "richTextBoxLog";
-            this.richTextBoxLog.Size = new System.Drawing.Size(356, 102);
-            this.richTextBoxLog.TabIndex = 6;
-            this.richTextBoxLog.Text = "";
+            richTextBoxLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            richTextBoxLog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            richTextBoxLog.Location = new System.Drawing.Point(12, 349);
+            richTextBoxLog.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            richTextBoxLog.Name = "richTextBoxLog";
+            richTextBoxLog.Size = new System.Drawing.Size(426, 102);
+            richTextBoxLog.TabIndex = 6;
+            richTextBoxLog.Text = "";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 421);
+            this.label1.Location = new System.Drawing.Point(9, 330);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(83, 17);
             this.label1.TabIndex = 7;
@@ -78,7 +83,7 @@
             // 
             // buttonBackground
             // 
-            this.buttonBackground.Location = new System.Drawing.Point(263, 97);
+            this.buttonBackground.Location = new System.Drawing.Point(338, 98);
             this.buttonBackground.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonBackground.Name = "buttonBackground";
             this.buttonBackground.Size = new System.Drawing.Size(100, 57);
@@ -89,7 +94,7 @@
             // 
             // buttonDLL
             // 
-            this.buttonDLL.Location = new System.Drawing.Point(263, 12);
+            this.buttonDLL.Location = new System.Drawing.Point(338, 12);
             this.buttonDLL.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonDLL.Name = "buttonDLL";
             this.buttonDLL.Size = new System.Drawing.Size(100, 30);
@@ -100,17 +105,18 @@
             // 
             // buttonSOAP
             // 
-            this.buttonSOAP.Location = new System.Drawing.Point(263, 47);
+            this.buttonSOAP.Location = new System.Drawing.Point(338, 46);
             this.buttonSOAP.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonSOAP.Name = "buttonSOAP";
             this.buttonSOAP.Size = new System.Drawing.Size(100, 30);
             this.buttonSOAP.TabIndex = 10;
             this.buttonSOAP.Text = "SOAP";
             this.buttonSOAP.UseVisualStyleBackColor = true;
+            this.buttonSOAP.Click += new System.EventHandler(this.buttonSOAP_Click);
             // 
             // buttonReadSOAP
             // 
-            this.buttonReadSOAP.Location = new System.Drawing.Point(263, 159);
+            this.buttonReadSOAP.Location = new System.Drawing.Point(338, 159);
             this.buttonReadSOAP.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonReadSOAP.Name = "buttonReadSOAP";
             this.buttonReadSOAP.Size = new System.Drawing.Size(100, 30);
@@ -122,14 +128,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(380, 556);
+            this.ClientSize = new System.Drawing.Size(450, 460);
             this.Controls.Add(this.buttonReadSOAP);
             this.Controls.Add(this.buttonSOAP);
             this.Controls.Add(this.buttonDLL);
             this.Controls.Add(this.buttonBackground);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.richTextBoxLog);
-            this.Controls.Add(this.richTextBoxConfig);
+            this.Controls.Add(richTextBoxLog);
+            this.Controls.Add(richTextBoxConfig);
             this.Controls.Add(this.buttonPath);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "FormDACE";
@@ -142,8 +148,8 @@
         #endregion
 
         private System.Windows.Forms.Button buttonPath;
-        private System.Windows.Forms.RichTextBox richTextBoxConfig;
-        private System.Windows.Forms.RichTextBox richTextBoxLog;
+        public static System.Windows.Forms.RichTextBox richTextBoxConfig;
+        public static System.Windows.Forms.RichTextBox richTextBoxLog;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonBackground;
         private System.Windows.Forms.Button buttonDLL;

@@ -10,7 +10,7 @@ namespace Park_DACE.Models
     {
         public String connectionType { get; set; }
         public String endpoint { get; set; }
-        public int id { get; set; }
+        public String id { get; set; }
         public String description { get; set; }
         public int numberOfSpots { get; set; }
         public String operatingHours { get; set; }

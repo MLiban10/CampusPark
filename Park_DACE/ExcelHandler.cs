@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,8 @@ namespace Park_DACE
             Excel.Application excelApp = new Excel.Application();
             excelApp.Visible = false;
 
-            string filename = @"C:\Campus_2_A_Park1.xlsx";
+            string currentDir = Environment.CurrentDirectory;
+            String filename = new DirectoryInfo(Path.GetFullPath(Path.Combine(currentDir, @"..\..\..\Utils\Campus_2_A_Park1.xlsx"))).ToString();
 
             Excel.Workbook excellWorkbook = excelApp.Workbooks.Open(filename);
             Excel.Worksheet excellWorksheet = (Excel.Worksheet)excellWorkbook.ActiveSheet;

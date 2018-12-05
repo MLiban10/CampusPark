@@ -29,11 +29,13 @@ namespace Park_DACE
             InitializeComponent();
             bw.DoWork += new DoWorkEventHandler(DoWork);
             getConfiguration();
+            dll = new ParkingSensorNodeDll.ParkingSensorNodeDll();
+            bw.RunWorkerAsync();
         }
 
         public void DoWork(object sender, DoWorkEventArgs e)
         {
-            dll.Initialize(NewSensorValueFunction, 2000);
+            dll.Initialize(NewSensorValueFunction, 5000);
         }
 
         public void NewSensorValueFunction(string str)
@@ -41,9 +43,10 @@ namespace Park_DACE
             //To have access to the listbox that is in other thread (Form)
             this.BeginInvoke((MethodInvoker)delegate
             {
+                richTextBoxLog.Text += "Receiving spot from DLL... ";
 
                 String[] partes = str.Split(';');
-                
+
                 if (partes.Length > 0)
                 {
                     spot = new ParkingSpot
@@ -56,108 +59,48 @@ namespace Park_DACE
                         Type = null,
                         Value = partes[4]
                     };
+                    richTextBoxLog.Text += "Successfull" + "\n";
+                    richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
                 }
-                      
-                richTextBoxLog.Text += "Receiving spot from DLL..." +"\n";
-                richTextBox1.Text += str + ExcelHandler.getGeolocationForGivenIDParkA(partes[1]) +"\n";
-                richTextBoxLog.Text += "Spot received Successfully!!" + "\n";
-                richTextBoxConfig.Text += "-----------------------------------------------------------" + "\n";
-                richTextBoxLog.Text += "-----------------------------------------------------------" +
-                "----------------------" + "\n";
+                else
+                {
+                    richTextBoxLog.Text += "No Spots Received" + "\n";
+                    richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
+
+                }
 
             });
 
         }
 
-        public FormDACE()
-        {
-            InitializeComponent();
-            bw.DoWork += new DoWorkEventHandler(DoWork);
-            //variable declaration and console.Write for testing
-            String geolocation = getGeolocationForGivenIDParkA("A-5");
-            getConfiguration();
-        }
-
-        public static string getGeolocationForGivenIDParkA(string ID)
-        {
-            var excelApp = new Excel.Application();
-            excelApp.Visible = false;
-
-            string currentDir = Environment.CurrentDirectory;
-            String filename = new DirectoryInfo(Path.GetFullPath(Path.Combine(currentDir, @"..\..\..\Utils\Campus_2_A_Park1.xlsx"))).ToString();
-
-            //Open Excel file
-            Excel.Workbook excellWorkbook = excelApp.Workbooks.Open(filename);
-            Excel.Worksheet excellWorksheet = (Excel.Worksheet)excellWorkbook.ActiveSheet;
-
-            int indicePrimeiraLinha = 6;
-            int numberOfSpots = (int)excellWorksheet.Cells[2, 2].Value;
-
-            //Here we need to read the cells of the ID's and check if anyone matches 
-            //If match, read geolocation
-            //If not, show error maybe?
-
-            List<String> idsFromExcel = new List<string>();
-
-            Excel.Range namedRangeFirstCollumn = excellWorksheet.get_Range("A" + indicePrimeiraLinha, "A" + ((indicePrimeiraLinha + numberOfSpots) - 1));
-
-            foreach (Excel.Range cell in namedRangeFirstCollumn.Cells)
-            {
-                idsFromExcel.Add(cell.Value);
-            }
-
-            foreach (string id in idsFromExcel)
-            {
-                if (id.Equals(ID))
-                {
-                    string[] parts = id.Split('-');
-                    int index1 = Int32.Parse(parts[1]);
-                    try
-                    {
-                        string geoLocation = excellWorksheet.Cells[index1 + 5, 2].Value;
-                        excellWorkbook.Close();
-                        excelApp.Quit();
-                        return geoLocation;
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e.Message);
-                    }
-                }
-            }
-
-            //Check if it's closing properly
-            excellWorkbook.Close();
-            excelApp.Quit();
-
-            return "There is no id with that value";
-        }
-
 
         private void buttonPath_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            if (fbd.ShowDialog() == DialogResult.OK)
-            {
-                getConfiguration();
-                MessageBox.Show(fbd.SelectedPath);
-            }
+            new FormConfig().Show();
         }
 
         private void getConfiguration()
         {
+            string currentDir = Environment.CurrentDirectory;
+            String filename = new DirectoryInfo(Path.GetFullPath(Path.Combine(currentDir, @"..\..\..\Utils\ParkingNodesConfig.xml"))).ToString();
 
+            HandlerXML handler = new HandlerXML(filename);
+            handler.LoadConfigurations();
         }
 
         private void buttonDLL_Click(object sender, EventArgs e)
         {
-            dll = new ParkingSensorNodeDll.ParkingSensorNodeDll();
-            bw.RunWorkerAsync();
+            richTextBoxConfig.Text = HandlerXML.getDLLConfiguration().ToString();
         }
 
         private void buttonBackground_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void buttonSOAP_Click(object sender, EventArgs e)
+        {
+            richTextBoxConfig.Text = HandlerXML.getSOAPConfiguration().ToString();
         }
     }
 }
