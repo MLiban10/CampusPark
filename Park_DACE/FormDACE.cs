@@ -11,7 +11,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Excel = Microsoft.Office.Interop.Excel;
 
 
 namespace Park_DACE
@@ -25,6 +24,13 @@ namespace Park_DACE
 
         private ParkingSpot spot = null;
 
+        public FormDACE()
+        {
+            InitializeComponent();
+            bw.DoWork += new DoWorkEventHandler(DoWork);
+            getConfiguration();
+        }
+
         public void DoWork(object sender, DoWorkEventArgs e)
         {
             dll.Initialize(NewSensorValueFunction, 2000);
@@ -37,7 +43,7 @@ namespace Park_DACE
             {
 
                 String[] partes = str.Split(';');
-
+                
                 if (partes.Length > 0)
                 {
                     spot = new ParkingSpot
@@ -45,19 +51,15 @@ namespace Park_DACE
                         Id = partes[0],
                         Name = partes[1],
                         Timestamp = partes[2],
-                        Location = getGeolocationForGivenIDParkA(partes[1]),
+                        Location = ExcelHandler.getGeolocationForGivenIDParkA(partes[1]),
                         BateryStatus = Int32.Parse(partes[3]),
                         Type = null,
                         Value = partes[4]
                     };
-                    Console.WriteLine(spot);
                 }
-
-                richTextBoxLog.Text += "Receiving spot from DLL..." + "\n";
-                //Thread.Sleep(1500);
-                richTextBoxConfig.Text += str + getGeolocationForGivenIDParkA(partes[1]) + "\n";
-                //Console.WriteLine(getGeolocationForGivenIDParkA(partes[1]));
-                //Thread.Sleep(1500);
+                      
+                richTextBoxLog.Text += "Receiving spot from DLL..." +"\n";
+                richTextBox1.Text += str + ExcelHandler.getGeolocationForGivenIDParkA(partes[1]) +"\n";
                 richTextBoxLog.Text += "Spot received Successfully!!" + "\n";
                 richTextBoxConfig.Text += "-----------------------------------------------------------" + "\n";
                 richTextBoxLog.Text += "-----------------------------------------------------------" +
