@@ -17,8 +17,12 @@ namespace BOT_SpotSensors
         [OperationContract]
         bool DeleteParkingSpot(string Id);
 
-        [OperationContract]
+        /*[OperationContract]
         List<ParkingSpot> GetParkingSpots();
+        */
+
+        [OperationContract]
+        String GetParkingSpotsXpath();
 
     }
 
