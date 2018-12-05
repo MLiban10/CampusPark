@@ -15,7 +15,7 @@ namespace BOT_SpotSensors
         void AddParkingSpot(ParkingSpot parkingSpot);
 
         [OperationContract]
-        bool DeleteParkingSpots(string Id);
+        bool DeleteParkingSpot(string Id);
 
         [OperationContract]
         List<ParkingSpot> GetParkingSpots();

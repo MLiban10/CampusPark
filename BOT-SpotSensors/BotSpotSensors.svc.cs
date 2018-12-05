@@ -13,45 +13,49 @@ namespace BOT_SpotSensors
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
     public class ServiceBOTSpotSensors : IServiceBOTSpotSensors
     {
-        string m_strPath = AppDomain.CurrentDomain.BaseDirectory.ToString() + "App_Data\\xml_example_for_the_soap_BOT.xml";
-
+        string m_strPath = AppDomain.CurrentDomain.BaseDirectory.ToString() + "App_Data\\soap_BOT.xml";
+         
         public void AddParkingSpot(ParkingSpot c_new_parkingSpot)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(m_strPath);
 
             XmlNode root = doc.SelectSingleNode("/parkingSpot");
+            XmlElement spot = doc.CreateElement("parkingSpot");
 
-            XmlElement elem = doc.CreateElement("parkingSpot");
             XmlElement id = doc.CreateElement("id");
-            XmlElement type = doc.CreateElement("type");
-            XmlElement name = doc.CreateElement("name");
-            XmlElement location = doc.CreateElement("location");
-            XmlElement value = doc.CreateElement("value");
-            XmlElement timeStamp = doc.CreateElement("timeStamp");
-            XmlElement batteryStatus = doc.CreateElement("batteryStatus");
-
             id.InnerText = c_new_parkingSpot.StrId;
+            spot.AppendChild(id);
+
+            XmlElement type = doc.CreateElement("type");
             type.InnerText = c_new_parkingSpot.StrType;
+            spot.AppendChild(type);
+
+            XmlElement name = doc.CreateElement("name");
             name.InnerText = c_new_parkingSpot.StrName;
+            spot.AppendChild(name);
+
+            XmlElement location = doc.CreateElement("location");
             location.InnerText = c_new_parkingSpot.StrLocation;
+            spot.AppendChild(location);
+
+            XmlElement value = doc.CreateElement("value");
             value.InnerText = c_new_parkingSpot.StrValue;
+            spot.AppendChild(value);
+
+            XmlElement timeStamp = doc.CreateElement("timeStamp");
             timeStamp.InnerText = Convert.ToString(c_new_parkingSpot.DateTimeStamp, NumberFormatInfo.InvariantInfo);
+            spot.AppendChild(timeStamp);
+
+            XmlElement batteryStatus = doc.CreateElement("batteryStatus");
             batteryStatus.InnerText = Convert.ToString(c_new_parkingSpot.IntBatteryStatus, NumberFormatInfo.InvariantInfo);
+            spot.AppendChild(batteryStatus);
 
-            elem.AppendChild(id);
-            elem.AppendChild(type);
-            elem.AppendChild(name);
-            elem.AppendChild(location);
-            elem.AppendChild(value);
-            elem.AppendChild(timeStamp);
-            elem.AppendChild(batteryStatus);
-
-            root.AppendChild(elem);
+            root.AppendChild(spot);
             doc.Save(m_strPath);
         }
 
-        public bool DeleteParkingSpots(string Id)
+        public bool DeleteParkingSpot(string Id)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(m_strPath);
