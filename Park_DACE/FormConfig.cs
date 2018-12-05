@@ -42,6 +42,7 @@ namespace Park_DACE
 
         private void buttonValidate_Click(object sender, EventArgs e)
         {
+            /*
             string xml = textBoxXmlFile.Text;
             string xsd = textBoxXsdFile.Text;
 
@@ -49,6 +50,7 @@ namespace Park_DACE
             bool valid = handler.ValidateXmlConfigFile();
 
             MessageBox.Show(valid + Environment.NewLine + handler.ValidationMessage);
+            */
         }
     }
 }

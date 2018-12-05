@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Smart_Park.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
@@ -14,40 +16,66 @@ namespace Park_DACE
 {
     public partial class FormDACE : Form
     {
+        
         private String strConfigurations;
         private ParkingSensorNodeDll.ParkingSensorNodeDll dll = null;
         private BackgroundWorker bw = new BackgroundWorker();
-        //private Spot spot;
+        
+        private ParkingSpot spot =null;
 
         public void DoWork(object sender, DoWorkEventArgs e)
         {
-            dll.Initialize(NewSensorValueFunction, 3000);
+            dll.Initialize(NewSensorValueFunction, 2000);
         }
-
-
-
+        
         public void NewSensorValueFunction(string str)
         {
             //To have access to the listbox that is in other thread (Form)
             this.BeginInvoke((MethodInvoker)delegate
             {
-                richTextBoxConfig.Text += str + "\n"/* + getGeolocationForGivenIDParkA()*/;
-            });
-        }
+                
+                String[] partes = str.Split(';');
 
+                if (partes.Length > 0)
+                {
+                    spot = new ParkingSpot
+                    {
+                        Id = partes[0],
+                        Name = partes[1],
+                        Timestamp = partes[2],
+                        Location = getGeolocationForGivenIDParkA(partes[1]),
+                        BateryStatus = Int32.Parse(partes[3]),
+                        Type = null,
+                        Value = partes[4]
+                    };
+                    Console.WriteLine(spot);
+                }
+                                
+                richTextBoxLog.Text += "Receiving spot from DLL..." +"\n";
+                //Thread.Sleep(1500);
+                richTextBox1.Text += str + getGeolocationForGivenIDParkA(partes[1]) +"\n";
+                //Console.WriteLine(getGeolocationForGivenIDParkA(partes[1]));
+                //Thread.Sleep(1500);
+                richTextBoxLog.Text += "Spot received Successfully!!" + "\n";
+                richTextBox1.Text += "-----------------------------------------------------------" + "\n";
+                richTextBoxLog.Text += "-----------------------------------------------------------" +
+                "----------------------" + "\n";
+                
+            });
+    
+        }
+        
         public FormDACE()
         {
             InitializeComponent();
             bw.DoWork += new DoWorkEventHandler(DoWork);
             //variable declaration and console.Write for testing
-            //String geolocation = getGeolocationForGivenIDParkA("A-30");
-            //Console.WriteLine(geolocation);
+            String geolocation = getGeolocationForGivenIDParkA("A-5");
             getConfiguration();
         }
 
         public static string getGeolocationForGivenIDParkA(string ID)
         {
-
             var excelApp = new Excel.Application();
             excelApp.Visible = false;
 
@@ -56,8 +84,7 @@ namespace Park_DACE
             //Open Excel file
             Excel.Workbook excellWorkbook = excelApp.Workbooks.Open(filename);
             Excel.Worksheet excellWorksheet = (Excel.Worksheet)excellWorkbook.ActiveSheet;
-
-
+            
             int indicePrimeiraLinha = 6;
             int numberOfSpots = (int)excellWorksheet.Cells[2, 2].Value;
 
@@ -83,21 +110,24 @@ namespace Park_DACE
                     try
                     {
                         string geoLocation = excellWorksheet.Cells[index1 + 5, 2].Value;
+                        excellWorkbook.Close();
+                        excelApp.Quit();
+                        return geoLocation;
                     }
                     catch (Exception e)
                     {
                         Console.WriteLine(e.Message);
                     }
-
-
                 }
             }
 
+            //Check if it's closing properly
             excellWorkbook.Close();
             excelApp.Quit();
 
             return "There is no id with that value";
         }
+   
 
         private void buttonPath_Click(object sender, EventArgs e)
         {
@@ -113,7 +143,7 @@ namespace Park_DACE
         {
 
         }
-
+        
         private void buttonDLL_Click(object sender, EventArgs e)
         {
             dll = new ParkingSensorNodeDll.ParkingSensorNodeDll();
