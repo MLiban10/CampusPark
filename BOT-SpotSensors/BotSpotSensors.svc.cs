@@ -15,7 +15,7 @@ namespace BOT_SpotSensors
     {
         string m_strPath = AppDomain.CurrentDomain.BaseDirectory.ToString() + "App_Data\\xml_example_for_the_soap_BOT.xml";
          
-        public void AddParkingSpot(ParkingSpot c_new_parkingSpot)
+        public void ParkingSpot(ParkingSpot c_new_parkingSpot)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(m_strPath);
@@ -58,23 +58,6 @@ namespace BOT_SpotSensors
 
             root.AppendChild(spot);
             doc.Save(m_strPath);
-        }
-
-        public bool DeleteParkingSpot(string Id)
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(m_strPath);
-
-            XmlNode n = doc.SelectSingleNode("/parkingSpot/id='" + Id + "']");
-            if (n == null)
-            {
-                return false;
-            }
-
-            XmlNode root = doc.SelectSingleNode("/parkingSpot");
-            root.RemoveChild(n);
-
-            return true;
         }
 
         /*

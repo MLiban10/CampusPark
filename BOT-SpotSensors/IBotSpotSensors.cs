@@ -12,11 +12,8 @@ namespace BOT_SpotSensors
     public interface IServiceBOTSpotSensors
     {
         [OperationContract]
-        void AddParkingSpot(ParkingSpot parkingSpot);
-
-        [OperationContract]
-        bool DeleteParkingSpot(string Id);
-
+        void ParkingSpot(ParkingSpot parkingSpot);
+        
         /*[OperationContract]
         List<ParkingSpot> GetParkingSpots();
         */
