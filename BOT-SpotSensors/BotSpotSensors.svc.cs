@@ -13,7 +13,7 @@ namespace BOT_SpotSensors
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
     public class ServiceBOTSpotSensors : IServiceBOTSpotSensors
     {
-        string m_strPath = AppDomain.CurrentDomain.BaseDirectory.ToString() + "App_Data\\xml_example_for_the_soap_BOT.xml";
+        string m_strPath = AppDomain.CurrentDomain.BaseDirectory.ToString() + "App_Data\\soap_BOT.xml";
          
         public void ParkingSpot(ParkingSpot c_new_parkingSpot)
         {
@@ -94,7 +94,14 @@ namespace BOT_SpotSensors
 
             foreach (XmlNode n in lst)
             {
-                strParkingSpot = strParkingSpot + Environment.NewLine + n.InnerText;
+                strParkingSpot = strParkingSpot + Environment.NewLine 
+                    + n["id"].InnerText + ";"
+                    + n["type"].InnerText + ";"
+                    + n["name"].InnerText + ";"
+                    + n["location"].InnerText + ";"
+                    + n["status"].SelectSingleNode("value").InnerText + ";"
+                    + Convert.ToDateTime(n["status"].SelectSingleNode("timestamp").InnerText, NumberFormatInfo.InvariantInfo) + ";"
+                    + Convert.ToInt32(n["batteryStatus"].InnerText, NumberFormatInfo.InvariantInfo);
             }
 
             return strParkingSpot;

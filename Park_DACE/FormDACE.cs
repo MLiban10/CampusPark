@@ -113,7 +113,7 @@ namespace Park_DACE
         {
             ServiceBOTSpotSensorsClient service = new ServiceBOTSpotSensorsClient();
 
-            String spots = "";
+            string spots = string.Empty;
 
             spots = service.GetParkingSpotsXpath();
 

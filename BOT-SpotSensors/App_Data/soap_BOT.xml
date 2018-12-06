@@ -1,8 +1,8 @@
 <park>
 	<parkingSpot>
-		<id>Campus_1_A_Park2</id>
+		<id>Campus_1_B_Park2</id>
 		<type>ParkingSpot</type>
-		<name>A-1</name>
+		<name>B-1</name>
 		<location></location>
 		<status>
 			<value>free</value>
@@ -11,9 +11,9 @@
 		<batteryStatus>0</batteryStatus>
 	</parkingSpot>
 	<parkingSpot>
-		<id>Campus_1_A_Park2</id>
+		<id>Campus_1_B_Park2</id>
 		<type>ParkingSpot</type>
-		<name>A-2</name>
+		<name>B-2</name>
 		<location></location>
 		<status>
 			<value>free</value>
@@ -22,9 +22,9 @@
 		<batteryStatus>0</batteryStatus>
 	</parkingSpot>
 	<parkingSpot>
-		<id>Campus_1_A_Park2</id>
+		<id>Campus_1_B_Park2</id>
 		<type>ParkingSpot</type>
-		<name>A-3</name>
+		<name>B-3</name>
 		<location></location>
 		<status>
 			<value>free</value>
