@@ -31,14 +31,14 @@
             this.components = new System.ComponentModel.Container();
             this.buttonPath = new System.Windows.Forms.Button();
             this.richTextBoxConfig = new System.Windows.Forms.RichTextBox();
-            this.richTextBoxLog = new System.Windows.Forms.RichTextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.buttonBackground = new System.Windows.Forms.Button();
-            this.buttonDLL = new System.Windows.Forms.Button();
-            this.buttonSOAP = new System.Windows.Forms.Button();
-            this.buttonReadSOAP = new System.Windows.Forms.Button();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.SuspendLayout();
+            richTextBoxLog = new System.Windows.Forms.RichTextBox();
+            label1 = new System.Windows.Forms.Label();
+            buttonBackground = new System.Windows.Forms.Button();
+            buttonDLL = new System.Windows.Forms.Button();
+            buttonSOAP = new System.Windows.Forms.Button();
+            buttonReadSOAP = new System.Windows.Forms.Button();
+            timer1 = new System.Windows.Forms.Timer(this.components);
+            SuspendLayout();
             // 
             // buttonPath
             // 
@@ -63,16 +63,16 @@
             // 
             // richTextBoxLog
             // 
-            this.richTextBoxLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            richTextBoxLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBoxLog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.richTextBoxLog.Location = new System.Drawing.Point(9, 284);
-            this.richTextBoxLog.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.richTextBoxLog.Name = "richTextBoxLog";
-            this.richTextBoxLog.Size = new System.Drawing.Size(320, 84);
-            this.richTextBoxLog.TabIndex = 6;
-            this.richTextBoxLog.Text = "";
+            richTextBoxLog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            richTextBoxLog.Location = new System.Drawing.Point(9, 284);
+            richTextBoxLog.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            richTextBoxLog.Name = "richTextBoxLog";
+            richTextBoxLog.Size = new System.Drawing.Size(320, 84);
+            richTextBoxLog.TabIndex = 6;
+            richTextBoxLog.Text = "";
             // 
             // label1
             // 
@@ -142,7 +142,7 @@
             this.Controls.Add(this.buttonDLL);
             this.Controls.Add(this.buttonBackground);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.richTextBoxLog);
+            this.Controls.Add(richTextBoxLog);
             this.Controls.Add(this.richTextBoxConfig);
             this.Controls.Add(this.buttonPath);
             this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
@@ -163,7 +163,7 @@
         private System.Windows.Forms.Button buttonReadSOAP;
         private System.Windows.Forms.Timer timer1;
         public System.Windows.Forms.RichTextBox richTextBoxConfig;
-        public System.Windows.Forms.RichTextBox richTextBoxLog;
+        public static System.Windows.Forms.RichTextBox richTextBoxLog;
     }
 }
 

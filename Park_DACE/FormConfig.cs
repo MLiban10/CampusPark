@@ -41,7 +41,6 @@ namespace Park_DACE
             this.Close();
             FormDACE.richTextBoxLog.Text += "Reading Configurations from XML... Successfull" + "\n";
             FormDACE.richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
-
         }
     }
 }

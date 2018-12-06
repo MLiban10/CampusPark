@@ -20,12 +20,19 @@ namespace Park_DACE
         private String strConfigurations;
         private ParkingSensorNodeDll.ParkingSensorNodeDll dll = null;
         private BackgroundWorker bw = new BackgroundWorker();
+        private List<ParkingSpot> spotsToSend = null;
+        private List<ParkingSpot> spots = null;
+        private List<ParkingSpot> spotsDLL = null;
 
         private ParkingSpot spot = null;
 
         public FormDACE()
         {
+          
             InitializeComponent();
+            spotsToSend = new List<ParkingSpot>();
+            spots = new List<ParkingSpot>();
+            spotsDLL = new List<ParkingSpot>();
             bw.DoWork += new DoWorkEventHandler(DoWork);
             getConfiguration();
             dll = new ParkingSensorNodeDll.ParkingSensorNodeDll();
@@ -59,6 +66,8 @@ namespace Park_DACE
                         Type = "ParkingSpot",
                         Value = partes[4]
                     };
+
+                    spotsDLL.Add(spot);
                     
                     richTextBoxConfig.AppendText(string.Format("Spot: {0} {1} {2} {3} {4} {5} {6} \n", spot.Id, spot.Name, spot.Timestamp,
                             spot.BateryStatus, spot.Type, spot.Value, spot.Location));
@@ -106,6 +115,11 @@ namespace Park_DACE
         private void timer1_Tick(object sender, EventArgs e)
         {
             richTextBoxConfig.AppendText("BOT \n");
+        }
+
+        public void ReadSpots(List<ParkingSpot> parkingSpots)
+        {
+
         }
     }
 }
