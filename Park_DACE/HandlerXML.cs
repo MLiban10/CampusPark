@@ -20,7 +20,7 @@ namespace Park_DACE
         public static List<ParkingSpot> spots = new List<ParkingSpot>();
 
 
-        private static List<Configuration> configurations = new List<Configuration>();
+        public static List<Configuration> configurations = new List<Configuration>();
 
         public HandlerXML(string xmlFilePath)
         {
