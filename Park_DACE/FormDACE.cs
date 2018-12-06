@@ -28,7 +28,7 @@ namespace Park_DACE
 
         public FormDACE()
         {
-          
+
             InitializeComponent();
             spotsToSend = new List<ParkingSpot>();
             spots = new List<ParkingSpot>();
@@ -56,6 +56,12 @@ namespace Park_DACE
 
                 if (partes.Length > 0)
                 {
+                    if (partes[0] != HandlerXML.configurations.Find(c => c.connectionType.Equals("DLL")).id)
+                    {
+                        richTextBoxLog.Text += "Error: Different Parks!" + "\n";
+                        richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
+                    }
+
                     spot = new ParkingSpot
                     {
                         Id = partes[0],
@@ -68,10 +74,10 @@ namespace Park_DACE
                     };
 
                     spotsDLL.Add(spot);
-                    
+
                     richTextBoxConfig.AppendText(string.Format("Spot: {0} {1} {2} {3} {4} {5} {6} \n", spot.Id, spot.Name, spot.Timestamp,
                             spot.BateryStatus, spot.Type, spot.Value, spot.Location));
-                    
+
                     richTextBoxLog.Text += "Successfull" + "\n";
                     richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
                 }
