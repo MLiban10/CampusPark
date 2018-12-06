@@ -17,7 +17,6 @@ namespace Park_DACE
 {
     public partial class FormDACE : Form
     {
-
         private String strConfigurations;
         private ParkingSensorNodeDll.ParkingSensorNodeDll dll = null;
         private BackgroundWorker bw = new BackgroundWorker();
@@ -31,6 +30,7 @@ namespace Park_DACE
             getConfiguration();
             dll = new ParkingSensorNodeDll.ParkingSensorNodeDll();
             bw.RunWorkerAsync();
+            timer1.Enabled = true;
         }
 
         public void DoWork(object sender, DoWorkEventArgs e)
@@ -54,11 +54,15 @@ namespace Park_DACE
                         Id = partes[0],
                         Name = partes[1],
                         Timestamp = partes[2],
-                        Location = ExcelHandler.getGeolocationForGivenIDParkA(partes[1]),
+                        Location = "0", // ExcelHandler.getGeolocationForGivenIDParkA(partes[1]),
                         BateryStatus = Int32.Parse(partes[3]),
-                        Type = null,
+                        Type = "ParkingSpot",
                         Value = partes[4]
                     };
+                    
+                    richTextBoxConfig.AppendText(string.Format("Spot: {0} {1} {2} {3} {4} {5} {6} \n", spot.Id, spot.Name, spot.Timestamp,
+                            spot.BateryStatus, spot.Type, spot.Value, spot.Location));
+                    
                     richTextBoxLog.Text += "Successfull" + "\n";
                     richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
                 }
@@ -66,13 +70,9 @@ namespace Park_DACE
                 {
                     richTextBoxLog.Text += "No Spots Received" + "\n";
                     richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
-
                 }
-
             });
-
         }
-
 
         private void buttonPath_Click(object sender, EventArgs e)
         {
@@ -101,6 +101,11 @@ namespace Park_DACE
         private void buttonSOAP_Click(object sender, EventArgs e)
         {
             richTextBoxConfig.Text = HandlerXML.getSOAPConfiguration().ToString();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            richTextBoxConfig.AppendText("BOT \n");
         }
     }
 }

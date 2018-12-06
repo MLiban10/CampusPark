@@ -17,6 +17,8 @@ namespace Park_DACE
         public string BotXsdFilePath { get; set; }
         private bool isValid = true;
         private string validationMessage;
+        public static List<ParkingSpot> spots = new List<ParkingSpot>();
+
 
         private static List<Configuration> configurations = new List<Configuration>();
 
@@ -75,7 +77,6 @@ namespace Park_DACE
 
         public List<ParkingSpot> GetBotSpots()
         {
-            List<ParkingSpot> spots = new List<ParkingSpot>();
             XmlDocument doc = new XmlDocument();
             doc.Load(BotXmlFilePath);
 
