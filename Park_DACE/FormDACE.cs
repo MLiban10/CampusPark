@@ -1,4 +1,5 @@
 ﻿using Park_DACE.Models;
+using Park_DACE.ServiceBotSpotSensor;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,7 +22,7 @@ namespace Park_DACE
         private ParkingSensorNodeDll.ParkingSensorNodeDll dll = null;
         private BackgroundWorker bw = new BackgroundWorker();
 
-        private ParkingSpot spot = null;
+        private Models.ParkingSpot spot = null;
 
         public FormDACE()
         {
@@ -49,7 +50,7 @@ namespace Park_DACE
 
                 if (partes.Length > 0)
                 {
-                    spot = new ParkingSpot
+                    spot = new Models.ParkingSpot
                     {
                         Id = partes[0],
                         Name = partes[1],
@@ -106,6 +107,19 @@ namespace Park_DACE
         private void timer1_Tick(object sender, EventArgs e)
         {
             richTextBoxConfig.AppendText("BOT \n");
+        }
+
+        private void buttonReadSOAP_Click(object sender, EventArgs e)
+        {
+            ServiceBOTSpotSensorsClient service = new ServiceBOTSpotSensorsClient();
+
+            String spots = "";
+
+            spots = service.GetParkingSpotsXpath();
+
+            Console.WriteLine(spots);
+
+            service.Close();
         }
     }
 }
