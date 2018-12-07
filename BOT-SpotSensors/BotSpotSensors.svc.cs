@@ -94,14 +94,15 @@ namespace BOT_SpotSensors
 
             foreach (XmlNode n in lst)
             {
-                strParkingSpot = strParkingSpot + Environment.NewLine 
+                strParkingSpot = strParkingSpot 
                     + n["id"].InnerText + ";"
                     + n["type"].InnerText + ";"
                     + n["name"].InnerText + ";"
                     + n["location"].InnerText + ";"
                     + n["status"].SelectSingleNode("value").InnerText + ";"
                     + Convert.ToDateTime(n["status"].SelectSingleNode("timestamp").InnerText, NumberFormatInfo.InvariantInfo) + ";"
-                    + Convert.ToInt32(n["batteryStatus"].InnerText, NumberFormatInfo.InvariantInfo);
+                    + Convert.ToInt32(n["batteryStatus"].InnerText, NumberFormatInfo.InvariantInfo)
+                    + Environment.NewLine;
             }
 
             return strParkingSpot;

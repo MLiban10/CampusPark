@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="388ef941-1f7d-4dbb-86f7-dd12bd3ca8d5" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:52490/BotSpotSensors.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="BotSpotSensors.disco" MetadataType="Disco" ID="6632c95f-1c80-4dd8-b855-9700caad5158" SourceId="1" SourceUrl="http://localhost:52490/BotSpotSensors.svc?disco" />
+    <MetadataFile FileName="BotSpotSensors.xsd" MetadataType="Schema" ID="988e98ca-f747-4982-8a43-f7b0067de909" SourceId="1" SourceUrl="http://localhost:52490/BotSpotSensors.svc?xsd=xsd1" />
+    <MetadataFile FileName="BotSpotSensors1.xsd" MetadataType="Schema" ID="2a3007ef-7de3-4a59-b187-9650e990afa6" SourceId="1" SourceUrl="http://localhost:52490/BotSpotSensors.svc?xsd=xsd2" />
+    <MetadataFile FileName="ServiceBOTSpotSensors.wsdl" MetadataType="Wsdl" ID="53c58840-218b-4f63-8f66-7b3e23894029" SourceId="1" SourceUrl="http://localhost:52490/BotSpotSensors.svc?wsdl" />
+    <MetadataFile FileName="BotSpotSensors2.xsd" MetadataType="Schema" ID="bf905c79-5a61-4b61-bb29-1134a7b51676" SourceId="1" SourceUrl="http://localhost:52490/BotSpotSensors.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

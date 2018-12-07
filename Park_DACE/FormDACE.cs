@@ -13,7 +13,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using uPLibrary.Networking.M2Mqtt;
-using uPLibrary.Networking.M2Mqtt.Messages;
+using uPLibrary.Networking.M2Mqtt.Messages;
+
 
 
 namespace Park_DACE
@@ -26,8 +27,10 @@ namespace Park_DACE
         private List<ParkingSpot> spotsToSend = null;
         private List<ParkingSpot> spots = null;
         private List<ParkingSpot> spotsDLL = null;
+        private List<ParkingSpot> spotsBOT = null;
+        private string spotsFromBOT = string.Empty;
 
-        private Models.ParkingSpot spot = null;
+        private ParkingSpot spot = null;
 
         private MqttClient client = null;
         string[] topics = { "ParkSS", "ParkDACE", "ParkTU" };
@@ -39,6 +42,7 @@ namespace Park_DACE
             spotsToSend = new List<ParkingSpot>();
             spots = new List<ParkingSpot>();
             spotsDLL = new List<ParkingSpot>();
+            spotsBOT = new List<ParkingSpot>();
             bw.DoWork += new DoWorkEventHandler(DoWork);
             getConfiguration();
             dll = new ParkingSensorNodeDll.ParkingSensorNodeDll();
@@ -59,7 +63,6 @@ namespace Park_DACE
                 richTextBoxLog.Text += "Receiving spot from DLL... ";
 
                 String[] partes = str.Split(';');
-                Boolean isFree = false;
 
                 if (partes.Length > 0)
                 {
@@ -68,10 +71,7 @@ namespace Park_DACE
                         richTextBoxLog.Text += "Error: Different Parks!" + "\n";
                         richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
                     }
-                    if (partes[4].Equals("free"))
-                    {
-                        isFree = true;
-                    }
+
                     spot = new ParkingSpot
                     {
                         Id = partes[0],
@@ -80,7 +80,7 @@ namespace Park_DACE
                         Location = ExcelHandler.getGeolocationForGivenIDParkA(partes[1]),
                         BateryStatus = Int32.Parse(partes[3]),
                         Type = "ParkingSpot",
-                        Value = isFree
+                        Value = partes[4].Equals("free") ? true : false
                     };
 
                     spotsDLL.Add(spot);
@@ -93,10 +93,49 @@ namespace Park_DACE
                 }
                 else
                 {
-                    richTextBoxLog.Text += "No Spots Received" + "\n";
+                    richTextBoxLog.Text += "No Spots Received from DLL..." + "\n";
                     richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
                 }
             });
+        }
+
+        public void convertStringToParkingSpot(string stringSpots)
+        {
+            richTextBoxLog.Text += "Receiving spot from BOTSpotSensor... " + "\n";
+
+            string[] stringSeparators = new string[] { "\r\n" };
+            string[] spotsList = stringSpots.Split(stringSeparators, StringSplitOptions.None);
+
+            if(spotsList.Length > 0)
+            {
+                foreach (string line in spotsList.Take(spotsList.Length - 1))
+                {
+                    String[] partes = line.Split(';');
+                    if (partes[0] != HandlerXML.configurations.Find(c => c.connectionType.Equals("SOAP")).id)
+                    {
+                        richTextBoxLog.Text += "Error: Different Parks!" + "\n";
+                        richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
+                    } else
+                    {
+                        spot = new ParkingSpot
+                        {
+                            Id = partes[0],
+                            Name = partes[2],
+                            Timestamp = partes[5],
+                            Location = partes[3], // ExcelHandler.getGeolocationForGivenIDParkB(partes[3]),
+                            BateryStatus = Int32.Parse(partes[6]),
+                            Type = partes[1],
+                            Value = partes[4].Equals("free") ? true : false
+                        };
+
+                        spotsBOT.Add(spot);
+                    }
+                }
+            } else
+            {
+                richTextBoxLog.Text += "No Spots Received from BOT..." + "\n";
+                richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
+            }
         }
 
         private void buttonPath_Click(object sender, EventArgs e)
@@ -137,11 +176,9 @@ namespace Park_DACE
         {
             ServiceBOTSpotSensorsClient service = new ServiceBOTSpotSensorsClient();
 
-            string spots = string.Empty;
+            spotsFromBOT = service.GetParkingSpotsXpath();
 
-            spots = service.GetParkingSpotsXpath();
-
-            Console.WriteLine(spots);
+            convertStringToParkingSpot(spotsFromBOT);
 
             service.Close();
         }
