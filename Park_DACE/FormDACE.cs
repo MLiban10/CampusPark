@@ -25,6 +25,7 @@ namespace Park_DACE
         private List<ParkingSpot> spotsToSend = null;
         private List<ParkingSpot> spots = null;
         private List<ParkingSpot> spotsDLL = null;
+        private string spotsFromBOT = string.Empty;
 
         private Models.ParkingSpot spot = null;
 
@@ -85,10 +86,36 @@ namespace Park_DACE
                 }
                 else
                 {
-                    richTextBoxLog.Text += "No Spots Received" + "\n";
+                    richTextBoxLog.Text += "No Spots Received from DLL..." + "\n";
                     richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
                 }
             });
+        }
+
+        public void convertStringToParkingSpot(string stringSpots)
+        {
+            richTextBoxLog.Text += "Receiving spot from BOTSpotSensor... ";
+
+            string[] stringSeparators = new string[] { "\r\n" };
+            string[] spotsList = stringSpots.Split(stringSeparators, StringSplitOptions.None);
+
+                String[] partes = spotsList[0].Split(';');
+                spot = new ParkingSpot
+                {
+                    Id = partes[0],
+                    Name = partes[2],
+                    Timestamp = partes[4],
+                    Location = partes[3], // ExcelHandler.getGeolocationForGivenIDParkA(partes[1]),
+                    BateryStatus = partes[5].Equals("free") ? 1 : 0,
+                    Type = partes[1],
+                    Value = partes[4]
+                };
+
+                Console.WriteLine(spot.BateryStatus);
+
+                //spotsDLL.Add(spot);
+
+            
         }
 
         private void buttonPath_Click(object sender, EventArgs e)
@@ -129,11 +156,9 @@ namespace Park_DACE
         {
             ServiceBOTSpotSensorsClient service = new ServiceBOTSpotSensorsClient();
 
-            string spots = string.Empty;
+            spotsFromBOT = service.GetParkingSpotsXpath();
 
-            spots = service.GetParkingSpotsXpath();
-
-            Console.WriteLine(spots);
+            convertStringToParkingSpot(spotsFromBOT);
 
             service.Close();
         }
