@@ -14,11 +14,19 @@ namespace Park_DACE.Models
         public int BateryStatus { get; set; }
         public Boolean Value { get; set; }
         public String Timestamp { get; set; }
+
+        public string ToString()
+        {
+            try
+            {
+                return string.Format("{0},{1},{2},{3},{4},{5},{6}", Id, Type, Name, Location, BateryStatus, Value, Timestamp);
+            }
+            catch (Exception)
+            {
+                string msg = string.Format("'{0}' is an invalid format string", Name);
+                throw new ArgumentException(msg);
+            }
+        }
     }
-    /*
-    public override string ToString()
-    {
-        return "";
-    }
-    */
+
 }
