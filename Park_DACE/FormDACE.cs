@@ -68,7 +68,7 @@ namespace Park_DACE
                         Id = partes[0],
                         Name = partes[1],
                         Timestamp = partes[2],
-                        Location = "0", // ExcelHandler.getGeolocationForGivenIDParkA(partes[1]),
+                        Location = ExcelHandler.getGeolocationForGivenIDParkA(partes[1]),
                         BateryStatus = Int32.Parse(partes[3]),
                         Type = "ParkingSpot",
                         Value = partes[4]
@@ -76,8 +76,8 @@ namespace Park_DACE
 
                     spotsDLL.Add(spot);
 
-                    richTextBoxConfig.AppendText(string.Format("Spot: {0} {1} {2} {3} {4} {5} {6} \n", spot.Id, spot.Name, spot.Timestamp,
-                            spot.BateryStatus, spot.Type, spot.Value, spot.Location));
+                    //richTextBoxConfig.AppendText(string.Format("Spot: {0} {1} {2} {3} {4} {5} {6} \n", spot.Id, spot.Name, spot.Timestamp,
+                    //spot.BateryStatus, spot.Type, spot.Value, spot.Location));
 
                     richTextBoxLog.Text += "Successfull" + "\n";
                     richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
@@ -121,7 +121,7 @@ namespace Park_DACE
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            richTextBoxConfig.AppendText("BOT \n");
+            //richTextBoxConfig.AppendText("BOT \n");
         }
 
         private void buttonReadSOAP_Click(object sender, EventArgs e)
