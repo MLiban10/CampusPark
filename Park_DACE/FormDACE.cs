@@ -30,7 +30,7 @@ namespace Park_DACE
         private Models.ParkingSpot spot = null;
 
         private MqttClient client = null;
-        String topic = "spot";
+        string[] topics = { "ParkSS", "ParkDACE", "ParkTU" };
 
         public FormDACE()
         {
@@ -186,13 +186,16 @@ namespace Park_DACE
 
         private void btnPublish_Click(object sender, EventArgs e)
         {
+            readSpots(spotsDLL);
+            //readSpots(spotsBot);
+
             //Alterar spotsToSend.ToString() para mandar em formato string
-            foreach (ParkingSpot spot in spotsDLL)
+            foreach (ParkingSpot spot in spotsToSend)
             {
                 Console.WriteLine(spot.ToString());
             }
             byte[] msg = Encoding.UTF8.GetBytes(spotsToSend.ToString());
-            client.Publish(topic, msg);
+            client.Publish(topics[1], msg);
         }
 
         private void FormDACE_Load(object sender, EventArgs e)
