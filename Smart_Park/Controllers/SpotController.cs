@@ -14,7 +14,7 @@ namespace Smart_Park.Controllers
             {
                 new ParkingSpot
                 {
-                    Id="TESTE", Type="TESTE", BateryStatus=0, Location="TESTE", Name="TESTE", Timestamp="TESTE", Value="TESTE"  
+                    Id="TESTE", Type="TESTE", BateryStatus=0, Location="TESTE", Name="TESTE", Timestamp=new DateTime(), Value="TESTE"
                 }
             };
 
@@ -38,10 +38,10 @@ namespace Smart_Park.Controllers
         }
 
 
-/// <summary>
-/// ////////////////////////////Smart park will only use gets//////////////////////////////////
-/// </summary>
-/// <param name="value"></param>
+        /// <summary>
+        /// ////////////////////////////Smart park will only use gets//////////////////////////////////
+        /// </summary>
+        /// <param name="value"></param>
         // POST: api/Spot
         public void Post([FromBody]string value)
         {
