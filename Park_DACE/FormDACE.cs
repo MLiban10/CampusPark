@@ -224,6 +224,10 @@ namespace Park_DACE
         private void btnPublish_Click(object sender, EventArgs e)
         {
             //Alterar spotsToSend.ToString() para mandar em formato string
+            foreach (ParkingSpot spot in spotsDLL)
+            {
+                Console.WriteLine(spot.ToString());
+            }
             byte[] msg = Encoding.UTF8.GetBytes(spotsToSend.ToString());
             client.Publish(topic, msg);
         }
