@@ -17,7 +17,7 @@ namespace Park_DACE.ServiceBotSpotSensor {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ParkingSpot", Namespace="http://schemas.datacontract.org/2004/07/BOT_SpotSensors")]
     [System.SerializableAttribute()]
-    public partial class ParkingSpot : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class BotParkingSpot : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -159,10 +159,10 @@ namespace Park_DACE.ServiceBotSpotSensor {
     public interface IServiceBOTSpotSensors {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceBOTSpotSensors/ParkingSpot", ReplyAction="http://tempuri.org/IServiceBOTSpotSensors/ParkingSpotResponse")]
-        void ParkingSpot([System.ServiceModel.MessageParameterAttribute(Name="parkingSpot")] Park_DACE.ServiceBotSpotSensor.ParkingSpot parkingSpot1);
+        void ParkingSpot([System.ServiceModel.MessageParameterAttribute(Name="parkingSpot")] Park_DACE.ServiceBotSpotSensor.BotParkingSpot parkingSpot1);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceBOTSpotSensors/ParkingSpot", ReplyAction="http://tempuri.org/IServiceBOTSpotSensors/ParkingSpotResponse")]
-        System.Threading.Tasks.Task ParkingSpotAsync(Park_DACE.ServiceBotSpotSensor.ParkingSpot parkingSpot);
+        System.Threading.Tasks.Task ParkingSpotAsync(Park_DACE.ServiceBotSpotSensor.BotParkingSpot parkingSpot);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceBOTSpotSensors/GetParkingSpotsXpath", ReplyAction="http://tempuri.org/IServiceBOTSpotSensors/GetParkingSpotsXpathResponse")]
         string GetParkingSpotsXpath();
@@ -198,11 +198,11 @@ namespace Park_DACE.ServiceBotSpotSensor {
                 base(binding, remoteAddress) {
         }
         
-        public void ParkingSpot(Park_DACE.ServiceBotSpotSensor.ParkingSpot parkingSpot1) {
+        public void ParkingSpot(Park_DACE.ServiceBotSpotSensor.BotParkingSpot parkingSpot1) {
             base.Channel.ParkingSpot(parkingSpot1);
         }
         
-        public System.Threading.Tasks.Task ParkingSpotAsync(Park_DACE.ServiceBotSpotSensor.ParkingSpot parkingSpot) {
+        public System.Threading.Tasks.Task ParkingSpotAsync(Park_DACE.ServiceBotSpotSensor.BotParkingSpot parkingSpot) {
             return base.Channel.ParkingSpotAsync(parkingSpot);
         }
         

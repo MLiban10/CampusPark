@@ -12,6 +12,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using uPLibrary.Networking.M2Mqtt;
+using uPLibrary.Networking.M2Mqtt.Messages;
 
 
 namespace Park_DACE
@@ -26,6 +28,9 @@ namespace Park_DACE
         private List<ParkingSpot> spotsDLL = null;
 
         private Models.ParkingSpot spot = null;
+
+        private MqttClient client = null;
+        String topic = "spot";
 
         public FormDACE()
         {
@@ -54,6 +59,7 @@ namespace Park_DACE
                 richTextBoxLog.Text += "Receiving spot from DLL... ";
 
                 String[] partes = str.Split(';');
+                Boolean isFree = false;
 
                 if (partes.Length > 0)
                 {
@@ -62,22 +68,25 @@ namespace Park_DACE
                         richTextBoxLog.Text += "Error: Different Parks!" + "\n";
                         richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
                     }
-
+                    if (partes[4].Equals("free"))
+                    {
+                        isFree = true;
+                    }
                     spot = new ParkingSpot
                     {
                         Id = partes[0],
                         Name = partes[1],
                         Timestamp = partes[2],
-                        Location = "0", // ExcelHandler.getGeolocationForGivenIDParkA(partes[1]),
+                        Location = ExcelHandler.getGeolocationForGivenIDParkA(partes[1]),
                         BateryStatus = Int32.Parse(partes[3]),
                         Type = "ParkingSpot",
-                        Value = partes[4]
+                        Value = isFree
                     };
 
                     spotsDLL.Add(spot);
 
-                    richTextBoxConfig.AppendText(string.Format("Spot: {0} {1} {2} {3} {4} {5} {6} \n", spot.Id, spot.Name, spot.Timestamp,
-                            spot.BateryStatus, spot.Type, spot.Value, spot.Location));
+                    //richTextBoxConfig.AppendText(string.Format("Spot: {0} {1} {2} {3} {4} {5} {6} \n", spot.Id, spot.Name, spot.Timestamp,
+                    //spot.BateryStatus, spot.Type, spot.Value, spot.Location));
 
                     richTextBoxLog.Text += "Successfull" + "\n";
                     richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
@@ -121,7 +130,7 @@ namespace Park_DACE
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            richTextBoxConfig.AppendText("BOT \n");
+            //richTextBoxConfig.AppendText("BOT \n");
         }
 
         private void buttonReadSOAP_Click(object sender, EventArgs e)
@@ -135,6 +144,64 @@ namespace Park_DACE
             Console.WriteLine(spots);
 
             service.Close();
+        }
+
+        private void readSpots(List<ParkingSpot> spotsAux)
+        {
+            foreach (ParkingSpot spot in spotsAux)
+            {
+                if (spots.Contains(spot))
+                {
+                    ParkingSpot spotOld = spots.Find(s => s == spot);
+                    if (spotOld.BateryStatus != spot.BateryStatus || spotOld.Value != spot.Value)
+                    {
+                        spots[spots.FindIndex(ind => ind.Equals(spotOld))] = spot;
+                        spotsToSend.Add(spot);
+                    }
+                }
+                else
+                {
+                    spots.Add(spot);
+                    spotsToSend.Add(spot);
+                }
+            }
+        }
+
+        private void ButtonBroker_Click(object sender, EventArgs e)
+
+        {
+            try
+            {
+                client.Connect(Guid.NewGuid().ToString());
+                btnPublish.Enabled = true; //botao do publish
+
+            }
+            catch (Exception)
+            {
+                richTextBoxLog.Text += "Unnable to connect to Broker" + "\n";
+                richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
+            }
+
+        }
+
+        private void btnPublish_Click(object sender, EventArgs e)
+        {
+            //Alterar spotsToSend.ToString() para mandar em formato string
+            byte[] msg = Encoding.UTF8.GetBytes(spotsToSend.ToString());
+            client.Publish(topic, msg);
+        }
+
+        private void FormDACE_Load(object sender, EventArgs e)
+        {
+            client = new MqttClient("127.0.0.1");
+        }
+
+        private void FormDACE_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (client.IsConnected)
+            {
+                client.Disconnect();
+            }
         }
     }
 }
