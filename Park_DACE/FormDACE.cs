@@ -1,5 +1,4 @@
-﻿
-using Park_DACE.Models;
+﻿using Park_DACE.Models;
 using Park_DACE.ServiceBotSpotSensor;
 using System;
 using System.Collections.Generic;
@@ -136,6 +135,27 @@ namespace Park_DACE
             Console.WriteLine(spots);
 
             service.Close();
+        }
+
+        private void readSpots(List<ParkingSpot> spotsAux)
+        {
+            foreach (ParkingSpot spot in spotsAux)
+            {
+                if (spots.Contains(spot))
+                {
+                    ParkingSpot spotOld = spots.Find(s => s == spot);
+                    if (spotOld.BateryStatus != spot.BateryStatus || spotOld.Value != spot.Value)
+                    {
+                        spots[spots.FindIndex(ind => ind.Equals(spotOld))] = spot;
+                        spotsToSend.Add(spot);
+                    }
+                }
+                else
+                {
+                    spots.Add(spot);
+                    spotsToSend.Add(spot);
+                }
+            }
         }
     }
 }
