@@ -66,6 +66,7 @@ namespace ParkTU
 
         private void Client_MqttMsgUnsubscribed(object sender, MqttMsgUnsubscribedEventArgs e)
         {
+
         }
     }
 }
