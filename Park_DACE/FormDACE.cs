@@ -106,7 +106,7 @@ namespace Park_DACE
             string[] stringSeparators = new string[] { "\r\n" };
             string[] spotsList = stringSpots.Split(stringSeparators, StringSplitOptions.None);
 
-            if(spotsList.Length > 0)
+            if (spotsList.Length > 0)
             {
                 foreach (string line in spotsList.Take(spotsList.Length - 1))
                 {
@@ -115,7 +115,8 @@ namespace Park_DACE
                     {
                         richTextBoxLog.Text += "Error: Different Parks!" + "\n";
                         richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
-                    } else
+                    }
+                    else
                     {
                         spot = new ParkingSpot
                         {
@@ -131,7 +132,8 @@ namespace Park_DACE
                         spotsBOT.Add(spot);
                     }
                 }
-            } else
+            }
+            else
             {
                 richTextBoxLog.Text += "No Spots Received from BOT..." + "\n";
                 richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
@@ -224,15 +226,16 @@ namespace Park_DACE
         private void btnPublish_Click(object sender, EventArgs e)
         {
             readSpots(spotsDLL);
-            //readSpots(spotsBot);
+            readSpots(spotsBOT);
 
             //Alterar spotsToSend.ToString() para mandar em formato string
             foreach (ParkingSpot spot in spotsToSend)
             {
                 Console.WriteLine(spot.ToString());
+                byte[] msg = Encoding.UTF8.GetBytes(spot.ToString());
+                client.Publish(topics[1], msg);
             }
-            byte[] msg = Encoding.UTF8.GetBytes(spotsToSend.ToString());
-            client.Publish(topics[1], msg);
+
         }
 
         private void FormDACE_Load(object sender, EventArgs e)

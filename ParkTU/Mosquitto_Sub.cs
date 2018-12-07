@@ -60,7 +60,7 @@ namespace ParkTU
         {
             this.BeginInvoke((MethodInvoker)delegate
             {
-                rchTxtBox_Message.AppendText($"{e.Topic}: {(Encoding.UTF8.GetString(e.Message))}");
+                rchTxtBox_Message.AppendText($"{e.Topic}: {(Encoding.UTF8.GetString(e.Message)).ToString()}");
             });
         }
 
