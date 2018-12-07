@@ -12,6 +12,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using uPLibrary.Networking.M2Mqtt;
+using uPLibrary.Networking.M2Mqtt.Messages;
 
 
 namespace Park_DACE
@@ -26,6 +28,9 @@ namespace Park_DACE
         private List<ParkingSpot> spotsDLL = null;
 
         private Models.ParkingSpot spot = null;
+
+        private MqttClient client = null;
+        String topic = "spot";
 
         public FormDACE()
         {
@@ -54,6 +59,7 @@ namespace Park_DACE
                 richTextBoxLog.Text += "Receiving spot from DLL... ";
 
                 String[] partes = str.Split(';');
+                Boolean isFree = false;
 
                 if (partes.Length > 0)
                 {
@@ -62,7 +68,10 @@ namespace Park_DACE
                         richTextBoxLog.Text += "Error: Different Parks!" + "\n";
                         richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
                     }
-
+                    if (partes[4].Equals("free"))
+                    {
+                        isFree = true;
+                    }
                     spot = new ParkingSpot
                     {
                         Id = partes[0],
@@ -71,7 +80,7 @@ namespace Park_DACE
                         Location = ExcelHandler.getGeolocationForGivenIDParkA(partes[1]),
                         BateryStatus = Int32.Parse(partes[3]),
                         Type = "ParkingSpot",
-                        Value = partes[4]
+                        Value = isFree
                     };
 
                     spotsDLL.Add(spot);
@@ -155,6 +164,43 @@ namespace Park_DACE
                     spots.Add(spot);
                     spotsToSend.Add(spot);
                 }
+            }
+        }
+
+        private void ButtonBroker_Click(object sender, EventArgs e)
+
+        {
+            try
+            {
+                client.Connect(Guid.NewGuid().ToString());
+                btnPublish.Enabled = true; //botao do publish
+
+            }
+            catch (Exception)
+            {
+                richTextBoxLog.Text += "Unnable to connect to Broker" + "\n";
+                richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
+            }
+
+        }
+
+        private void btnPublish_Click(object sender, EventArgs e)
+        {
+            //Alterar spotsToSend.ToString() para mandar em formato string
+            byte[] msg = Encoding.UTF8.GetBytes(spotsToSend.ToString());
+            client.Publish(topic, msg);
+        }
+
+        private void FormDACE_Load(object sender, EventArgs e)
+        {
+            client = new MqttClient("127.0.0.1");
+        }
+
+        private void FormDACE_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (client.IsConnected)
+            {
+                client.Disconnect();
             }
         }
     }

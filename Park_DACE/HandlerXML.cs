@@ -90,7 +90,7 @@ namespace Park_DACE
                 s.Name = spot["name"].InnerText;
                 s.Location = spot["location"].InnerText;
                 s.BateryStatus = int.Parse(spot["batteryStatus"].InnerText);
-                s.Value = spot["value"].InnerText;
+                s.Value = Boolean.Parse(spot["value"].InnerText);
                 s.Timestamp = spot["timestamp"].InnerText;
 
                 spots.Add(s);
