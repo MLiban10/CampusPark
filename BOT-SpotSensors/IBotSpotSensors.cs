@@ -12,11 +12,10 @@ namespace BOT_SpotSensors
     public interface IServiceBOTSpotSensors
     {
         [OperationContract]
-        void ParkingSpot(ParkingSpot parkingSpot);
+        void AddParkingSpot(ParkingSpot parkingSpot);
         
-        /*[OperationContract]
+        [OperationContract]
         List<ParkingSpot> GetParkingSpots();
-        */
 
         [OperationContract]
         String GetParkingSpotsXpath();
@@ -30,7 +29,7 @@ namespace BOT_SpotSensors
         private string strId;
         private string strType;
         private string strName;
-        private string strLocation;     //está dentro do status
+        private string strLocation;
         private string strValue;
         private DateTime dateTimeStamp;
         private int intBatteryStatus;
