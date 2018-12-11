@@ -66,7 +66,17 @@ namespace ParkTU
 
         private void Client_MqttMsgUnsubscribed(object sender, MqttMsgUnsubscribedEventArgs e)
         {
+            if (client.IsConnected)
+            {
+                client.Unsubscribe(topics);
+            }
+        }
 
+        private void btnPublish_Click(object sender, EventArgs e)
+        {
+            string topic = topics[0];
+            byte[] msg = Encoding.UTF8.GetBytes(rchTxtBox_Message.Text);
+            client.Publish(topic, msg);
         }
     }
 }

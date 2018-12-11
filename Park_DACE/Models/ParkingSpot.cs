@@ -19,7 +19,7 @@ namespace Park_DACE.Models
         {
             try
             {
-                return string.Format("{0},{1},{2},{3},{4},{5},{6}", Id, Type, Name, Location, BateryStatus, Value, Timestamp);
+                return string.Format("{0},{1},{2},{3},{4},{5},{6};", Id, Type, Name, Location, BateryStatus, Value, Timestamp);
             }
             catch (Exception)
             {

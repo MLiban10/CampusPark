@@ -15,8 +15,6 @@ using System.Windows.Forms;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 
-
-
 namespace Park_DACE
 {
     public partial class FormDACE : Form
@@ -32,7 +30,7 @@ namespace Park_DACE
 
         private ParkingSpot spot = null;
 
-        private MqttClient client = null;
+        MqttClient client = null;
         string[] topics = { "ParkSS", "ParkDACE", "ParkTU" };
 
         public FormDACE()

@@ -34,6 +34,7 @@
             this.btn_Unsubscribe = new System.Windows.Forms.Button();
             this.lbl_Message = new System.Windows.Forms.Label();
             this.rchTxtBox_Message = new System.Windows.Forms.RichTextBox();
+            this.btnPublish = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lbl_domain
@@ -55,7 +56,7 @@
             // 
             // btn_subscribe
             // 
-            this.btn_subscribe.Location = new System.Drawing.Point(15, 54);
+            this.btn_subscribe.Location = new System.Drawing.Point(12, 40);
             this.btn_subscribe.Name = "btn_subscribe";
             this.btn_subscribe.Size = new System.Drawing.Size(149, 23);
             this.btn_subscribe.TabIndex = 2;
@@ -65,9 +66,9 @@
             // 
             // btn_Unsubscribe
             // 
-            this.btn_Unsubscribe.Location = new System.Drawing.Point(170, 54);
+            this.btn_Unsubscribe.Location = new System.Drawing.Point(12, 69);
             this.btn_Unsubscribe.Name = "btn_Unsubscribe";
-            this.btn_Unsubscribe.Size = new System.Drawing.Size(122, 23);
+            this.btn_Unsubscribe.Size = new System.Drawing.Size(149, 23);
             this.btn_Unsubscribe.TabIndex = 3;
             this.btn_Unsubscribe.Text = "Unsubscribe all topics";
             this.btn_Unsubscribe.UseVisualStyleBackColor = true;
@@ -90,11 +91,22 @@
             this.rchTxtBox_Message.TabIndex = 5;
             this.rchTxtBox_Message.Text = "";
             // 
+            // btnPublish
+            // 
+            this.btnPublish.Location = new System.Drawing.Point(168, 39);
+            this.btnPublish.Name = "btnPublish";
+            this.btnPublish.Size = new System.Drawing.Size(124, 23);
+            this.btnPublish.TabIndex = 6;
+            this.btnPublish.Text = "Publish";
+            this.btnPublish.UseVisualStyleBackColor = true;
+            this.btnPublish.Click += new System.EventHandler(this.btnPublish_Click);
+            // 
             // Mosquitto_Sub
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(340, 328);
+            this.Controls.Add(this.btnPublish);
             this.Controls.Add(this.rchTxtBox_Message);
             this.Controls.Add(this.lbl_Message);
             this.Controls.Add(this.btn_Unsubscribe);
@@ -117,5 +129,6 @@
         private System.Windows.Forms.Button btn_Unsubscribe;
         private System.Windows.Forms.Label lbl_Message;
         private System.Windows.Forms.RichTextBox rchTxtBox_Message;
+        private System.Windows.Forms.Button btnPublish;
     }
 }
