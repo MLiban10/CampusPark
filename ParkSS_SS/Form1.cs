@@ -40,6 +40,8 @@ namespace ParkSS_SS
             this.BeginInvoke((MethodInvoker)delegate
             {
                 richTextBoxSS.AppendText($"{e.Topic}: {(Encoding.UTF8.GetString(e.Message)).ToString()}");
+                richTextBoxSS.AppendText("--------------------------------------------------------"+
+                    Environment.NewLine);
             });
         }
 
