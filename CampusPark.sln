@@ -16,12 +16,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Park_DACE", "Park_DACE\Park
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkSS_SS", "ParkSS_SS\ParkSS_SS.csproj", "{951579F4-105A-4856-A03D-84795CF21913}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BD", "BD", "{D46A562E-1136-4BA5-AF1D-CBB2FE47491A}"
-	ProjectSection(SolutionItems) = preProject
-		ParkSS\App_Data\ParkDB.mdf = ParkSS\App_Data\ParkDB.mdf
-		ParkSS\App_Data\ParkDB_log.ldf = ParkSS\App_Data\ParkDB_log.ldf
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
