@@ -73,7 +73,7 @@ namespace Park_DACE
 
                     spot = new ParkingSpot
                     {
-                        Id = partes[0],
+                        Id = partes[0] + "_" + partes[1],
                         Name = partes[1],
                         Timestamp = partes[2],
                         Location = ExcelHandler.getGeolocationForGivenIDPark(partes[1], @"..\..\..\Utils\Campus_2_A_Park1.xlsx"),
@@ -123,7 +123,7 @@ namespace Park_DACE
                             Id = partes[0],
                             Name = partes[2],
                             Timestamp = partes[5],
-                            Location = "",
+                            Location = ExcelHandler.getGeolocationForGivenIDPark(partes[3], @"..\..\..\Utils\Campus_2_B_Park2.xlsx"),
                             BateryStatus = Int32.Parse(partes[6]),
                             Type = partes[1],
                             Value = partes[4].Equals("free") ? true : false
