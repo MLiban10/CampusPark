@@ -170,10 +170,6 @@ namespace Park_DACE
         private void timer1_Tick(object sender, EventArgs e)
         {
             //richTextBoxConfig.AppendText("BOT \n");
-        }
-
-        private void buttonReadSOAP_Click(object sender, EventArgs e)
-        {
             ServiceBOTSpotSensorsClient service = new ServiceBOTSpotSensorsClient();
 
             spotsFromBOT = service.GetParkingSpotsXpath();
@@ -181,6 +177,12 @@ namespace Park_DACE
             convertStringToParkingSpot(spotsFromBOT);
 
             service.Close();
+        }
+
+        private void buttonReadSOAP_Click(object sender, EventArgs e)
+        {
+            timer1.Enabled = true;
+    
         }
 
         private void readSpots(List<ParkingSpot> spotsAux)
@@ -239,6 +241,8 @@ namespace Park_DACE
         private void FormDACE_Load(object sender, EventArgs e)
         {
             client = new MqttClient("127.0.0.1");
+
+            buttonReadSOAP_Click(sender,e);
         }
 
         private void FormDACE_FormClosed(object sender, FormClosedEventArgs e)
