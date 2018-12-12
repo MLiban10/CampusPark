@@ -17,6 +17,7 @@ namespace BOT_SpotSensors
          
         public void AddParkingSpot(ParkingSpot c_new_parkingSpot)
         {
+            
             XmlDocument doc = new XmlDocument();
             doc.Load(m_strPath);
 
@@ -106,7 +107,7 @@ namespace BOT_SpotSensors
                     + Convert.ToInt32(n["batteryStatus"].InnerText, NumberFormatInfo.InvariantInfo)
                     + Environment.NewLine;
             }
-
+            Console.WriteLine(strParkingSpot);
             return strParkingSpot;
         }
 

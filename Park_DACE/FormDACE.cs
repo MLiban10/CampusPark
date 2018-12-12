@@ -75,7 +75,7 @@ namespace Park_DACE
                         Id = partes[0],
                         Name = partes[1],
                         Timestamp = partes[2],
-                        Location = ExcelHandler.getGeolocationForGivenIDParkA(partes[1]),
+                        Location = ExcelHandler.getGeolocationForGivenIDPark(partes[1], @"..\..\..\Utils\Campus_2_A_Park1.xlsx"),
                         BateryStatus = Int32.Parse(partes[3]),
                         Type = "ParkingSpot",
                         Value = partes[4].Equals("free") ? true : false
@@ -100,6 +100,7 @@ namespace Park_DACE
         public void convertStringToParkingSpot(string stringSpots)
         {
             richTextBoxLog.Text += "Receiving spot from BOTSpotSensor... " + "\n";
+            spotsBOT.Clear();
 
             string[] stringSeparators = new string[] { "\r\n" };
             string[] spotsList = stringSpots.Split(stringSeparators, StringSplitOptions.None);
@@ -116,17 +117,18 @@ namespace Park_DACE
                     }
                     else
                     {
+                        
                         spot = new ParkingSpot
                         {
                             Id = partes[0],
                             Name = partes[2],
                             Timestamp = partes[5],
-                            Location = partes[3], // ExcelHandler.getGeolocationForGivenIDParkB(partes[3]),
+                            Location = ExcelHandler.getGeolocationForGivenIDPark(partes[3], @"..\..\..\Utils\Campus_2_B_Park2.xlsx"),
                             BateryStatus = Int32.Parse(partes[6]),
                             Type = partes[1],
                             Value = partes[4].Equals("free") ? true : false
                         };
-
+                        
                         spotsBOT.Add(spot);
                     }
                 }
@@ -169,7 +171,6 @@ namespace Park_DACE
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            //richTextBoxConfig.AppendText("BOT \n");
             ServiceBOTSpotSensorsClient service = new ServiceBOTSpotSensorsClient();
 
             spotsFromBOT = service.GetParkingSpotsXpath();
@@ -182,9 +183,8 @@ namespace Park_DACE
         private void buttonReadSOAP_Click(object sender, EventArgs e)
         {
             timer1.Enabled = true;
-    
         }
-
+        
         private void readSpots(List<ParkingSpot> spotsAux)
         {
             foreach (ParkingSpot spot in spotsAux)
@@ -192,20 +192,16 @@ namespace Park_DACE
                 if (spots.Contains(spot))
                 {
                     ParkingSpot spotOld = spots.Find(s => s == spot);
-                    if (spotOld.BateryStatus != spot.BateryStatus || spotOld.Value != spot.Value)
-                    {
-                        spots[spots.FindIndex(ind => ind.Equals(spotOld))] = spot;
-                        spotsToSend.Add(spot);
-                    }
+                    
+                    spots[spots.FindIndex(ind => ind.Equals(spotOld))] = spot;
                 }
                 else
                 {
                     spots.Add(spot);
-                    spotsToSend.Add(spot);
                 }
             }
         }
-
+        
         private void ButtonBroker_Click(object sender, EventArgs e)
 
         {
@@ -225,17 +221,17 @@ namespace Park_DACE
 
         private void btnPublish_Click(object sender, EventArgs e)
         {
+          
             readSpots(spotsDLL);
             readSpots(spotsBOT);
 
             //Alterar spotsToSend.ToString() para mandar em formato string
-            foreach (ParkingSpot spot in spotsToSend)
+            foreach (ParkingSpot spot in spots)
             {
-                Console.WriteLine(spot.ToString());
                 byte[] msg = Encoding.UTF8.GetBytes(spot.ToString());
                 client.Publish(topics[1], msg);
             }
-
+            spots.Clear();
         }
 
         private void FormDACE_Load(object sender, EventArgs e)

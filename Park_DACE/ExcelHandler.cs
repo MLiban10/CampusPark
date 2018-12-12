@@ -10,21 +10,21 @@ namespace Park_DACE
 {
     class ExcelHandler
     {
-        public static string getGeolocationForGivenIDParkA(string ID)
+        public static string getGeolocationForGivenIDPark(string ID, string filename)
         {
             Excel.Application excelApp = new Excel.Application();
             excelApp.Visible = false;
 
             string currentDir = Environment.CurrentDirectory;
-            String filename = new DirectoryInfo(Path.GetFullPath(Path.Combine(currentDir, @"..\..\..\Utils\Campus_2_A_Park1.xlsx"))).ToString();
+            string filen = new DirectoryInfo(Path.GetFullPath(Path.Combine(currentDir, filename))).ToString();
 
-            Excel.Workbook excellWorkbook = excelApp.Workbooks.Open(filename);
+            Excel.Workbook excellWorkbook = excelApp.Workbooks.Open(filen);
             Excel.Worksheet excellWorksheet = (Excel.Worksheet)excellWorkbook.ActiveSheet;
 
             int indicePrimeiraLinha = 6;
             int numberOfSpots = (int)excellWorksheet.Cells[2, 2].Value;
 
-            List<String> idsFromExcel = new List<string>();
+            List<string> idsFromExcel = new List<string>();
 
             Excel.Range namedRangeFirstCollumn = excellWorksheet.get_Range("A" + indicePrimeiraLinha, "A" + ((indicePrimeiraLinha + numberOfSpots) - 1));
 
@@ -64,7 +64,7 @@ namespace Park_DACE
 
             return "There is no id with that value";
         }
-
+        
         public static void ReleaseCOMObjects(object obj)
         {
             try
