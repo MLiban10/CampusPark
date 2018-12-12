@@ -19,7 +19,6 @@ namespace Park_DACE
 {
     public partial class FormDACE : Form
     {
-        private String strConfigurations;
         private ParkingSensorNodeDll.ParkingSensorNodeDll dll = null;
         private BackgroundWorker bw = new BackgroundWorker();
         private List<ParkingSpot> spotsToSend = null;
@@ -27,6 +26,8 @@ namespace Park_DACE
         private List<ParkingSpot> spotsDLL = null;
         private List<ParkingSpot> spotsBOT = null;
         private string spotsFromBOT = string.Empty;
+        int count = 0;
+
 
         private ParkingSpot spot = null;
 
@@ -117,18 +118,16 @@ namespace Park_DACE
                     }
                     else
                     {
-                        
                         spot = new ParkingSpot
                         {
                             Id = partes[0],
                             Name = partes[2],
                             Timestamp = partes[5],
-                            Location = ExcelHandler.getGeolocationForGivenIDPark(partes[3], @"..\..\..\Utils\Campus_2_B_Park2.xlsx"),
+                            Location = "",
                             BateryStatus = Int32.Parse(partes[6]),
                             Type = partes[1],
                             Value = partes[4].Equals("free") ? true : false
                         };
-                        
                         spotsBOT.Add(spot);
                     }
                 }
@@ -169,15 +168,48 @@ namespace Park_DACE
             richTextBoxConfig.Text = HandlerXML.getSOAPConfiguration().ToString();
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void readSpot(int index)
         {
             ServiceBOTSpotSensorsClient service = new ServiceBOTSpotSensorsClient();
 
             spotsFromBOT = service.GetParkingSpotsXpath();
 
-            convertStringToParkingSpot(spotsFromBOT);
+            string[] stringSeparators = new string[] { "\r\n" };
+            string[] spotsList = spotsFromBOT.Split(stringSeparators, StringSplitOptions.None);
+
+            String[] partes = spotsList[index].Split(';');
+            if (partes[0] != HandlerXML.configurations.Find(c => c.connectionType.Equals("SOAP")).id)
+            {
+                richTextBoxLog.Text += "Error: Different Parks!" + "\n";
+                richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
+            }
+            else
+            {
+                spot = new ParkingSpot
+                {
+                    Id = partes[0],
+                    Name = partes[2],
+                    Timestamp = partes[5],
+                    Location = ExcelHandler.getGeolocationForGivenIDPark(partes[2], @"..\..\..\Utils\Campus_2_B_Park1.xlsx"),
+                    BateryStatus = Int32.Parse(partes[6]),
+                    Type = partes[1],
+                    Value = partes[4].Equals("free") ? true : false
+                };
+                spotsBOT.Add(spot);
+            }
+
+            Console.WriteLine(spot.ToString());
 
             service.Close();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if(count < 10)
+            {
+                readSpot(count);
+                count++;   
+            }
         }
 
         private void buttonReadSOAP_Click(object sender, EventArgs e)

@@ -44,10 +44,10 @@
             // 
             // buttonPath
             // 
-            this.buttonPath.Location = new System.Drawing.Point(339, 318);
-            this.buttonPath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonPath.Location = new System.Drawing.Point(254, 258);
+            this.buttonPath.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonPath.Name = "buttonPath";
-            this.buttonPath.Size = new System.Drawing.Size(100, 30);
+            this.buttonPath.Size = new System.Drawing.Size(75, 24);
             this.buttonPath.TabIndex = 0;
             this.buttonPath.Text = "Config Path";
             this.buttonPath.UseVisualStyleBackColor = true;
@@ -56,41 +56,42 @@
             // richTextBoxConfig
             // 
             this.richTextBoxConfig.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.richTextBoxConfig.Location = new System.Drawing.Point(12, 12);
-            this.richTextBoxConfig.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.richTextBoxConfig.Location = new System.Drawing.Point(9, 10);
+            this.richTextBoxConfig.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.richTextBoxConfig.Name = "richTextBoxConfig";
-            this.richTextBoxConfig.Size = new System.Drawing.Size(320, 301);
+            this.richTextBoxConfig.Size = new System.Drawing.Size(241, 245);
             this.richTextBoxConfig.TabIndex = 3;
             this.richTextBoxConfig.Text = "";
             // 
             // richTextBoxLog
             // 
-            this.richTextBoxLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.richTextBoxLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBoxLog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.richTextBoxLog.Location = new System.Drawing.Point(12, 350);
-            this.richTextBoxLog.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.richTextBoxLog.Location = new System.Drawing.Point(9, 284);
+            this.richTextBoxLog.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.richTextBoxLog.Name = "richTextBoxLog";
-            this.richTextBoxLog.Size = new System.Drawing.Size(425, 102);
+            this.richTextBoxLog.Size = new System.Drawing.Size(320, 84);
             this.richTextBoxLog.TabIndex = 6;
             this.richTextBoxLog.Text = "";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 330);
+            this.label1.Location = new System.Drawing.Point(7, 268);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(83, 17);
+            this.label1.Size = new System.Drawing.Size(63, 13);
             this.label1.TabIndex = 7;
             this.label1.Text = "Log Output:";
             // 
             // buttonBackground
             // 
-            this.buttonBackground.Location = new System.Drawing.Point(339, 98);
-            this.buttonBackground.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonBackground.Location = new System.Drawing.Point(254, 80);
+            this.buttonBackground.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonBackground.Name = "buttonBackground";
-            this.buttonBackground.Size = new System.Drawing.Size(100, 57);
+            this.buttonBackground.Size = new System.Drawing.Size(75, 46);
             this.buttonBackground.TabIndex = 8;
             this.buttonBackground.Text = "Run in Background";
             this.buttonBackground.UseVisualStyleBackColor = true;
@@ -98,10 +99,10 @@
             // 
             // buttonDLL
             // 
-            this.buttonDLL.Location = new System.Drawing.Point(339, 12);
-            this.buttonDLL.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonDLL.Location = new System.Drawing.Point(254, 10);
+            this.buttonDLL.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonDLL.Name = "buttonDLL";
-            this.buttonDLL.Size = new System.Drawing.Size(100, 30);
+            this.buttonDLL.Size = new System.Drawing.Size(75, 24);
             this.buttonDLL.TabIndex = 9;
             this.buttonDLL.Text = "DLL";
             this.buttonDLL.UseVisualStyleBackColor = true;
@@ -109,10 +110,10 @@
             // 
             // buttonSOAP
             // 
-            this.buttonSOAP.Location = new System.Drawing.Point(339, 46);
-            this.buttonSOAP.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonSOAP.Location = new System.Drawing.Point(254, 37);
+            this.buttonSOAP.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonSOAP.Name = "buttonSOAP";
-            this.buttonSOAP.Size = new System.Drawing.Size(100, 30);
+            this.buttonSOAP.Size = new System.Drawing.Size(75, 24);
             this.buttonSOAP.TabIndex = 10;
             this.buttonSOAP.Text = "SOAP";
             this.buttonSOAP.UseVisualStyleBackColor = true;
@@ -120,10 +121,10 @@
             // 
             // buttonReadSOAP
             // 
-            this.buttonReadSOAP.Location = new System.Drawing.Point(339, 159);
-            this.buttonReadSOAP.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonReadSOAP.Location = new System.Drawing.Point(254, 129);
+            this.buttonReadSOAP.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonReadSOAP.Name = "buttonReadSOAP";
-            this.buttonReadSOAP.Size = new System.Drawing.Size(100, 30);
+            this.buttonReadSOAP.Size = new System.Drawing.Size(75, 24);
             this.buttonReadSOAP.TabIndex = 11;
             this.buttonReadSOAP.Text = "Read SOAP";
             this.buttonReadSOAP.UseVisualStyleBackColor = true;
@@ -136,9 +137,10 @@
             // 
             // ButtonBroker
             // 
-            this.ButtonBroker.Location = new System.Drawing.Point(339, 194);
+            this.ButtonBroker.Location = new System.Drawing.Point(254, 158);
+            this.ButtonBroker.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.ButtonBroker.Name = "ButtonBroker";
-            this.ButtonBroker.Size = new System.Drawing.Size(100, 61);
+            this.ButtonBroker.Size = new System.Drawing.Size(75, 50);
             this.ButtonBroker.TabIndex = 12;
             this.ButtonBroker.Text = "Connect To Broker";
             this.ButtonBroker.UseVisualStyleBackColor = true;
@@ -147,9 +149,10 @@
             // btnPublish
             // 
             this.btnPublish.Enabled = false;
-            this.btnPublish.Location = new System.Drawing.Point(339, 262);
+            this.btnPublish.Location = new System.Drawing.Point(254, 213);
+            this.btnPublish.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnPublish.Name = "btnPublish";
-            this.btnPublish.Size = new System.Drawing.Size(98, 34);
+            this.btnPublish.Size = new System.Drawing.Size(74, 28);
             this.btnPublish.TabIndex = 13;
             this.btnPublish.Text = "Publish";
             this.btnPublish.UseVisualStyleBackColor = true;
@@ -157,9 +160,9 @@
             // 
             // FormDACE
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(451, 460);
+            this.ClientSize = new System.Drawing.Size(338, 374);
             this.Controls.Add(this.btnPublish);
             this.Controls.Add(this.ButtonBroker);
             this.Controls.Add(this.buttonReadSOAP);
@@ -170,7 +173,7 @@
             this.Controls.Add(this.richTextBoxLog);
             this.Controls.Add(this.richTextBoxConfig);
             this.Controls.Add(this.buttonPath);
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "FormDACE";
             this.Text = "Park DACE";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormDACE_FormClosed);

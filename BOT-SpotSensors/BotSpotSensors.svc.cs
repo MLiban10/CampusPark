@@ -131,7 +131,7 @@ namespace BOT_SpotSensors
             for (int i = 1; i <= spotsNumber; i++)
             {
                 ParkingSpot parkingSpot = new ParkingSpot(
-                    "Campus_2_B_Park2", 
+                    "Campus_2_B_Park1", 
                     "ParkingSpot", 
                     "B-" + i,
                     "", values[random.Next(values.Count())],

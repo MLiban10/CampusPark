@@ -37,6 +37,7 @@ namespace Park_DACE
             {
                 if (id.Equals(ID))
                 {
+                    Console.WriteLine(id + " === " + ID);
                     string[] parts = id.Split('-');
                     int index1 = Int32.Parse(parts[1]);
                     try
