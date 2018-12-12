@@ -121,7 +121,7 @@ namespace Park_DACE
                             Id = partes[0],
                             Name = partes[2],
                             Timestamp = partes[5],
-                            Location = partes[3], // ExcelHandler.getGeolocationForGivenIDParkB(partes[3]),
+                            Location = ExcelHandler.getGeolocationForGivenIDParkB(partes[3]),
                             BateryStatus = Int32.Parse(partes[6]),
                             Type = partes[1],
                             Value = partes[4].Equals("free") ? true : false
@@ -182,7 +182,6 @@ namespace Park_DACE
         private void buttonReadSOAP_Click(object sender, EventArgs e)
         {
             timer1.Enabled = true;
-    
         }
 
         private void readSpots(List<ParkingSpot> spotsAux)
