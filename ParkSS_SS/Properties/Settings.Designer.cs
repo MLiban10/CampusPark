@@ -29,9 +29,9 @@ namespace ParkSS_SS.Properties {
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ParkDB;Integrated Security=Tru" +
             "e;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationInten" +
             "t=ReadWrite;MultiSubnetFailover=False")]
-        public string ConnString {
+        public string ConnStr {
             get {
-                return ((string)(this["ConnString"]));
+                return ((string)(this["ConnStr"]));
             }
         }
     }
