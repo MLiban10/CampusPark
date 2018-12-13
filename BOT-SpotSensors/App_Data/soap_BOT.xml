@@ -30,7 +30,7 @@
     <location>
     </location>
     <status>
-      <value>free</value>
+      <value>busy</value>
       <timestamp>07/12/2018 18:30:00</timestamp>
     </status>
     <batteryStatus>0</batteryStatus>
@@ -54,7 +54,7 @@
     <location>
     </location>
     <status>
-      <value>busy</value>
+      <value>free</value>
       <timestamp>07/12/2018 18:30:00</timestamp>
     </status>
     <batteryStatus>0</batteryStatus>

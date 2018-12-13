@@ -16,15 +16,15 @@ namespace ParkSS_SS
 {
     public partial class ParkSSForm : Form
     {
-        string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ParkDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-        //string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ParkSS.Properties.Settings.ConnString"].ConnectionString;
+        //string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ParkDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ParkSS_SS.Properties.Settings.ConnStr"].ConnectionString;
 
         MqttClient client = null;
+        string receivedData = "";
         string[] topics = { "ParkSS", "ParkDACE", "ParkTU" };
 
-        private ParkingSpot spot = null;
-
-        private List<ParkingSpot> listSpots = null;
+        private ParkingSpot spot = new ParkingSpot();
+        private List<ParkingSpot> listSpots = new List<ParkingSpot>();
 
         public ParkSSForm()
         {
@@ -48,7 +48,10 @@ namespace ParkSS_SS
         {
             this.BeginInvoke((MethodInvoker)delegate
             {
-                richTextBoxSS.AppendText($"{e.Topic}: {(Encoding.UTF8.GetString(e.Message)).ToString()}");
+                receivedData = Encoding.UTF8.GetString(e.Message);
+                richTextBoxSS.AppendText($"{e.Topic}: {receivedData}");
+
+                convertStringToParkingSpot(receivedData);
             });
         }
 
@@ -75,85 +78,95 @@ namespace ParkSS_SS
 
         public void convertStringToParkingSpot(string stringSpots)
         {
-            richTextBoxSS.Text += "Receiving spot from ParkDACE... " + "\n";
+
+            Console.WriteLine("Receiving spot from ParkDACE... ");
 
             string[] stringSeparators = new string[] { "\r\n" };
             string[] spotsList = stringSpots.Split(stringSeparators, StringSplitOptions.None);
 
             if (spotsList.Length > 0)
             {
-                foreach (string line in spotsList.Take(spotsList.Length - 1))
+
+                String[] partes = spotsList[0].Split(',');
+
+                spot = new ParkingSpot
                 {
-                    String[] partes = line.Split(';');
+                    Id = partes[0],
+                    Name = partes[2],
+                    Timestamp = partes[7],
+                    Location = partes[3] + "," + partes[4],
+                    BateryStatus = Int32.Parse(partes[5]),
+                    Type = partes[1],
+                    Value = bool.Parse(partes[6])
+                };
 
-                    spot = new ParkingSpot
-                    {
-                        Id = partes[0],
-                        Name = partes[2],
-                        Timestamp = partes[5],
-                        Location = partes[3],
-                        BateryStatus = Int32.Parse(partes[6]),
-                        Type = partes[1],
-                        Value = bool.Parse(partes[4])
-                    };
+                listSpots.Add(spot);
 
-                    listSpots.Add(spot);
 
-                }
+
             }
             else
             {
-                richTextBoxSS.Text += "No Spots Received from DACE..." + "\n";
-                richTextBoxSS.Text += "--------------------------------------------------------------------------------------------------\n";
+                Console.WriteLine("No Spots Received from DACE...");
             }
         }
 
         private void btn_storeDatabase_Click(object sender, EventArgs e)
         {
+            richTextBoxSS.Clear();
+
             SqlConnection conn = null;
             try
             {
                 conn = new SqlConnection(connectionString);
-                conn.Open();
 
-                SqlCommand test = new SqlCommand("Select * From Spots", conn);
-
-                if (test == null)
+                if (conn.State == ConnectionState.Closed)
                 {
+                    conn.Open();
+                }
+
+                foreach (ParkingSpot s in listSpots)
+                {
+                    SqlCommand test = new SqlCommand("Select * From Spots", conn);
+
+                    //if (test == null)
+                    //{
                     SqlCommand cmd = new SqlCommand("INSERT INTO Spots OUTPUT INSERTED.ID VALUES (@Id, @Type, @Name, @Location, @BateryStatus, @Value, @Timestamp)", conn);
-                    cmd.Parameters.AddWithValue("@Id", spot.Id);
-                    cmd.Parameters.AddWithValue("@Type", spot.Type);
-                    cmd.Parameters.AddWithValue("@Name", spot.Name);
-                    cmd.Parameters.AddWithValue("@Location", spot.Location);
-                    cmd.Parameters.AddWithValue("@BateryStatus", spot.BateryStatus);
-                    cmd.Parameters.AddWithValue("@Value", spot.Value);
-                    cmd.Parameters.AddWithValue("@Timestamp", spot.Timestamp);
+                    cmd.Parameters.AddWithValue("@Id", s.Id);
+                    cmd.Parameters.AddWithValue("@Type", s.Type);
+                    cmd.Parameters.AddWithValue("@Name", s.Name);
+                    cmd.Parameters.AddWithValue("@Location", s.Location);
+                    cmd.Parameters.AddWithValue("@BateryStatus", s.BateryStatus);
+                    cmd.Parameters.AddWithValue("@Value", s.Value.ToString());
+                    cmd.Parameters.AddWithValue("@Timestamp", DateTime.Parse(s.Timestamp));
+
+                    //listSpots.Remove(s);
+                    cmd.ExecuteNonQuery();
+                    Console.WriteLine("Spot stored successfully!");
+                    /*}
+                    else
+                    {
 
 
-                    int id = (int)cmd.ExecuteScalar();
-                    spot.Id = Convert.ToString(id);
-                    conn.Close();
+                        SqlCommand cmd = new SqlCommand("UPDATE Spots SET OUTPUT INSERTED.ID VALUES (@Id, @Type, @Name, @Location, @BateryStatus, @Value, @Timestamp)", conn);
+                        cmd.Parameters.AddWithValue("@Id", s.Id);
+                        cmd.Parameters.AddWithValue("@Type", s.Type);
+                        cmd.Parameters.AddWithValue("@Name", s.Name);
+                        cmd.Parameters.AddWithValue("@Location", s.Location);
+                        cmd.Parameters.AddWithValue("@BateryStatus", s.BateryStatus);
+                        cmd.Parameters.AddWithValue("@Value", s.Value);
+                        cmd.Parameters.AddWithValue("@Timestamp", s.Timestamp);
 
-                    Console.WriteLine("Data stored successfully!");
+
+                        listSpots.Remove(s);
+                        conn.Close();
+
+                        Console.WriteLine("Spot updated successfully!");
+                    }*/
+
                 }
-                else
-                {
-                    SqlCommand cmd = new SqlCommand("UPDATE Spots SET OUTPUT INSERTED.ID VALUES (@Id, @Type, @Name, @Location, @BateryStatus, @Value, @Timestamp)", conn);
-                    cmd.Parameters.AddWithValue("@Id", spot.Id);
-                    cmd.Parameters.AddWithValue("@Type", spot.Type);
-                    cmd.Parameters.AddWithValue("@Name", spot.Name);
-                    cmd.Parameters.AddWithValue("@Location", spot.Location);
-                    cmd.Parameters.AddWithValue("@BateryStatus", spot.BateryStatus);
-                    cmd.Parameters.AddWithValue("@Value", spot.Value);
-                    cmd.Parameters.AddWithValue("@Timestamp", spot.Timestamp);
 
-
-                    int id = (int)cmd.ExecuteScalar();
-                    spot.Id = Convert.ToString(id);
-                    conn.Close();
-
-                    Console.WriteLine("Data updated successfully!");
-                }
+                conn.Close();
             }
             catch (Exception)
             {

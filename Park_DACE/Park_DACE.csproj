@@ -37,7 +37,7 @@
       <HintPath>..\packages\M2Mqtt.4.3.0.0\lib\net45\M2Mqtt.Net.dll</HintPath>
     </Reference>
     <Reference Include="ParkingSensorNodeDll">
-      <HintPath>..\..\Users\sergi\Desktop\Integracao_Sistemas\Project\ParkingSensorNodeDll.dll</HintPath>
+      <HintPath>..\Utils\ParkingSensorNodeDll.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
