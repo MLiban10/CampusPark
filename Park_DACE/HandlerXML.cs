@@ -17,8 +17,6 @@ namespace Park_DACE
         public string BotXsdFilePath { get; set; }
         private bool isValid = true;
         private string validationMessage;
-        public static List<ParkingSpot> spots = new List<ParkingSpot>();
-
 
         public static List<Configuration> configurations = new List<Configuration>();
 
@@ -73,30 +71,6 @@ namespace Park_DACE
                     validationMessage = "Unknow error! Document not VALID!";
                     break;
             }
-        }
-
-        public List<ParkingSpot> GetBotSpots()
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(BotXmlFilePath);
-
-            XmlNodeList filtro = doc.SelectNodes("/spots/parkingSpot");
-
-            foreach (XmlNode spot in filtro)
-            {
-                ParkingSpot s = new ParkingSpot();
-                s.Id = spot["id"].InnerText;
-                s.Type = spot["type"].InnerText;
-                s.Name = spot["name"].InnerText;
-                s.Location = spot["location"].InnerText;
-                s.BateryStatus = int.Parse(spot["batteryStatus"].InnerText);
-                s.Value = Boolean.Parse(spot["value"].InnerText);
-                s.Timestamp = spot["timestamp"].InnerText;
-
-                spots.Add(s);
-            }
-
-            return spots;
         }
 
         public void LoadConfigurations()

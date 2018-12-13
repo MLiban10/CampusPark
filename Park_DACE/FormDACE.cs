@@ -3,17 +3,10 @@ using Park_DACE.ServiceBotSpotSensor;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using uPLibrary.Networking.M2Mqtt;
-using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace Park_DACE
 {
@@ -27,7 +20,8 @@ namespace Park_DACE
         private List<ParkingSpot> spotsBOT = null;
         private string spotsFromBOT = string.Empty;
         int count = 0;
-
+        private List<string> geolocationsFromParkA = null;
+        private List<string> geolocationsFromParkB = null;
 
         private ParkingSpot spot = null;
 
@@ -36,17 +30,16 @@ namespace Park_DACE
 
         public FormDACE()
         {
-
             InitializeComponent();
             spotsToSend = new List<ParkingSpot>();
             spots = new List<ParkingSpot>();
             spotsDLL = new List<ParkingSpot>();
             spotsBOT = new List<ParkingSpot>();
+            geolocationsFromParkA = ExcelHandler.getGeolocationForGivenIDPark(Application.StartupPath + @"\Utils\Campus_2_A_Park1.xlsx");
+            geolocationsFromParkB = ExcelHandler.getGeolocationForGivenIDPark(Application.StartupPath + @"\Utils\Campus_2_B_Park1.xlsx");
             bw.DoWork += new DoWorkEventHandler(DoWork);
             getConfiguration();
             dll = new ParkingSensorNodeDll.ParkingSensorNodeDll();
-            bw.RunWorkerAsync();
-            timer1.Enabled = true;
         }
 
         public void DoWork(object sender, DoWorkEventArgs e)
@@ -71,12 +64,15 @@ namespace Park_DACE
                         richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
                     }
 
+                    string[] parts = partes[1].Split('-');
+                    int index = Int32.Parse(parts[1]);
+
                     spot = new ParkingSpot
                     {
                         Id = partes[0] + "_" + partes[1],
                         Name = partes[1],
                         Timestamp = partes[2],
-                        Location = ExcelHandler.getGeolocationForGivenIDPark(partes[1], @"..\..\..\Utils\Campus_2_A_Park1.xlsx"),
+                        Location = "", //geolocationsFromParkA[index],
                         BateryStatus = Int32.Parse(partes[3]),
                         Type = "ParkingSpot",
                         Value = partes[4].Equals("free") ? true : false
@@ -98,47 +94,6 @@ namespace Park_DACE
             });
         }
 
-        public void convertStringToParkingSpot(string stringSpots)
-        {
-            richTextBoxLog.Text += "Receiving spot from BOTSpotSensor... " + "\n";
-            spotsBOT.Clear();
-
-            string[] stringSeparators = new string[] { "\r\n" };
-            string[] spotsList = stringSpots.Split(stringSeparators, StringSplitOptions.None);
-
-            if (spotsList.Length > 0)
-            {
-                foreach (string line in spotsList.Take(spotsList.Length - 1))
-                {
-                    String[] partes = line.Split(';');
-                    if (partes[0] != HandlerXML.configurations.Find(c => c.connectionType.Equals("SOAP")).id)
-                    {
-                        richTextBoxLog.Text += "Error: Different Parks!" + "\n";
-                        richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
-                    }
-                    else
-                    {
-                        spot = new ParkingSpot
-                        {
-                            Id = partes[0],
-                            Name = partes[2],
-                            Timestamp = partes[5],
-                            Location = ExcelHandler.getGeolocationForGivenIDPark(partes[3], @"..\..\..\Utils\Campus_2_B_Park2.xlsx"),
-                            BateryStatus = Int32.Parse(partes[6]),
-                            Type = partes[1],
-                            Value = partes[4].Equals("free") ? true : false
-                        };
-                        spotsBOT.Add(spot);
-                    }
-                }
-            }
-            else
-            {
-                richTextBoxLog.Text += "No Spots Received from BOT..." + "\n";
-                richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
-            }
-        }
-
         private void buttonPath_Click(object sender, EventArgs e)
         {
             new FormConfig().Show();
@@ -158,11 +113,6 @@ namespace Park_DACE
             richTextBoxConfig.Text = HandlerXML.getDLLConfiguration().ToString();
         }
 
-        private void buttonBackground_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Minimized;
-        }
-
         private void buttonSOAP_Click(object sender, EventArgs e)
         {
             richTextBoxConfig.Text = HandlerXML.getSOAPConfiguration().ToString();
@@ -171,6 +121,8 @@ namespace Park_DACE
         private void readSpot(int index)
         {
             ServiceBOTSpotSensorsClient service = new ServiceBOTSpotSensorsClient();
+
+            richTextBoxLog.Text += "Receiving spot from SOAP... " + Environment.NewLine;
 
             spotsFromBOT = service.GetParkingSpotsXpath();
 
@@ -185,12 +137,15 @@ namespace Park_DACE
             }
             else
             {
+                string[] parts = partes[2].Split('-');
+                int index1 = Int32.Parse(parts[1]);
+
                 spot = new ParkingSpot
                 {
                     Id = partes[0],
                     Name = partes[2],
                     Timestamp = partes[5],
-                    Location = ExcelHandler.getGeolocationForGivenIDPark(partes[2], @"..\..\..\Utils\Campus_2_B_Park1.xlsx"),
+                    Location = geolocationsFromParkB[index1],
                     BateryStatus = Int32.Parse(partes[6]),
                     Type = partes[1],
                     Value = partes[4].Equals("free") ? true : false
@@ -235,7 +190,6 @@ namespace Park_DACE
         }
         
         private void ButtonBroker_Click(object sender, EventArgs e)
-
         {
             try
             {
@@ -253,7 +207,6 @@ namespace Park_DACE
 
         private void btnPublish_Click(object sender, EventArgs e)
         {
-          
             readSpots(spotsDLL);
             readSpots(spotsBOT);
 
@@ -269,6 +222,9 @@ namespace Park_DACE
         private void FormDACE_Load(object sender, EventArgs e)
         {
             client = new MqttClient("127.0.0.1");
+
+            bw.RunWorkerAsync();
+            timer1.Enabled = true;
 
             buttonReadSOAP_Click(sender,e);
         }

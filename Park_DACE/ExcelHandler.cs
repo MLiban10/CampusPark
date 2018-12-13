@@ -10,13 +10,13 @@ namespace Park_DACE
 {
     class ExcelHandler
     {
-        public static string getGeolocationForGivenIDPark(string ID, string filename)
+        public static List<string> getGeolocationForGivenIDPark(string filename)
         {
             Excel.Application excelApp = new Excel.Application();
-            excelApp.Visible = false;
 
             string currentDir = Environment.CurrentDirectory;
             string filen = new DirectoryInfo(Path.GetFullPath(Path.Combine(currentDir, filename))).ToString();
+            List<string> geoLocations = new List<string>();
 
             Excel.Workbook excellWorkbook = excelApp.Workbooks.Open(filen);
             Excel.Worksheet excellWorksheet = (Excel.Worksheet)excellWorkbook.ActiveSheet;
@@ -30,30 +30,22 @@ namespace Park_DACE
 
             foreach (Excel.Range cell in namedRangeFirstCollumn.Cells)
             {
+                //A1,A2,A3 or B1,B2,B3
                 idsFromExcel.Add(cell.Value);
             }
 
             foreach (string id in idsFromExcel)
             {
-                if (id.Equals(ID))
+                string[] parts = id.Split('-');
+                int index1 = Int32.Parse(parts[1]);
+                try
                 {
-                    Console.WriteLine(id + " === " + ID);
-                    string[] parts = id.Split('-');
-                    int index1 = Int32.Parse(parts[1]);
-                    try
-                    {
-                        string geoLocation = excellWorksheet.Cells[index1 + 5, 2].Value;
-                        excellWorkbook.Close();
-                        excelApp.Quit();
-
-                        ReleaseCOMObjects(excellWorkbook);
-                        ReleaseCOMObjects(excelApp);
-                        return geoLocation;
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e.Message);
-                    }
+                    string geoLocation = excellWorksheet.Cells[index1 + 5, 2].Value;
+                    geoLocations.Add(geoLocation);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
                 }
             }
 
@@ -63,9 +55,9 @@ namespace Park_DACE
             ReleaseCOMObjects(excellWorkbook);
             ReleaseCOMObjects(excelApp);
 
-            return "There is no id with that value";
+            return geoLocations;
         }
-        
+
         public static void ReleaseCOMObjects(object obj)
         {
             try
