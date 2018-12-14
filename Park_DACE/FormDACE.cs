@@ -73,7 +73,7 @@ namespace Park_DACE
                         {
                             Id = partes[0] + "_" + partes[1],
                             Name = partes[1],
-                            Timestamp = partes[2],
+                            Timestamp = (DateTime.Parse(partes[2]).AddMinutes(DateTime.Now.Minute).AddSeconds(DateTime.Now.Second)).ToString(),
                             Location = geolocationsFromParkA[index],
                             BateryStatus = Int32.Parse(partes[3]),
                             Type = "ParkingSpot",
@@ -152,7 +152,7 @@ namespace Park_DACE
                 {
                     spot = new ParkingSpot
                     {
-                        Id = partes[0],
+                        Id = partes[0] + "_" + partes[2],
                         Name = partes[2],
                         Timestamp = partes[5],
                         Location = geolocationsFromParkB[index1],
