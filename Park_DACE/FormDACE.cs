@@ -40,6 +40,8 @@ namespace Park_DACE
             bw.DoWork += new DoWorkEventHandler(DoWork);
             getConfiguration();
             dll = new ParkingSensorNodeDll.ParkingSensorNodeDll();
+            client = new MqttClient("127.0.0.1");
+            sendConfigurations();
         }
 
         public void DoWork(object sender, DoWorkEventArgs e)
@@ -124,7 +126,7 @@ namespace Park_DACE
 
         private void buttonSOAP_Click(object sender, EventArgs e)
         {
-            richTextBoxConfig.Text = HandlerXML.getSOAPConfiguration().ToString();
+            richTextBoxConfig.Text = HandlerXML.getSOAPConfigurationToSend().ToString();
         }
 
         private void readSpot(int index)
@@ -177,6 +179,7 @@ namespace Park_DACE
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            
             if (count < 11)
             {
                 readSpot(count);
@@ -233,18 +236,24 @@ namespace Park_DACE
             foreach (ParkingSpot spot in spots)
             {
                 byte[] msg = Encoding.UTF8.GetBytes(spot.ToString());
-                client.Publish(topics[1], msg);
+                client.Publish(topics[0], msg);
             }
             spots.Clear();
 
-            byte[] msgConfiguration = Encoding.UTF8.GetBytes(configuration.ToString());
-            client.Publish(topics[2], msgConfiguration);
+        }
+
+        public void sendConfigurations()
+        {
+            byte[] msgConfigurationDLL = Encoding.UTF8.GetBytes(HandlerXML.getDLLConfigurationToSend());
+            byte[] msgConfigurationSOAP = Encoding.UTF8.GetBytes(HandlerXML.getSOAPConfigurationToSend());
+            client.Publish(topics[1], msgConfigurationDLL);
+            richTextBoxLog.AppendText(Environment.NewLine + "Sending DLL configuration" + Environment.NewLine);
+            client.Publish(topics[1], msgConfigurationSOAP);
+            richTextBoxLog.AppendText("Sending SOAP configuration" + Environment.NewLine);
         }
 
         private void FormDACE_Load(object sender, EventArgs e)
         {
-            client = new MqttClient("127.0.0.1");
-
             bw.RunWorkerAsync();
             timer1.Enabled = true;
 

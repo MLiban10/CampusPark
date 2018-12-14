@@ -135,7 +135,7 @@ namespace BOT_SpotSensors
                     "ParkingSpot",
                     "B-" + i,
                     "", values[random.Next(values.Count())],
-                    DateTime.Now,
+                    DateTime.Now, 
                     random.Next(1));
 
                 AddParkingSpot(parkingSpot);

@@ -1,4 +1,4 @@
-﻿using Park_DACE.Models;
+﻿using ParkSS.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,8 +23,10 @@ namespace ParkSS_SS
         string receivedData = "";
         string[] topics = { "Spots", "Configurations", "Debug" };
 
-        private ParkingSpot spot = new ParkingSpot();
+        private ParkingSpot spot = null;
+        private Configuration configuration = null;
         private List<ParkingSpot> listSpots = new List<ParkingSpot>();
+        private List<Configuration> configurations = new List<Configuration>();
 
         public FormParkSS()
         {
@@ -50,9 +52,19 @@ namespace ParkSS_SS
             this.BeginInvoke((MethodInvoker)delegate
             {
                 receivedData = Encoding.UTF8.GetString(e.Message);
-                richTextBoxSS.AppendText($"{e.Topic}: {receivedData}");
+                //richTextBoxSS.Clear();
 
-                convertStringToParkingSpot(receivedData);
+                if (receivedData.Length < 90)//Quer dizer que e um spot
+                {
+                    //richTextBoxSS.Clear();
+                    richTextBoxSS.AppendText($"{e.Topic}: {receivedData}");
+                    convertStringToParkingSpot(receivedData);
+                }
+                else
+                {
+                    convertStringToConfiguration(receivedData);
+                }
+
             });
         }
 
@@ -76,6 +88,35 @@ namespace ParkSS_SS
             if (client.IsConnected)
             {
                 client.Disconnect();
+            }
+        }
+
+        private void convertStringToConfiguration(string receivedData)
+        {
+            Console.WriteLine("Receiving DLL and SOAP configurations from ParkDACE... ");
+            //string[] spotsList = stringSpots.Split(stringSeparators, StringSplitOptions.None);
+            Console.WriteLine(receivedData);
+            
+            string[] partes = receivedData.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            string[] partesConf = partes[0].Split('\n');
+            if(partesConf.Length > 0)
+            {
+
+                configuration = new Configuration
+                {
+                    connectionType = partesConf[0],
+                    endpoint = partesConf[1],
+                    id = partesConf[2],
+                    description = partesConf[3],
+                    numberOfSpots = Int32.Parse(partesConf[4]),
+                    operatingHours = partesConf[5],
+                    numberOfSpecialSpots = Int32.Parse(partesConf[6]),
+                    geoLocationFile = partesConf[7]
+                };
+                Console.WriteLine(configuration);
+
+                configurations.Add(configuration);
+                
             }
         }
 

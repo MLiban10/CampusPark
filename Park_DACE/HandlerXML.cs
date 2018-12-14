@@ -117,21 +117,40 @@ namespace Park_DACE
             }
             return null;
         }
-
-        public static String getSOAPConfiguration()
+        
+        public static String getSOAPConfigurationToSend()
         {
             foreach (Configuration configuration in configurations)
             {
                 if (configuration.connectionType.Equals("SOAP"))
                 {
-                    return ("Connection Type: " + configuration.connectionType.ToString() + "\n"
-                        + "Endpoint: " + configuration.endpoint.ToString() + "\n"
-                        + "Id: " + configuration.id.ToString() + "\n"
-                        + "Description: " + configuration.description.ToString() + "\n"
-                        + "Number Of Spots: " + configuration.numberOfSpots.ToString() + "\n"
-                        + "Operating Hours: " + configuration.operatingHours.ToString() + "\n"
-                        + "Number Of Special Spots: " + configuration.numberOfSpecialSpots.ToString() + "\n"
-                        + "GeoLocation File: " + configuration.geoLocationFile.ToString() + "\n");
+                    return (configuration.connectionType.ToString() + "\n"
+                        + configuration.endpoint.ToString() + "\n"
+                        + configuration.id.ToString() + "\n"
+                        + configuration.description.ToString() + "\n"
+                        + configuration.numberOfSpots.ToString() + "\n"
+                        + configuration.operatingHours.ToString() + "\n"
+                        + configuration.numberOfSpecialSpots.ToString() + "\n"
+                        + configuration.geoLocationFile.ToString() + "\n");
+                }
+            }
+            return null;
+        }
+
+        public static String getDLLConfigurationToSend()
+        {
+            foreach (Configuration configuration in configurations)
+            {
+                if (configuration.connectionType.Equals("DLL"))
+                {
+                    return (configuration.connectionType.ToString() + "\n"
+                        + configuration.endpoint.ToString() + "\n"
+                        + configuration.id.ToString() + "\n"
+                        + configuration.description.ToString() + "\n"
+                        + configuration.numberOfSpots.ToString() + "\n"
+                        + configuration.operatingHours.ToString() + "\n"
+                        + configuration.numberOfSpecialSpots.ToString() + "\n"
+                        + configuration.geoLocationFile.ToString() + "\n");
                 }
             }
             return null;
