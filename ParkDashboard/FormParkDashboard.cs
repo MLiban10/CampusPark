@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace ParkDashboard
 {
-    public partial class Form1 : Form
+    public partial class FormParkDashboard : Form
     {
         string baseURI = @"http://localhost:52566/";
         HttpClient client = null;
@@ -20,7 +20,7 @@ namespace ParkDashboard
 
         
 
-        public Form1()
+        public FormParkDashboard()
         {
             InitializeComponent();
         }

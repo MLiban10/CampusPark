@@ -68,7 +68,6 @@ namespace ParkSS_SS
         {
             client = new MqttClient(textBoxIP.Text);
             btnSubscribe_Click(sender, e);
-            // btn_storeDatabase_Click(sender, e);
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -232,6 +231,16 @@ namespace ParkSS_SS
         private void buttonClear_Click(object sender, EventArgs e)
         {
             richTextBoxSS.Clear();
+        }
+
+        private void buttonChangeIP_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void timerStore_Tick(object sender, EventArgs e)
+        {
+            btn_storeDatabase_Click(sender, e);
         }
     }
 }

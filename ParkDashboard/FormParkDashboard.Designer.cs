@@ -1,6 +1,6 @@
 ﻿namespace ParkDashboard
 {
-    partial class Form1
+    partial class FormParkDashboard
     {
         /// <summary>
         /// Required designer variable.
