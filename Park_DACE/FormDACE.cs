@@ -235,6 +235,9 @@ namespace Park_DACE
                 client.Publish(topics[1], msg);
             }
             spots.Clear();
+
+            byte[] msgConfiguration = Encoding.UTF8.GetBytes(configuration.ToString());
+            client.Publish(topics[2], msgConfiguration);
         }
 
         private void FormDACE_Load(object sender, EventArgs e)
