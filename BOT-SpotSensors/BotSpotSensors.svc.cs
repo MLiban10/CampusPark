@@ -14,10 +14,10 @@ namespace BOT_SpotSensors
     public class ServiceBOTSpotSensors : IServiceBOTSpotSensors
     {
         string m_strPath = AppDomain.CurrentDomain.BaseDirectory.ToString() + "App_Data\\soap_BOT.xml";
-         
+
         public void AddParkingSpot(ParkingSpot c_new_parkingSpot)
         {
-            
+
             XmlDocument doc = new XmlDocument();
             doc.Load(m_strPath);
 
@@ -50,7 +50,7 @@ namespace BOT_SpotSensors
             timeStamp.InnerText = Convert.ToString(c_new_parkingSpot.DateTimeStamp, NumberFormatInfo.InvariantInfo);
             status.AppendChild(timeStamp);
 
-            
+
             spot.AppendChild(status);
 
             XmlElement batteryStatus = doc.CreateElement("batteryStatus");
@@ -61,7 +61,7 @@ namespace BOT_SpotSensors
             doc.Save(m_strPath);
         }
 
-        
+
         public List<ParkingSpot> GetParkingSpots()
         {
             XmlDocument doc = new XmlDocument();
@@ -82,7 +82,7 @@ namespace BOT_SpotSensors
 
             return anParkingSpot;
         }
-        
+
 
         public String GetParkingSpotsXpath()
         {
@@ -93,11 +93,11 @@ namespace BOT_SpotSensors
 
             XmlNodeList lst = doc.SelectNodes("//parkingSpot");
 
-            String strParkingSpot = string.Empty; 
+            String strParkingSpot = string.Empty;
 
             foreach (XmlNode n in lst)
             {
-                strParkingSpot = strParkingSpot 
+                strParkingSpot = strParkingSpot
                     + n["id"].InnerText + ";"
                     + n["type"].InnerText + ";"
                     + n["name"].InnerText + ";"
@@ -131,11 +131,11 @@ namespace BOT_SpotSensors
             for (int i = 1; i <= spotsNumber; i++)
             {
                 ParkingSpot parkingSpot = new ParkingSpot(
-                    "Campus_2_B_Park1", 
-                    "ParkingSpot", 
+                    "Campus_2_B_Park1",
+                    "ParkingSpot",
                     "B-" + i,
                     "", values[random.Next(values.Count())],
-                    DateTime.Now, 
+                    DateTime.Now,
                     random.Next(1));
 
                 AddParkingSpot(parkingSpot);

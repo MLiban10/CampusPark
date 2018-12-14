@@ -21,7 +21,7 @@ namespace ParkSS_SS
 
         MqttClient client = null;
         string receivedData = "";
-        string[] topics = { "ParkSS", "ParkDACE", "ParkTU" };
+        string[] topics = { "Spots", "Configurations", "Debug" };
 
         private ParkingSpot spot = new ParkingSpot();
         private List<ParkingSpot> listSpots = new List<ParkingSpot>();
@@ -116,7 +116,6 @@ namespace ParkSS_SS
 
         private void btn_storeDatabase_Click(object sender, EventArgs e)
         {
-            richTextBoxSS.Clear();
 
             SqlConnection conn = null;
             try
@@ -130,43 +129,92 @@ namespace ParkSS_SS
 
                 foreach (ParkingSpot s in listSpots)
                 {
-                    SqlCommand test = new SqlCommand();// verificar se o spot já existe --- SERGIO
-
-                    //if (test == null)
-                    //{
-                    SqlCommand cmd = new SqlCommand("INSERT INTO Spots OUTPUT INSERTED.ID VALUES (@Id, @Type, @Name, @Location, @BateryStatus, @Value, @Timestamp)", conn);
-                    cmd.Parameters.AddWithValue("@Id", s.Id);
-                    cmd.Parameters.AddWithValue("@Type", s.Type);
-                    cmd.Parameters.AddWithValue("@Name", s.Name);
-                    cmd.Parameters.AddWithValue("@Location", s.Location);
-                    cmd.Parameters.AddWithValue("@BateryStatus", s.BateryStatus);
-                    cmd.Parameters.AddWithValue("@Value", s.Value.ToString());
-                    cmd.Parameters.AddWithValue("@Timestamp", DateTime.Parse(s.Timestamp));
-
-                    //listSpots.Remove(s);
-                    cmd.ExecuteNonQuery();
-                    Console.WriteLine("Spot stored successfully!");
-                    /*}
-                    else
+                    try
                     {
 
+                        //SqlCommand cmd = new SqlCommand("SELECT * FROM Spots WHERE Id LIKE @id", conn);
+                        //cmd.Parameters.AddWithValue("@id", s.Id);
 
-                        SqlCommand cmd = new SqlCommand("UPDATE Spots SET OUTPUT INSERTED.ID VALUES (@Id, @Type, @Name, @Location, @BateryStatus, @Value, @Timestamp)", conn);
-                        cmd.Parameters.AddWithValue("@Id", s.Id);
-                        cmd.Parameters.AddWithValue("@Type", s.Type);
-                        cmd.Parameters.AddWithValue("@Name", s.Name);
-                        cmd.Parameters.AddWithValue("@Location", s.Location);
-                        cmd.Parameters.AddWithValue("@BateryStatus", s.BateryStatus);
-                        cmd.Parameters.AddWithValue("@Value", s.Value);
-                        cmd.Parameters.AddWithValue("@Timestamp", s.Timestamp);
+                        SqlCommand cmdCheck = new SqlCommand("SELECT COUNT(*) FROM Spots WHERE (Id = @Id)", conn);
+                        cmdCheck.Parameters.AddWithValue("@Id", s.Id);
+                        int spotExist = (int)cmdCheck.ExecuteScalar();
+
+                        //SqlDataReader reader = cmd.ExecuteReader();
+                        //reader.Read();
+
+                        if (spotExist > 0)
+                        {
+                            Console.WriteLine("Existe");
+
+                            SqlCommand cmdUpdate = new SqlCommand("UPDATE Spots SET Id = @Id, Type = @Type, Name = @Name," +
+                                " Location = @Location, BateryStatus = @BateryStatus, Value = @Value, Timestamp = @Timestamp WHERE Id LIKE @Id", conn);
+                            cmdUpdate.Parameters.AddWithValue("@Id", s.Id);
+                            cmdUpdate.Parameters.AddWithValue("@Type", s.Type);
+                            cmdUpdate.Parameters.AddWithValue("@Name", s.Name);
+                            cmdUpdate.Parameters.AddWithValue("@Location", s.Location);
+                            cmdUpdate.Parameters.AddWithValue("@BateryStatus", s.BateryStatus);
+                            cmdUpdate.Parameters.AddWithValue("@Value", s.Value.ToString());
+                            cmdUpdate.Parameters.AddWithValue("@Timestamp", DateTime.Parse(s.Timestamp));
 
 
-                        listSpots.Remove(s);
-                        conn.Close();
+                            //listSpots.Remove(s);
+                            cmdUpdate.ExecuteNonQuery();
 
-                        Console.WriteLine("Spot updated successfully!");
-                    }*/
+                            Console.WriteLine("Spot updated successfully!");
 
+                            SqlCommand logInsert = new SqlCommand("INSERT INTO LogSpots VALUES (@Id, @Type, @Name, @Location, @BateryStatus, @Value, @Timestamp)", conn);
+                            logInsert.Parameters.AddWithValue("@Id", s.Id);
+                            logInsert.Parameters.AddWithValue("@Type", s.Type);
+                            logInsert.Parameters.AddWithValue("@Name", s.Name);
+                            logInsert.Parameters.AddWithValue("@Location", s.Location);
+                            logInsert.Parameters.AddWithValue("@BateryStatus", s.BateryStatus);
+                            logInsert.Parameters.AddWithValue("@Value", s.Value.ToString());
+                            logInsert.Parameters.AddWithValue("@Timestamp", DateTime.Parse(s.Timestamp));
+
+                            //listSpots.Remove(s);
+                            logInsert.ExecuteNonQuery();
+                            Console.WriteLine("Spot logged successfully!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Não Existe");
+
+                            SqlCommand cmdInsert = new SqlCommand("INSERT INTO Spots VALUES (@Id, @Type, @Name, @Location, @BateryStatus, @Value, @Timestamp)", conn);
+                            cmdInsert.Parameters.AddWithValue("@Id", s.Id);
+                            cmdInsert.Parameters.AddWithValue("@Type", s.Type);
+                            cmdInsert.Parameters.AddWithValue("@Name", s.Name);
+                            cmdInsert.Parameters.AddWithValue("@Location", s.Location);
+                            cmdInsert.Parameters.AddWithValue("@BateryStatus", s.BateryStatus);
+                            cmdInsert.Parameters.AddWithValue("@Value", s.Value.ToString());
+                            cmdInsert.Parameters.AddWithValue("@Timestamp", DateTime.Parse(s.Timestamp));
+
+                            //listSpots.Remove(s);
+                            cmdInsert.ExecuteNonQuery();
+                            Console.WriteLine("Spot stored successfully!");
+
+                            SqlCommand logInsert = new SqlCommand("INSERT INTO LogSpots VALUES (@Id, @Type, @Name, @Location, @BateryStatus, @Value, @Timestamp)", conn);
+                            logInsert.Parameters.AddWithValue("@Id", s.Id);
+                            logInsert.Parameters.AddWithValue("@Type", s.Type);
+                            logInsert.Parameters.AddWithValue("@Name", s.Name);
+                            logInsert.Parameters.AddWithValue("@Location", s.Location);
+                            logInsert.Parameters.AddWithValue("@BateryStatus", s.BateryStatus);
+                            logInsert.Parameters.AddWithValue("@Value", s.Value.ToString());
+                            logInsert.Parameters.AddWithValue("@Timestamp", DateTime.Parse(s.Timestamp));
+
+                            //listSpots.Remove(s);
+                            logInsert.ExecuteNonQuery();
+                            Console.WriteLine("Spot logged successfully!");
+
+                        }
+
+
+
+                        //reader.Close();
+                    }
+                    catch (Exception)
+                    {
+                        Console.WriteLine("Error!");
+                    }
                 }
 
                 conn.Close();
@@ -179,6 +227,11 @@ namespace ParkSS_SS
                 }
                 Console.Error.WriteLine("ERROR: data not stored.");
             }
+        }
+
+        private void buttonClear_Click(object sender, EventArgs e)
+        {
+            richTextBoxSS.Clear();
         }
     }
 }
