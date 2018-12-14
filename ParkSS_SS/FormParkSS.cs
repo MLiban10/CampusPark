@@ -63,6 +63,7 @@ namespace ParkSS_SS
                 else
                 {
                     convertStringToConfiguration(receivedData);
+                    store_Configurations();
                 }
 
             });
@@ -95,10 +96,10 @@ namespace ParkSS_SS
             Console.WriteLine("Receiving DLL and SOAP configurations from ParkDACE... ");
             //string[] spotsList = stringSpots.Split(stringSeparators, StringSplitOptions.None);
             Console.WriteLine(receivedData);
-            
+
             string[] partes = receivedData.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
             string[] partesConf = partes[0].Split('\n');
-            if(partesConf.Length > 0)
+            if (partesConf.Length > 0)
             {
 
                 configuration = new Configuration
@@ -115,7 +116,7 @@ namespace ParkSS_SS
                 Console.WriteLine(configuration);
 
                 configurations.Add(configuration);
-                
+
             }
         }
 
@@ -282,6 +283,85 @@ namespace ParkSS_SS
         private void timerStore_Tick(object sender, EventArgs e)
         {
             btn_storeDatabase_Click(sender, e);
+        }
+
+        private void store_Configurations()
+        {
+
+            SqlConnection conn = null;
+            try
+            {
+                conn = new SqlConnection(connectionString);
+
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+
+                foreach (Configuration s in configurations)
+                {
+                    try
+                    {
+
+                        SqlCommand cmdCheck = new SqlCommand("SELECT COUNT(*) FROM Conf WHERE (connectionType = @connectionType)", conn);
+                        cmdCheck.Parameters.AddWithValue("@connectionType", s.connectionType);
+                        int confExist = (int)cmdCheck.ExecuteScalar();
+
+                        if (confExist > 0)
+                        {
+                            Console.WriteLine("Existe");
+
+                            SqlCommand cmdUpdate = new SqlCommand("UPDATE Conf SET connectionType = @connectionType, endpoint = @endpoint, id = @id," +
+                                " description = @description, numberOfSpots = @numberOfSpots, operatingHours = @operatingHours, numberOfSpecialSpots = @numberOfSpecialSpots, geoLocationFile = @geoLocationFile WHERE connectionType LIKE @connectionType", conn);
+                            cmdUpdate.Parameters.AddWithValue("@connectionType", s.connectionType);
+                            cmdUpdate.Parameters.AddWithValue("@endpoint", s.endpoint);
+                            cmdUpdate.Parameters.AddWithValue("@id", s.id);
+                            cmdUpdate.Parameters.AddWithValue("@description", s.description);
+                            cmdUpdate.Parameters.AddWithValue("@numberOfSpots", s.numberOfSpots);
+                            cmdUpdate.Parameters.AddWithValue("@operatingHours", s.operatingHours);
+                            cmdUpdate.Parameters.AddWithValue("@numberOfSpecialSpots", s.numberOfSpecialSpots);
+                            cmdUpdate.Parameters.AddWithValue("@geoLocationFile", s.geoLocationFile);
+
+                            cmdUpdate.ExecuteNonQuery();
+
+                            Console.WriteLine("Conf updated successfully!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Não Existe");
+
+                            SqlCommand cmdInsert = new SqlCommand("INSERT INTO Conf VALUES (@connectionType, @endpoint, @id, @description, @numberOfSpots, @operatingHours, @numberOfSpecialSpots, @geoLocationFile)", conn);
+                            cmdInsert.Parameters.AddWithValue("@connectionType", s.connectionType);
+                            cmdInsert.Parameters.AddWithValue("@endpoint", s.endpoint);
+                            cmdInsert.Parameters.AddWithValue("@id", s.id);
+                            cmdInsert.Parameters.AddWithValue("@description", s.description);
+                            cmdInsert.Parameters.AddWithValue("@numberOfSpots", s.numberOfSpots);
+                            cmdInsert.Parameters.AddWithValue("@operatingHours", s.operatingHours);
+                            cmdInsert.Parameters.AddWithValue("@numberOfSpecialSpots", s.numberOfSpecialSpots);
+                            cmdInsert.Parameters.AddWithValue("@geoLocationFile", s.geoLocationFile);
+
+                            cmdInsert.ExecuteNonQuery();
+                            Console.WriteLine("Conf stored successfully!");
+
+                        }
+
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Error- " + e);
+                    }
+                }
+
+                conn.Close();
+            }
+            catch (Exception)
+            {
+                if (conn.State == System.Data.ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+                Console.Error.WriteLine("ERROR: data not stored.");
+            }
         }
     }
 }

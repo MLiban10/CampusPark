@@ -65,37 +65,41 @@ namespace Park_DACE
                         richTextBoxLog.Text += "Error: Different Parks!" + "\n";
                         richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
                     }
-
-                    string[] parts = partes[1].Split('-');
-                    int index = Int32.Parse(parts[1]);
-
-                    try
+                    else
                     {
-                        spot = new ParkingSpot
+
+                        string[] parts = partes[1].Split('-');
+                        int index = Int32.Parse(parts[1]);
+
+                        try
                         {
-                            Id = partes[0] + "_" + partes[1],
-                            Name = partes[1],
-                            //Timestamp = (DateTime.Parse(partes[2]).AddMinutes(DateTime.Now.Minute).AddSeconds(DateTime.Now.Second)).ToString(),
-                            Timestamp = partes[2],
-                            Location = geolocationsFromParkA[index - 1],
-                            BateryStatus = Int32.Parse(partes[3]),
-                            Type = "ParkingSpot",
-                            Value = partes[4].Equals("free") ? true : false
-                        };
+                            spot = new ParkingSpot
+                            {
+                                Id = partes[0] + "_" + partes[1],
+                                Name = partes[1],
+                                //Timestamp = (DateTime.Parse(partes[2]).AddMinutes(DateTime.Now.Minute).AddSeconds(DateTime.Now.Second)).ToString(),
+                                Timestamp = partes[2],
+                                Location = geolocationsFromParkA[index - 1],
+                                BateryStatus = Int32.Parse(partes[3]),
+                                Type = "ParkingSpot",
+                                Value = partes[4].Equals("free") ? true : false
+                            };
 
-                        spotsDLL.Add(spot);
+                            spotsDLL.Add(spot);
+
+                        }
+                        catch (Exception)
+                        {
+                            Console.WriteLine("Ui, Ui!");
+                        }
+
+                        //richTextBoxConfig.AppendText(string.Format("Spot: {0} {1} {2} {3} {4} {5} {6} \n", spot.Id, spot.Name, spot.Timestamp,
+                        //spot.BateryStatus, spot.Type, spot.Value, spot.Location));
+
+                        richTextBoxLog.Text += "Successfull" + "\n";
+                        richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
 
                     }
-                    catch (Exception)
-                    {
-                        Console.WriteLine("Ui, Ui!");
-                    }
-
-                    //richTextBoxConfig.AppendText(string.Format("Spot: {0} {1} {2} {3} {4} {5} {6} \n", spot.Id, spot.Name, spot.Timestamp,
-                    //spot.BateryStatus, spot.Type, spot.Value, spot.Location));
-
-                    richTextBoxLog.Text += "Successfull" + "\n";
-                    richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
                 }
                 else
                 {
@@ -253,7 +257,7 @@ namespace Park_DACE
             byte[] msgConfigurationDLL = Encoding.UTF8.GetBytes(HandlerXML.getDLLConfigurationToSend());
             byte[] msgConfigurationSOAP = Encoding.UTF8.GetBytes(HandlerXML.getSOAPConfigurationToSend());
             client.Publish(topics[1], msgConfigurationDLL);
-            richTextBoxLog.AppendText(Environment.NewLine + "Sending DLL configuration" + Environment.NewLine);
+            richTextBoxLog.AppendText("Sending DLL configuration" + Environment.NewLine);
             client.Publish(topics[1], msgConfigurationSOAP);
             richTextBoxLog.AppendText("Sending SOAP configuration" + Environment.NewLine);
         }
