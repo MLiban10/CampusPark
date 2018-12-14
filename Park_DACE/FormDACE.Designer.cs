@@ -145,6 +145,7 @@
             this.btnPublish.TabIndex = 13;
             this.btnPublish.Text = "Publish";
             this.btnPublish.UseVisualStyleBackColor = true;
+            this.btnPublish.Visible = false;
             this.btnPublish.Click += new System.EventHandler(this.btnPublish_Click);
             // 
             // FormDACE

@@ -77,7 +77,7 @@ namespace Park_DACE
                             Name = partes[1],
                             //Timestamp = (DateTime.Parse(partes[2]).AddMinutes(DateTime.Now.Minute).AddSeconds(DateTime.Now.Second)).ToString(),
                             Timestamp = partes[2],
-                            Location = geolocationsFromParkA[index],
+                            Location = geolocationsFromParkA[index - 1],
                             BateryStatus = Int32.Parse(partes[3]),
                             Type = "ParkingSpot",
                             Value = partes[4].Equals("free") ? true : false
@@ -133,60 +133,66 @@ namespace Park_DACE
         {
             ServiceBOTSpotSensorsClient service = new ServiceBOTSpotSensorsClient();
 
-            richTextBoxLog.Text += "Receiving spot from SOAP... " + Environment.NewLine;
+            richTextBoxLog.Text += "Receiving spot from SOAP... ";
 
             spotsFromBOT = service.GetParkingSpotsXpath();
 
             string[] stringSeparators = new string[] { "\r\n" };
             string[] spotsList = spotsFromBOT.Split(stringSeparators, StringSplitOptions.None);
-
-            String[] partes = spotsList[index].Split(';');
-            if (partes[0] != HandlerXML.configurations.Find(c => c.connectionType.Equals("SOAP")).id)
+            if (index < spotsList.Length - 1)
             {
-                richTextBoxLog.Text += "Error: Different Parks!" + "\n";
-                richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
+                String[] partes = spotsList[index].Split(';');
+                if (partes[0] != HandlerXML.configurations.Find(c => c.connectionType.Equals("SOAP")).id)
+                {
+                    richTextBoxLog.Text += "Error: Different Parks!" + "\n";
+                    richTextBoxLog.Text += "--------------------------------------------------------------------------------------------------\n";
+                }
+                else
+                {
+                    string[] parts = partes[2].Split('-');
+                    int index1 = Int32.Parse(parts[1]);
+
+                    try
+                    {
+                        spot = new ParkingSpot
+                        {
+                            Id = partes[0] + "_" + partes[2],
+                            Name = partes[2],
+                            Timestamp = partes[5],
+                            Location = geolocationsFromParkB[index1 - 1],
+                            BateryStatus = Int32.Parse(partes[6]),
+                            Type = partes[1],
+                            Value = partes[4].Equals("free") ? true : false
+                        };
+                        spotsBOT.Add(spot);
+
+
+                        richTextBoxLog.Text += "Successfull" + "\n";
+
+                    }
+                    catch (Exception)
+                    {
+                        Console.WriteLine("Ai, Ai!");
+                    }
+                }
+
+                Console.WriteLine(spot.ToString());
             }
             else
             {
-                string[] parts = partes[2].Split('-');
-                int index1 = Int32.Parse(parts[1]);
-
-                try
-                {
-                    spot = new ParkingSpot
-                    {
-                        Id = partes[0] + "_" + partes[2],
-                        Name = partes[2],
-                        Timestamp = partes[5],
-                        Location = geolocationsFromParkB[index1],
-                        BateryStatus = Int32.Parse(partes[6]),
-                        Type = partes[1],
-                        Value = partes[4].Equals("free") ? true : false
-                    };
-                    spotsBOT.Add(spot);
-
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("Ai, Ai!");
-                }
+                count = 0;
             }
-
-            Console.WriteLine(spot.ToString());
 
             service.Close();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            
-            if (count < 11)
-            {
-                readSpot(count);
-                count++;
+            readSpot(count);
+            count++;
 
-                btnPublish.PerformClick();
-            }
+            btnPublish_Click(sender, e);
+
         }
 
         private void buttonReadSOAP_Click(object sender, EventArgs e)

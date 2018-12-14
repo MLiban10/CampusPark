@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnSubscribe = new System.Windows.Forms.Button();
             this.richTextBoxSS = new System.Windows.Forms.RichTextBox();
             this.textBoxIP = new System.Windows.Forms.TextBox();
@@ -35,6 +36,7 @@
             this.buttonChangeIP = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonClear = new System.Windows.Forms.Button();
+            this.timerStore = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // btnSubscribe
@@ -60,7 +62,7 @@
             // 
             // textBoxIP
             // 
-            this.textBoxIP.Location = new System.Drawing.Point(52, 21);
+            this.textBoxIP.Location = new System.Drawing.Point(49, 15);
             this.textBoxIP.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxIP.Name = "textBoxIP";
             this.textBoxIP.Size = new System.Drawing.Size(130, 22);
@@ -81,17 +83,18 @@
             // 
             // buttonChangeIP
             // 
-            this.buttonChangeIP.Location = new System.Drawing.Point(189, 21);
+            this.buttonChangeIP.Location = new System.Drawing.Point(192, 9);
             this.buttonChangeIP.Name = "buttonChangeIP";
-            this.buttonChangeIP.Size = new System.Drawing.Size(75, 23);
+            this.buttonChangeIP.Size = new System.Drawing.Size(75, 32);
             this.buttonChangeIP.TabIndex = 4;
             this.buttonChangeIP.Text = "Change";
             this.buttonChangeIP.UseVisualStyleBackColor = true;
+            this.buttonChangeIP.Click += new System.EventHandler(this.buttonChangeIP_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(17, 24);
+            this.label1.Location = new System.Drawing.Point(14, 18);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(28, 17);
             this.label1.TabIndex = 5;
@@ -99,13 +102,19 @@
             // 
             // buttonClear
             // 
-            this.buttonClear.Location = new System.Drawing.Point(758, 20);
+            this.buttonClear.Location = new System.Drawing.Point(758, 9);
             this.buttonClear.Name = "buttonClear";
-            this.buttonClear.Size = new System.Drawing.Size(75, 23);
+            this.buttonClear.Size = new System.Drawing.Size(75, 34);
             this.buttonClear.TabIndex = 6;
             this.buttonClear.Text = "Clear";
             this.buttonClear.UseVisualStyleBackColor = true;
             this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
+            // 
+            // timerStore
+            // 
+            this.timerStore.Enabled = true;
+            this.timerStore.Interval = 5000;
+            this.timerStore.Tick += new System.EventHandler(this.timerStore_Tick);
             // 
             // FormParkSS
             // 
@@ -138,6 +147,7 @@
         private System.Windows.Forms.Button buttonChangeIP;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonClear;
+        private System.Windows.Forms.Timer timerStore;
     }
 }
 
