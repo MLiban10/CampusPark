@@ -37,8 +37,8 @@ namespace Smart_Park.Controllers
                         Name = (string)reader["Name"],
                         Location = (string)reader["Location"],
                         BateryStatus = (int)reader["BateryStatus"],
-                        Value = (Boolean)reader["Value"],
-                        Timestamp = (string)reader["Timestamp"]
+                        Value = Boolean.Parse((string)reader["Value"]),
+                        Timestamp = ((DateTime)reader["Timestamp"]).ToString()
                     };
                     spots.Add(p);
                 }
@@ -71,6 +71,7 @@ namespace Smart_Park.Controllers
                 cmd.Parameters.AddWithValue("@id", id);
 
                 SqlDataReader reader = cmd.ExecuteReader();
+
                 while (reader.Read())
                 {
                     spot = new ParkingSpot
@@ -80,8 +81,8 @@ namespace Smart_Park.Controllers
                         Name = (string)reader["Name"],
                         Location = (string)reader["Location"],
                         BateryStatus = (int)reader["BateryStatus"],
-                        Value = (Boolean)reader["Value"],
-                        Timestamp = (string)reader["Timestamp"]
+                        Value = Boolean.Parse((string)reader["Value"]),
+                        Timestamp = ((DateTime)reader["Timestamp"]).ToString()
                     };
                 }
 
@@ -151,8 +152,8 @@ namespace Smart_Park.Controllers
                         Name = (string)reader["Name"],
                         Location = (string)reader["Location"],
                         BateryStatus = (int)reader["BateryStatus"],
-                        Value = (Boolean)reader["Value"],
-                        Timestamp = (string)reader["Timestamp"]
+                        Value = Boolean.Parse((string)reader["Value"]),
+                        Timestamp = ((DateTime)reader["Timestamp"]).ToString()
                     };
                     spots.Add(p);
                 }
@@ -194,8 +195,8 @@ namespace Smart_Park.Controllers
                         Name = (string)reader["Name"],
                         Location = (string)reader["Location"],
                         BateryStatus = (int)reader["BateryStatus"],
-                        Value = (Boolean)reader["Value"],
-                        Timestamp = (string)reader["Timestamp"]
+                        Value = Boolean.Parse((string)reader["Value"]),
+                        Timestamp = ((DateTime)reader["Timestamp"]).ToString()
                     };
                     spots.Add(p);
                 }
@@ -238,8 +239,8 @@ namespace Smart_Park.Controllers
                             Name = (string)reader["Name"],
                             Location = (string)reader["Location"],
                             BateryStatus = (int)reader["BateryStatus"],
-                            Value = (Boolean)reader["Value"],
-                            Timestamp = (string)reader["Timestamp"]
+                            Value = Boolean.Parse((string)reader["Value"]),
+                            Timestamp = ((DateTime)reader["Timestamp"]).ToString()
                         };
                         spots.Add(p);
                     }
@@ -280,8 +281,8 @@ namespace Smart_Park.Controllers
                         Name = (string)reader["Name"],
                         Location = (string)reader["Location"],
                         BateryStatus = (int)reader["BateryStatus"],
-                        Value = (Boolean)reader["Value"],
-                        Timestamp = (string)reader["Timestamp"]
+                        Value = Boolean.Parse((string)reader["Value"]),
+                        Timestamp = ((DateTime)reader["Timestamp"]).ToString()
                     };
                     spots.Add(p);
                 }
@@ -354,8 +355,8 @@ namespace Smart_Park.Controllers
                         Name = (string)reader["Name"],
                         Location = (string)reader["Location"],
                         BateryStatus = (int)reader["BateryStatus"],
-                        Value = (Boolean)reader["Value"],
-                        Timestamp = (string)reader["Timestamp"]
+                        Value = Boolean.Parse((string)reader["Value"]),
+                        Timestamp = ((DateTime)reader["Timestamp"]).ToString()
                     };
                 }
 
@@ -396,8 +397,8 @@ namespace Smart_Park.Controllers
                             Name = (string)reader["Name"],
                             Location = (string)reader["Location"],
                             BateryStatus = (int)reader["BateryStatus"],
-                            Value = (Boolean)reader["Value"],
-                            Timestamp = (string)reader["Timestamp"]
+                            Value = Boolean.Parse((string)reader["Value"]),
+                            Timestamp = ((DateTime)reader["Timestamp"]).ToString()
                         };
                         spots.Add(p);
                     }
@@ -442,8 +443,8 @@ namespace Smart_Park.Controllers
                             Name = (string)reader["Name"],
                             Location = (string)reader["Location"],
                             BateryStatus = (int)reader["BateryStatus"],
-                            Value = (Boolean)reader["Value"],
-                            Timestamp = (string)reader["Timestamp"]
+                            Value = Boolean.Parse((string)reader["Value"]),
+                            Timestamp = ((DateTime)reader["Timestamp"]).ToString()
                         };
                         spots.Add(p);
                     }
@@ -480,7 +481,7 @@ namespace Smart_Park.Controllers
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    if ((Boolean)reader["Value"] == true)
+                    if (Boolean.Parse((string)reader["Value"]) == true)
                     {
                         counterFree++;
                     }
@@ -489,8 +490,8 @@ namespace Smart_Park.Controllers
 
                 reader.Close();
                 conn.Close();
-
-                return Ok((counterFree * 100) / counterSpots);
+                int result = (counterFree * 100) / counterSpots;
+                return Ok(result.ToString() + "%");
             }
             catch (Exception)
             {
