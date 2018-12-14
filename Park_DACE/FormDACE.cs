@@ -26,7 +26,7 @@ namespace Park_DACE
         private ParkingSpot spot = null;
 
         MqttClient client = null;
-        string[] topics = { "ParkSS", "ParkDACE", "ParkTU" };
+        string[] topics = { "Spots", "Configurations", "Debug" };
 
         public FormDACE()
         {
@@ -44,7 +44,7 @@ namespace Park_DACE
 
         public void DoWork(object sender, DoWorkEventArgs e)
         {
-            dll.Initialize(NewSensorValueFunction, 500);
+            dll.Initialize(NewSensorValueFunction, 5000);
         }
 
         public void NewSensorValueFunction(string str)
@@ -73,7 +73,8 @@ namespace Park_DACE
                         {
                             Id = partes[0] + "_" + partes[1],
                             Name = partes[1],
-                            Timestamp = (DateTime.Parse(partes[2]).AddMinutes(DateTime.Now.Minute).AddSeconds(DateTime.Now.Second)).ToString(),
+                            //Timestamp = (DateTime.Parse(partes[2]).AddMinutes(DateTime.Now.Minute).AddSeconds(DateTime.Now.Second)).ToString(),
+                            Timestamp = partes[2],
                             Location = geolocationsFromParkA[index],
                             BateryStatus = Int32.Parse(partes[3]),
                             Type = "ParkingSpot",

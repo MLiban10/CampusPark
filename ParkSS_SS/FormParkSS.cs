@@ -21,7 +21,7 @@ namespace ParkSS_SS
 
         MqttClient client = null;
         string receivedData = "";
-        string[] topics = { "ParkSS", "ParkDACE", "ParkTU" };
+        string[] topics = { "Spots", "Configurations", "Debug" };
 
         private ParkingSpot spot = new ParkingSpot();
         private List<ParkingSpot> listSpots = new List<ParkingSpot>();
@@ -116,7 +116,6 @@ namespace ParkSS_SS
 
         private void btn_storeDatabase_Click(object sender, EventArgs e)
         {
-            richTextBoxSS.Clear();
 
             SqlConnection conn = null;
             try
@@ -228,6 +227,11 @@ namespace ParkSS_SS
                 }
                 Console.Error.WriteLine("ERROR: data not stored.");
             }
+        }
+
+        private void buttonClear_Click(object sender, EventArgs e)
+        {
+            richTextBoxSS.Clear();
         }
     }
 }
