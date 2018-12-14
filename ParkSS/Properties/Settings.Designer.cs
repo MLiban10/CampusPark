@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Smart_Park.Properties {
+namespace ParkSS.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -28,7 +28,7 @@ namespace Smart_Park.Properties {
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ParkDB;Integrated Security=Tru" +
             "e;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationInten" +
-            "t=ReadWrite;MultiSubnetFailover=False\n")]
+            "t=ReadWrite;MultiSubnetFailover=False")]
         public string ConnStr {
             get {
                 return ((string)(this["ConnStr"]));

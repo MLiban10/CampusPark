@@ -11,7 +11,8 @@ namespace Smart_Park.Controllers
 {
     public class SpotsController : ApiController
     {
-        string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["Smart_Park.Properties.Settings.ConnStr"].ConnectionString;
+        string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ParkDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        //string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["Smart_Park.Properties.Settings.ConnStr"].ConnectionString;
 
         // GET: api/spots
         [Route("api/spots")]
@@ -54,7 +55,7 @@ namespace Smart_Park.Controllers
         }
 
         // GET: api/spots/{id}
-        [Route("api/spots/{id:string}")] //specifies that the id parameter is an integer
+        [Route("api/spots/{id}")] //specifies that the id parameter is an integer
         public IHttpActionResult GetSpot(string id)
         {
 
@@ -126,7 +127,7 @@ namespace Smart_Park.Controllers
         }
 
         // GET: api/logspots/parks/{id}/{timespamp}
-        [Route("api/logspots/parks/{id:string}/{timespamp:DateTime}")]
+        [Route("api/logspots/parks/{id}/{timespamp:dateTime}")]
         public IEnumerable<ParkingSpot> GetAllSpotsFromParkAtMoment(string id, DateTime timespamp)
         {
             List<ParkingSpot> spots = new List<ParkingSpot>();
@@ -168,7 +169,7 @@ namespace Smart_Park.Controllers
         }
 
         // GET: api/logspots/parks/{id}/{timespampsS}/{timespampE}
-        [Route("api/logspots/parks/{id:string}/{timespampS:dateTime/{timespampE:DateTime}")]
+        [Route("api/logspots/parks/{id}/{timespampS:dateTime}/{timespampE:dateTime}")]
         public IEnumerable<ParkingSpot> GetAllSpotsFromParkAtInterval(string id, DateTime timespampS, DateTime timespampE)
         {
             List<ParkingSpot> spots = new List<ParkingSpot>();
@@ -211,7 +212,7 @@ namespace Smart_Park.Controllers
         }
 
         // GET: api/spots/parks/{id}/{timespamp}
-        [Route("api/logspots/parks/free/{id:string}/{timespamp:DateTime}")]
+        [Route("api/logspots/parks/free/{id}/{timespamp:dateTime}")]
         public IEnumerable<ParkingSpot> GetAllFreeSpotsFromParkAtMoment(string id, DateTime timespamp)
         {
             List<ParkingSpot> spots = new List<ParkingSpot>();
@@ -256,7 +257,7 @@ namespace Smart_Park.Controllers
         }
 
         // GET: api/conf/parks/{id}
-        [Route("api/spots/parks/{id:string}")]
+        [Route("api/spots/parks/{id}")]
         public IEnumerable<ParkingSpot> GetAllSpotsFromPark(string id)
         {
             List<ParkingSpot> spots = new List<ParkingSpot>();
@@ -297,7 +298,7 @@ namespace Smart_Park.Controllers
         }
 
         // GET: api/spots/parks/{id}
-        [Route("api/conf/parks/{id:string}")]
+        [Route("api/conf/parks/{id}")]
         public IEnumerable<string> GetPark(string id)
         {
             List<string> parks = new List<string>();
@@ -328,7 +329,7 @@ namespace Smart_Park.Controllers
         }
 
         // GET: api/spots/{id}
-        [Route("api/logspots/{id:string}/{timespamp:DateTime}")] //specifies that the id parameter is an integer
+        [Route("api/logspots/{id}/{timespamp:dateTime}")] //specifies that the id parameter is an integer
         public IHttpActionResult GetSpotAtMoment(string id, DateTime timespamp)
         {
             SqlConnection conn = null;
@@ -415,7 +416,7 @@ namespace Smart_Park.Controllers
 
 
         // GET: api/spots/critical/parks/{id}
-        [Route("api/spots/critical/parks/{id:string}")]
+        [Route("api/spots/critical/parks/{id}")]
         public IEnumerable<ParkingSpot> GetAllSpotsWithCriticalBatteryAtPark(string id)
         {
 
@@ -461,7 +462,7 @@ namespace Smart_Park.Controllers
 
 
         // GET: api/spots/parks/{id}/ocupation
-        [Route("api/spots/parks/{id:string}/ocupation")]
+        [Route("api/spots/parks/{id}/ocupation")]
         public IHttpActionResult GetParkOcupation(string id)
         {
             SqlConnection conn = null;

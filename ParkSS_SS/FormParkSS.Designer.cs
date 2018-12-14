@@ -1,6 +1,6 @@
 ﻿namespace ParkSS_SS
 {
-    partial class ParkSSForm
+    partial class FormParkSS
     {
         /// <summary>
         /// Required designer variable.

@@ -44,7 +44,7 @@ namespace Park_DACE
 
         public void DoWork(object sender, DoWorkEventArgs e)
         {
-            dll.Initialize(NewSensorValueFunction, 5000);
+            dll.Initialize(NewSensorValueFunction, 500);
         }
 
         public void NewSensorValueFunction(string str)
@@ -67,18 +67,26 @@ namespace Park_DACE
                     string[] parts = partes[1].Split('-');
                     int index = Int32.Parse(parts[1]);
 
-                    spot = new ParkingSpot
+                    try
                     {
-                        Id = partes[0] + "_" + partes[1],
-                        Name = partes[1],
-                        Timestamp = partes[2],
-                        Location = "", //geolocationsFromParkA[index],
-                        BateryStatus = Int32.Parse(partes[3]),
-                        Type = "ParkingSpot",
-                        Value = partes[4].Equals("free") ? true : false
-                    };
+                        spot = new ParkingSpot
+                        {
+                            Id = partes[0] + "_" + partes[1],
+                            Name = partes[1],
+                            Timestamp = partes[2],
+                            Location = geolocationsFromParkA[index],
+                            BateryStatus = Int32.Parse(partes[3]),
+                            Type = "ParkingSpot",
+                            Value = partes[4].Equals("free") ? true : false
+                        };
 
-                    spotsDLL.Add(spot);
+                        spotsDLL.Add(spot);
+
+                    }
+                    catch (Exception)
+                    {
+                        Console.WriteLine("Ui, Ui!");
+                    }
 
                     //richTextBoxConfig.AppendText(string.Format("Spot: {0} {1} {2} {3} {4} {5} {6} \n", spot.Id, spot.Name, spot.Timestamp,
                     //spot.BateryStatus, spot.Type, spot.Value, spot.Location));
@@ -102,7 +110,7 @@ namespace Park_DACE
         private void getConfiguration()
         {
             string currentDir = Environment.CurrentDirectory;
-            String filename = new DirectoryInfo(Path.GetFullPath(Path.Combine(currentDir, @"..\..\..\Utils\ParkingNodesConfig.xml"))).ToString();
+            String filename = new DirectoryInfo(Path.GetFullPath(Path.Combine(currentDir, Application.StartupPath + @"\Utils\ParkingNodesConfig.xml"))).ToString();
 
             HandlerXML handler = new HandlerXML(filename);
             handler.LoadConfigurations();
@@ -140,17 +148,25 @@ namespace Park_DACE
                 string[] parts = partes[2].Split('-');
                 int index1 = Int32.Parse(parts[1]);
 
-                spot = new ParkingSpot
+                try
                 {
-                    Id = partes[0],
-                    Name = partes[2],
-                    Timestamp = partes[5],
-                    Location = geolocationsFromParkB[index1],
-                    BateryStatus = Int32.Parse(partes[6]),
-                    Type = partes[1],
-                    Value = partes[4].Equals("free") ? true : false
-                };
-                spotsBOT.Add(spot);
+                    spot = new ParkingSpot
+                    {
+                        Id = partes[0],
+                        Name = partes[2],
+                        Timestamp = partes[5],
+                        Location = geolocationsFromParkB[index1],
+                        BateryStatus = Int32.Parse(partes[6]),
+                        Type = partes[1],
+                        Value = partes[4].Equals("free") ? true : false
+                    };
+                    spotsBOT.Add(spot);
+
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Ai, Ai!");
+                }
             }
 
             Console.WriteLine(spot.ToString());
@@ -160,10 +176,12 @@ namespace Park_DACE
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if(count < 10)
+            if (count < 11)
             {
                 readSpot(count);
-                count++;   
+                count++;
+
+                btnPublish.PerformClick();
             }
         }
 
@@ -171,7 +189,7 @@ namespace Park_DACE
         {
             timer1.Enabled = true;
         }
-        
+
         private void readSpots(List<ParkingSpot> spotsAux)
         {
             foreach (ParkingSpot spot in spotsAux)
@@ -179,7 +197,7 @@ namespace Park_DACE
                 if (spots.Contains(spot))
                 {
                     ParkingSpot spotOld = spots.Find(s => s == spot);
-                    
+
                     spots[spots.FindIndex(ind => ind.Equals(spotOld))] = spot;
                 }
                 else
@@ -188,7 +206,7 @@ namespace Park_DACE
                 }
             }
         }
-        
+
         private void ButtonBroker_Click(object sender, EventArgs e)
         {
             try
@@ -226,7 +244,8 @@ namespace Park_DACE
             bw.RunWorkerAsync();
             timer1.Enabled = true;
 
-            buttonReadSOAP_Click(sender,e);
+            buttonReadSOAP_Click(sender, e);
+            ButtonBroker_Click(sender, e);
         }
 
         private void FormDACE_FormClosed(object sender, FormClosedEventArgs e)

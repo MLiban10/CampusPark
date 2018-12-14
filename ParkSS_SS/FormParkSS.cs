@@ -14,7 +14,7 @@ using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace ParkSS_SS
 {
-    public partial class ParkSSForm : Form
+    public partial class FormParkSS : Form
     {
         //string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ParkDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ParkSS_SS.Properties.Settings.ConnStr"].ConnectionString;
@@ -26,10 +26,11 @@ namespace ParkSS_SS
         private ParkingSpot spot = new ParkingSpot();
         private List<ParkingSpot> listSpots = new List<ParkingSpot>();
 
-        public ParkSSForm()
+        public FormParkSS()
         {
             InitializeComponent();
         }
+
 
         private void btnSubscribe_Click(object sender, EventArgs e)
         {
@@ -66,6 +67,8 @@ namespace ParkSS_SS
         private void ParkSS_Load(object sender, EventArgs e)
         {
             client = new MqttClient(textBoxIP.Text);
+            btnSubscribe_Click(sender, e);
+            // btn_storeDatabase_Click(sender, e);
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -127,7 +130,7 @@ namespace ParkSS_SS
 
                 foreach (ParkingSpot s in listSpots)
                 {
-                    SqlCommand test = new SqlCommand("Select * From Spots", conn);
+                    SqlCommand test = new SqlCommand();// verificar se o spot já existe --- SERGIO
 
                     //if (test == null)
                     //{

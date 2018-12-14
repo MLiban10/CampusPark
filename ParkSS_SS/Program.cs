@@ -16,7 +16,7 @@ namespace ParkSS_SS
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ParkSSForm());
+            Application.Run(new FormParkSS());
         }
     }
 }
