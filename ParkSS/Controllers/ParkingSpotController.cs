@@ -128,9 +128,14 @@ namespace Smart_Park.Controllers
         }
 
         // GET: api/logspots/parks/{id}/{timespamp}
-        [Route("api/logspots/parks/{id}/{timespamp:dateTime}")]
-        public IEnumerable<ParkingSpot> GetAllSpotsFromParkAtMoment(string id, DateTime timespamp)
+        [Route("api/logspots/parks/{id}/{timespamp}")]
+        public IEnumerable<ParkingSpot> GetAllSpotsFromParkAtMoment(string id, string timespamp)
         {
+
+            timespamp = timespamp.Replace("-", "/");
+            timespamp = timespamp.Replace("_", " ");
+            timespamp = timespamp.Replace(",", ":");
+
             List<ParkingSpot> spots = new List<ParkingSpot>();
             SqlConnection conn = null;
             try
@@ -138,9 +143,9 @@ namespace Smart_Park.Controllers
                 conn = new SqlConnection(connectionString);
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand("SELECT * FROM LogSpots WHERE Id LIKE '%'+@id+'%' AND Timespamp = @timespamp", conn);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM LogSpots WHERE Id LIKE '%'+@id+'%' AND Timestamp = @timespamp", conn);
                 cmd.Parameters.AddWithValue("@id", id);
-                cmd.Parameters.AddWithValue("@timespamp", timespamp);
+                cmd.Parameters.AddWithValue("@timespamp", DateTime.Parse(timespamp));
 
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
@@ -170,9 +175,18 @@ namespace Smart_Park.Controllers
         }
 
         // GET: api/logspots/parks/{id}/{timespampsS}/{timespampE}
-        [Route("api/logspots/parks/{id}/{timespampS:dateTime}/{timespampE:dateTime}")]
-        public IEnumerable<ParkingSpot> GetAllSpotsFromParkAtInterval(string id, DateTime timespampS, DateTime timespampE)
+        [Route("api/logspots/parks/{id}/{timespampS}/{timespampE}")]
+        public IEnumerable<ParkingSpot> GetAllSpotsFromParkAtInterval(string id, string timespampS, string timespampE)
         {
+
+            timespampS = timespampS.Replace("-", "/");
+            timespampS = timespampS.Replace("_", " ");
+            timespampS = timespampS.Replace(",", ":");
+
+            timespampE = timespampE.Replace("-", "/");
+            timespampE = timespampE.Replace("_", " ");
+            timespampE = timespampE.Replace(",", ":");
+
             List<ParkingSpot> spots = new List<ParkingSpot>();
             SqlConnection conn = null;
             try
@@ -180,10 +194,10 @@ namespace Smart_Park.Controllers
                 conn = new SqlConnection(connectionString);
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand("SELECT * FROM LogSpots WHERE Id LIKE '%'+@id+'%' AND Timespamp >= @timespampS AND Timespamp <= @timespampE", conn);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM LogSpots WHERE Id LIKE '%'+@id+'%' AND Timestamp >= @timespampS AND Timestamp <= @timespampE", conn);
                 cmd.Parameters.AddWithValue("@id", id);
-                cmd.Parameters.AddWithValue("@timespampS", timespampS);
-                cmd.Parameters.AddWithValue("@timespampE", timespampE);
+                cmd.Parameters.AddWithValue("@timespampS", DateTime.Parse(timespampS));
+                cmd.Parameters.AddWithValue("@timespampE", DateTime.Parse(timespampE));
 
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
@@ -212,10 +226,15 @@ namespace Smart_Park.Controllers
             return spots;
         }
 
-        // GET: api/spots/parks/{id}/{timespamp}
-        [Route("api/logspots/parks/free/{id}/{timespamp:dateTime}")]
-        public IEnumerable<ParkingSpot> GetAllFreeSpotsFromParkAtMoment(string id, DateTime timespamp)
+        // GET: api/logspots/free/{id}/{timespamp}
+        [Route("api/logspots/free/{id}/{timestamp}")]
+        public IEnumerable<ParkingSpot> GetAllFreeSpotsFromParkAtMoment(string id, string timestamp)
         {
+
+            timestamp = timestamp.Replace("-", "/");
+            timestamp = timestamp.Replace("_", " ");
+            timestamp = timestamp.Replace(",", ":");
+
             List<ParkingSpot> spots = new List<ParkingSpot>();
             SqlConnection conn = null;
             try
@@ -223,14 +242,14 @@ namespace Smart_Park.Controllers
                 conn = new SqlConnection(connectionString);
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand("SELECT * FROM LogSpots WHERE Id LIKE '%'+@id+'%' AND Timespamp = @timespamp", conn);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM LogSpots WHERE Id LIKE '%'+@id+'%' AND Timestamp = @timespamp", conn);
                 cmd.Parameters.AddWithValue("@id", id);
-                cmd.Parameters.AddWithValue("@timespamp", timespamp);
+                cmd.Parameters.AddWithValue("@timespamp", DateTime.Parse(timestamp));
 
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    if ((Boolean)reader["Value"] == true)
+                    if (((string)reader["Value"]).Equals("True"))
                     {
                         ParkingSpot p = new ParkingSpot
                         {
