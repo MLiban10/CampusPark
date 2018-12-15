@@ -27,12 +27,12 @@ namespace ParkSS_SS
         private Configuration configuration = null;
         private List<ParkingSpot> listSpots = new List<ParkingSpot>();
         private List<Configuration> configurations = new List<Configuration>();
+        private Boolean isConnected = false;
 
         public FormParkSS()
         {
             InitializeComponent();
         }
-
 
         private void btnSubscribe_Click(object sender, EventArgs e)
         {
@@ -44,7 +44,21 @@ namespace ParkSS_SS
             client.MqttMsgPublishReceived += Client_MqttMsgPublishReceived;
             client.MqttMsgUnsubscribed += Client_MqttMsgUnsubscribed;
             byte[] qos = { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE };
-            client.Subscribe(topics, qos);
+            Console.WriteLine("Connecting...");
+            try
+            {
+                do
+                {
+                    Console.WriteLine("Trying to subscribe...");
+                    client.Subscribe(topics, qos);
+                    isConnected = true;
+                    Console.WriteLine("Subscribed");
+                } while (isConnected == false);
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
         }
 
         private void Client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)

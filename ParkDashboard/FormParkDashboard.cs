@@ -18,8 +18,6 @@ namespace ParkDashboard
         HttpClient client = null;
         List<ParkingSpot> parkingSpots = new List<ParkingSpot>();
 
-        
-
         public FormParkDashboard()
         {
             InitializeComponent();
@@ -65,10 +63,60 @@ namespace ParkDashboard
                 this.comboBoxParks.DataSource = dataSource;
                 this.comboBoxParks.DisplayMember = "Name";
                 this.comboBoxParks.ValueMember = "Name";
+                
+                var day  = new List<int>();
+                for(int i = 1; i <= 31; i++)
+                {
+                    day.Add(i);
+                }
 
+                
+                this.comboBoxDay.DataSource = day;
+                this.comboBoxDay.DisplayMember = "Day";
+                this.comboBoxDay.DisplayMember = "Day";
+
+                var month = new List<int>();
+                for (int i = 0; i <= 12; i++)
+                {
+                    month.Add(i);
+                }
+                this.comboBoxMonth.DataSource = month;
+                this.comboBoxMonth.DisplayMember = "Month";
+                this.comboBoxMonth.DisplayMember = "Month";
+
+                var year = new List<int>();
+                for (int i = 2017; i <= 2019; i++)
+                {
+                    year.Add(i);
+                }
+                this.comboBoxYear.DataSource = year;
+                this.comboBoxYear.DisplayMember = "Year";
+                this.comboBoxYear.DisplayMember = "Year";
+
+                var hour = new List<int>();
+                for (int i = 0; i <= 23; i++)
+                {
+                    hour.Add(i);
+                }
+                this.comboBoxHours.DataSource = hour;
+                this.comboBoxHours.DisplayMember = "Hour";
+                this.comboBoxHours.DisplayMember = "Hour";
+
+                var minute = new List<int>();
+                for (int i = 0; i <= 59; i++)
+                {
+                    minute.Add(i);
+                }
+                this.comboBoxMinutes.DataSource = minute;
+                this.comboBoxMinutes.DisplayMember = "Minute";
+                this.comboBoxMinutes.DisplayMember = "Minute";
+                
                 btnParkPercentage.Enabled = true;
                 btnParkSpots.Enabled = true;
                 btnParkSensors.Enabled = true;
+                comboBoxHours.Enabled = true;
+                comboBoxMinutes.Enabled = true;
+                btnFreeSpotsForPark.Enabled = true;
             }
             else
             {
@@ -230,5 +278,48 @@ namespace ParkDashboard
                 richTextBoxSpots.AppendText($"Error connecting to API {response.StatusCode} with message {response.ReasonPhrase}.");
             }
         }
+
+        private void btnFreeSpotsForPark_Click(object sender, EventArgs e)
+        {
+            richTextBoxSpots.Text = "";
+
+            client = new HttpClient();
+            client.BaseAddress = new Uri(baseURI);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            string id = comboBoxParks.SelectedValue.ToString();
+            string test = comboBoxDay.SelectedValue.ToString() + "/"+comboBoxMonth.SelectedValue.ToString()+ "/"+
+                comboBoxYear.SelectedValue.ToString()+" "+comboBoxHours.SelectedValue.ToString()+":"+comboBoxMinutes.SelectedValue.ToString()+":00";
+            DateTime timespamp = DateTime.Parse(test);
+
+            HttpResponseMessage response = client.GetAsync($"api/logspots/parks/free/{id}/{timespamp:dateTime}").Result;
+
+            response.EnsureSuccessStatusCode();
+            if (response.IsSuccessStatusCode)
+            {
+                string json = response.Content.ReadAsStringAsync().Result;
+                parkingSpots = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ParkingSpot>>(json);
+
+                foreach (ParkingSpot parkingSpot in parkingSpots)
+                {
+                    richTextBoxSpots.AppendText(ShowParkingSpotsBatteryReplacement(parkingSpot));
+                }
+            }
+            else
+            {
+                richTextBoxSpots.AppendText($"Error connecting to API {response.StatusCode} with message {response.ReasonPhrase}.");
+            }
+        }
+
+        private void btnSpotParkStatus_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /*
+         timestamp.Replace("-", "/");
+            timestamp.Replace("_", " ");
+            timestamp.Replace(".", ":");
+            */
     }
 }
