@@ -248,7 +248,7 @@
             this.btnSpotParkStatus.Name = "btnSpotParkStatus";
             this.btnSpotParkStatus.Size = new System.Drawing.Size(139, 34);
             this.btnSpotParkStatus.TabIndex = 20;
-            this.btnSpotParkStatus.Text = "Get Status For Spot In a Park";
+            this.btnSpotParkStatus.Text = "Get Status For Spots In a Park";
             this.btnSpotParkStatus.UseVisualStyleBackColor = true;
             this.btnSpotParkStatus.Click += new System.EventHandler(this.btnSpotParkStatus_Click);
             // 

@@ -312,7 +312,33 @@ namespace ParkDashboard
 
         private void btnSpotParkStatus_Click(object sender, EventArgs e)
         {
+            richTextBoxSpots.Text = "";
 
+            client = new HttpClient();
+            client.BaseAddress = new Uri(baseURI);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            string id = comboBoxParks.SelectedValue.ToString();
+            string timestamp = comboBoxDay.SelectedValue.ToString() + "-" + comboBoxMonth.SelectedValue.ToString() + "-" +
+                comboBoxYear.SelectedValue.ToString() + "_" + comboBoxHours.SelectedValue.ToString() + "," + comboBoxMinutes.SelectedValue.ToString() + ",00";
+
+            HttpResponseMessage response = client.GetAsync($"api/logspots/parks/{id}/{timestamp}").Result;
+
+            response.EnsureSuccessStatusCode();
+            if (response.IsSuccessStatusCode)
+            {
+                string json = response.Content.ReadAsStringAsync().Result;
+                parkingSpots = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ParkingSpot>>(json);
+
+                foreach (ParkingSpot parkingSpot in parkingSpots)
+                {
+                    richTextBoxSpots.AppendText(ShowFullParkingSpot(parkingSpot));
+                }
+            }
+            else
+            {
+                richTextBoxSpots.AppendText($"Error connecting to API {response.StatusCode} with message {response.ReasonPhrase}.");
+            }
         }
 
         private void FormParkDashboard_Load(object sender, EventArgs e)
