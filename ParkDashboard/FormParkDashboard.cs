@@ -329,7 +329,7 @@ namespace ParkDashboard
 
         private void btnDLLConfig_Click(object sender, EventArgs e)
         {
-            richTextBoxSpots.Text = "";
+            richTextBoxConfs.Text = "";
 
             client = new HttpClient();
             client.BaseAddress = new Uri(baseURI);
@@ -343,14 +343,14 @@ namespace ParkDashboard
             {
                 string json = response.Content.ReadAsStringAsync().Result;
                 configurations = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Configuration>>(json);
-               
-                richTextBoxSpots.AppendText(ShowFullConfiguration(configurations[0]));
+                richTextBoxConfs.AppendText(ShowFullConfiguration(configurations[0]));
+
             }
         }
 
         private void btnSoapConfig_Click(object sender, EventArgs e)
         {
-            richTextBoxSpots.Text = "";
+            richTextBoxConfs.Text = "";
 
             client = new HttpClient();
             client.BaseAddress = new Uri(baseURI);
@@ -365,7 +365,7 @@ namespace ParkDashboard
                 string json = response.Content.ReadAsStringAsync().Result;
                 configurations = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Configuration>>(json);
 
-                richTextBoxSpots.AppendText(ShowFullConfiguration(configurations[1]));
+                richTextBoxConfs.AppendText(ShowFullConfiguration(configurations[1]));
             }
         }
 

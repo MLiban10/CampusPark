@@ -49,7 +49,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.btnSpotParkStatus = new System.Windows.Forms.Button();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.richTextBoxConfs = new System.Windows.Forms.RichTextBox();
             this.btnDLLConfig = new System.Windows.Forms.Button();
             this.btnSoapConfig = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -252,13 +252,13 @@
             this.btnSpotParkStatus.UseVisualStyleBackColor = true;
             this.btnSpotParkStatus.Click += new System.EventHandler(this.btnSpotParkStatus_Click);
             // 
-            // richTextBox1
+            // richTextBoxConfs
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(208, 134);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(217, 202);
-            this.richTextBox1.TabIndex = 21;
-            this.richTextBox1.Text = "";
+            this.richTextBoxConfs.Location = new System.Drawing.Point(208, 134);
+            this.richTextBoxConfs.Name = "richTextBoxConfs";
+            this.richTextBoxConfs.Size = new System.Drawing.Size(217, 202);
+            this.richTextBoxConfs.TabIndex = 21;
+            this.richTextBoxConfs.Text = "";
             // 
             // btnDLLConfig
             // 
@@ -287,7 +287,7 @@
             this.ClientSize = new System.Drawing.Size(816, 366);
             this.Controls.Add(this.btnSoapConfig);
             this.Controls.Add(this.btnDLLConfig);
-            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.richTextBoxConfs);
             this.Controls.Add(this.btnSpotParkStatus);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -341,7 +341,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnSpotParkStatus;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox richTextBoxConfs;
         private System.Windows.Forms.Button btnDLLConfig;
         private System.Windows.Forms.Button btnSoapConfig;
     }
