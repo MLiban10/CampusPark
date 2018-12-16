@@ -131,7 +131,6 @@ namespace Smart_Park.Controllers
         [Route("api/logspots/parks/{id}/{timespamp}")]
         public IEnumerable<ParkingSpot> GetAllSpotsFromParkAtMoment(string id, string timespamp)
         {
-
             timespamp = timespamp.Replace("-", "/");
             timespamp = timespamp.Replace("_", " ");
             timespamp = timespamp.Replace(",", ":");

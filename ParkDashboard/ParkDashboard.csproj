@@ -55,6 +55,7 @@
     <Compile Include="FormParkDashboard.Designer.cs">
       <DependentUpon>FormParkDashboard.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Configuration.cs" />
     <Compile Include="Models\Park.cs" />
     <Compile Include="Models\ParkingSpot.cs" />
     <Compile Include="Program.cs" />

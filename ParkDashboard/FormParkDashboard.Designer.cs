@@ -49,16 +49,20 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.btnSpotParkStatus = new System.Windows.Forms.Button();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.btnDLLConfig = new System.Windows.Forms.Button();
+            this.btnSoapConfig = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnAllSpots
             // 
-            this.btnAllSpots.Location = new System.Drawing.Point(208, 12);
+            this.btnAllSpots.Location = new System.Drawing.Point(208, 67);
             this.btnAllSpots.Name = "btnAllSpots";
             this.btnAllSpots.Size = new System.Drawing.Size(75, 23);
             this.btnAllSpots.TabIndex = 0;
             this.btnAllSpots.Text = "GetAllSpots";
             this.btnAllSpots.UseVisualStyleBackColor = true;
+            this.btnAllSpots.Visible = false;
             this.btnAllSpots.Click += new System.EventHandler(this.btnAllSpots_Click);
             // 
             // richTextBoxSpots
@@ -72,7 +76,7 @@
             // btnReplaceSensors
             // 
             this.btnReplaceSensors.Enabled = false;
-            this.btnReplaceSensors.Location = new System.Drawing.Point(208, 42);
+            this.btnReplaceSensors.Location = new System.Drawing.Point(208, 12);
             this.btnReplaceSensors.Name = "btnReplaceSensors";
             this.btnReplaceSensors.Size = new System.Drawing.Size(75, 49);
             this.btnReplaceSensors.TabIndex = 2;
@@ -248,11 +252,42 @@
             this.btnSpotParkStatus.UseVisualStyleBackColor = true;
             this.btnSpotParkStatus.Click += new System.EventHandler(this.btnSpotParkStatus_Click);
             // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(208, 134);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(217, 202);
+            this.richTextBox1.TabIndex = 21;
+            this.richTextBox1.Text = "";
+            // 
+            // btnDLLConfig
+            // 
+            this.btnDLLConfig.Location = new System.Drawing.Point(209, 105);
+            this.btnDLLConfig.Name = "btnDLLConfig";
+            this.btnDLLConfig.Size = new System.Drawing.Size(75, 23);
+            this.btnDLLConfig.TabIndex = 22;
+            this.btnDLLConfig.Text = "DLL Config";
+            this.btnDLLConfig.UseVisualStyleBackColor = true;
+            this.btnDLLConfig.Click += new System.EventHandler(this.btnDLLConfig_Click);
+            // 
+            // btnSoapConfig
+            // 
+            this.btnSoapConfig.Location = new System.Drawing.Point(304, 105);
+            this.btnSoapConfig.Name = "btnSoapConfig";
+            this.btnSoapConfig.Size = new System.Drawing.Size(88, 23);
+            this.btnSoapConfig.TabIndex = 23;
+            this.btnSoapConfig.Text = "SOAP Config";
+            this.btnSoapConfig.UseVisualStyleBackColor = true;
+            this.btnSoapConfig.Click += new System.EventHandler(this.btnSoapConfig_Click);
+            // 
             // FormParkDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(600, 366);
+            this.ClientSize = new System.Drawing.Size(816, 366);
+            this.Controls.Add(this.btnSoapConfig);
+            this.Controls.Add(this.btnDLLConfig);
+            this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.btnSpotParkStatus);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -277,6 +312,7 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormParkDashboard";
             this.Text = "Park Dashboard";
+            this.Load += new System.EventHandler(this.FormParkDashboard_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -305,6 +341,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnSpotParkStatus;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.Button btnDLLConfig;
+        private System.Windows.Forms.Button btnSoapConfig;
     }
 }
 

@@ -17,6 +17,7 @@ namespace ParkDashboard
         string baseURI = @"http://localhost:52566/";
         HttpClient client = null;
         List<ParkingSpot> parkingSpots = new List<ParkingSpot>();
+        List<Configuration> configurations = new List<Configuration>();
 
         public FormParkDashboard()
         {
@@ -70,7 +71,6 @@ namespace ParkDashboard
                     day.Add(i);
                 }
 
-                
                 this.comboBoxDay.DataSource = day;
                 this.comboBoxDay.DisplayMember = "Day";
                 this.comboBoxDay.DisplayMember = "Day";
@@ -288,11 +288,10 @@ namespace ParkDashboard
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             string id = comboBoxParks.SelectedValue.ToString();
-            string test = comboBoxDay.SelectedValue.ToString() + "/"+comboBoxMonth.SelectedValue.ToString()+ "/"+
-                comboBoxYear.SelectedValue.ToString()+" "+comboBoxHours.SelectedValue.ToString()+":"+comboBoxMinutes.SelectedValue.ToString()+":00";
-            DateTime timespamp = DateTime.Parse(test);
+            string timestamp = comboBoxDay.SelectedValue.ToString() + "-"+comboBoxMonth.SelectedValue.ToString()+ "-"+
+                comboBoxYear.SelectedValue.ToString()+"_"+comboBoxHours.SelectedValue.ToString()+","+comboBoxMinutes.SelectedValue.ToString()+",00";
 
-            HttpResponseMessage response = client.GetAsync($"api/logspots/parks/free/{id}/{timespamp:dateTime}").Result;
+            HttpResponseMessage response = client.GetAsync($"api/logspots/free/{id}/{timestamp}").Result;
 
             response.EnsureSuccessStatusCode();
             if (response.IsSuccessStatusCode)
@@ -302,7 +301,7 @@ namespace ParkDashboard
 
                 foreach (ParkingSpot parkingSpot in parkingSpots)
                 {
-                    richTextBoxSpots.AppendText(ShowParkingSpotsBatteryReplacement(parkingSpot));
+                    richTextBoxSpots.AppendText(ShowFullParkingSpot(parkingSpot));
                 }
             }
             else
@@ -314,6 +313,60 @@ namespace ParkDashboard
         private void btnSpotParkStatus_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void FormParkDashboard_Load(object sender, EventArgs e)
+        {
+            btnAllSpots_Click(sender, e);
+        }
+
+        public String ShowFullConfiguration(Configuration c)
+        {
+            return $"Connection Type: {c.connectionType}\nEndpoint: {c.endpoint}\nID: {c.id}\n" +
+                $"Description:{c.description}\nNumber of spots: {c.numberOfSpots}\nOperating Hours: {c.operatingHours}\n" +
+                $"Number of Special Spots: {c.numberOfSpecialSpots}\n Geolocation File: {c.geoLocationFile}\n---------------------------------------------------------\n";
+        }
+
+        private void btnDLLConfig_Click(object sender, EventArgs e)
+        {
+            richTextBoxSpots.Text = "";
+
+            client = new HttpClient();
+            client.BaseAddress = new Uri(baseURI);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = client.GetAsync($"api/confs").Result;
+
+            response.EnsureSuccessStatusCode();
+            if (response.IsSuccessStatusCode)
+            {
+                string json = response.Content.ReadAsStringAsync().Result;
+                configurations = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Configuration>>(json);
+               
+                richTextBoxSpots.AppendText(ShowFullConfiguration(configurations[0]));
+            }
+        }
+
+        private void btnSoapConfig_Click(object sender, EventArgs e)
+        {
+            richTextBoxSpots.Text = "";
+
+            client = new HttpClient();
+            client.BaseAddress = new Uri(baseURI);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = client.GetAsync($"api/confs").Result;
+
+            response.EnsureSuccessStatusCode();
+            if (response.IsSuccessStatusCode)
+            {
+                string json = response.Content.ReadAsStringAsync().Result;
+                configurations = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Configuration>>(json);
+
+                richTextBoxSpots.AppendText(ShowFullConfiguration(configurations[1]));
+            }
         }
 
         /*
