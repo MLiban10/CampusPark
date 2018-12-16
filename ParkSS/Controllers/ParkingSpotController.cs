@@ -390,6 +390,50 @@ namespace Smart_Park.Controllers
             }
         }
 
+        // GET: api/confs
+        [Route("api/confs")] //specifies that the id parameter is an integer
+        public IEnumerable<Configuration> GetConfigurations()
+        {
+            SqlConnection conn = null;
+            List<Configuration> confs = new List<Configuration>();
+            try
+            {
+                conn = new SqlConnection(connectionString);
+                conn.Open();
+
+
+                SqlCommand cmd = new SqlCommand("SELECT * FROM Conf", conn);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Configuration conf = new Configuration
+                    {
+                        connectionType = (string)reader["connectionType"],
+                        endpoint = (string)reader["endpoint"],
+                        id = (string)reader["id"],
+                        description = (string)reader["description"],
+                        numberOfSpots = (int)reader["numberOfSpots"],
+                        operatingHours = (string)reader["operatingHours"],
+                        numberOfSpecialSpots = (int)reader["numberOfSpecialSpots"],
+                        geoLocationFile = (string)reader["geoLocationFile"]
+                    };
+                    confs.Add(conf);
+                }
+
+                reader.Close();
+                conn.Close();
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return confs;
+        }
+
+
         // GET: api/spots/critical
         [Route("api/spots/critical")]
         public IEnumerable<ParkingSpot> GetAllSpotsWithCriticalBattery()

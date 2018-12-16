@@ -7,7 +7,7 @@
     </location>
     <status>
       <value>free</value>
-      <timestamp>15/12/2018 17:29:04</timestamp>
+      <timestamp>16/12/2018 11:57:30</timestamp>
     </status>
     <batteryStatus>0</batteryStatus>
   </parkingSpot>
@@ -18,8 +18,8 @@
     <location>
     </location>
     <status>
-      <value>busy</value>
-      <timestamp>15/12/2018 17:29:04</timestamp>
+      <value>free</value>
+      <timestamp>16/12/2018 11:57:30</timestamp>
     </status>
     <batteryStatus>0</batteryStatus>
   </parkingSpot>
@@ -31,7 +31,7 @@
     </location>
     <status>
       <value>busy</value>
-      <timestamp>15/12/2018 17:29:04</timestamp>
+      <timestamp>16/12/2018 11:57:30</timestamp>
     </status>
     <batteryStatus>0</batteryStatus>
   </parkingSpot>
@@ -43,7 +43,7 @@
     </location>
     <status>
       <value>free</value>
-      <timestamp>15/12/2018 17:29:04</timestamp>
+      <timestamp>16/12/2018 11:57:30</timestamp>
     </status>
     <batteryStatus>0</batteryStatus>
   </parkingSpot>
@@ -54,8 +54,8 @@
     <location>
     </location>
     <status>
-      <value>busy</value>
-      <timestamp>15/12/2018 17:29:04</timestamp>
+      <value>free</value>
+      <timestamp>16/12/2018 11:57:30</timestamp>
     </status>
     <batteryStatus>0</batteryStatus>
   </parkingSpot>
@@ -67,7 +67,7 @@
     </location>
     <status>
       <value>busy</value>
-      <timestamp>15/12/2018 17:29:04</timestamp>
+      <timestamp>16/12/2018 11:57:30</timestamp>
     </status>
     <batteryStatus>0</batteryStatus>
   </parkingSpot>
@@ -78,8 +78,8 @@
     <location>
     </location>
     <status>
-      <value>busy</value>
-      <timestamp>15/12/2018 17:30:15</timestamp>
+      <value>free</value>
+      <timestamp>16/12/2018 11:57:30</timestamp>
     </status>
     <batteryStatus>0</batteryStatus>
   </parkingSpot>
@@ -90,8 +90,8 @@
     <location>
     </location>
     <status>
-      <value>busy</value>
-      <timestamp>15/12/2018 17:30:15</timestamp>
+      <value>free</value>
+      <timestamp>16/12/2018 11:57:30</timestamp>
     </status>
     <batteryStatus>0</batteryStatus>
   </parkingSpot>
@@ -103,7 +103,7 @@
     </location>
     <status>
       <value>free</value>
-      <timestamp>15/12/2018 17:30:15</timestamp>
+      <timestamp>16/12/2018 11:57:30</timestamp>
     </status>
     <batteryStatus>0</batteryStatus>
   </parkingSpot>
@@ -115,7 +115,7 @@
     </location>
     <status>
       <value>free</value>
-      <timestamp>15/12/2018 17:30:15</timestamp>
+      <timestamp>16/12/2018 11:57:30</timestamp>
     </status>
     <batteryStatus>0</batteryStatus>
   </parkingSpot>
