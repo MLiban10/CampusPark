@@ -66,57 +66,91 @@ namespace ParkDashboard
                 this.comboBoxParks.ValueMember = "Name";
                 
                 var day  = new List<int>();
+                var day2 = new List<int>();
                 for(int i = 1; i <= 31; i++)
                 {
                     day.Add(i);
+                    day2.Add(i);
                 }
 
                 this.comboBoxDay.DataSource = day;
                 this.comboBoxDay.DisplayMember = "Day";
                 this.comboBoxDay.DisplayMember = "Day";
+                this.comboBoxDay2.DataSource = day2;
+                this.comboBoxDay2.DisplayMember = "Day";
+                this.comboBoxDay2.DisplayMember = "Day";
 
                 var month = new List<int>();
+                var month2 = new List<int>();
+
                 for (int i = 0; i <= 12; i++)
                 {
                     month.Add(i);
+                    month2.Add(i);
                 }
                 this.comboBoxMonth.DataSource = month;
                 this.comboBoxMonth.DisplayMember = "Month";
                 this.comboBoxMonth.DisplayMember = "Month";
+                this.comboBoxMonth2.DataSource = month2;
+                this.comboBoxMonth2.DisplayMember = "Month";
+                this.comboBoxMonth2.DisplayMember = "Month";
 
                 var year = new List<int>();
+                var year2 = new List<int>();
                 for (int i = 2017; i <= 2019; i++)
                 {
                     year.Add(i);
+                    year2.Add(i);
                 }
                 this.comboBoxYear.DataSource = year;
                 this.comboBoxYear.DisplayMember = "Year";
                 this.comboBoxYear.DisplayMember = "Year";
+                this.comboBoxYear2.DataSource = year2;
+                this.comboBoxYear2.DisplayMember = "Year";
+                this.comboBoxYear2.DisplayMember = "Year";
 
                 var hour = new List<int>();
+                var hour2 = new List<int>();
                 for (int i = 0; i <= 23; i++)
                 {
                     hour.Add(i);
+                    hour2.Add(i);
                 }
                 this.comboBoxHours.DataSource = hour;
                 this.comboBoxHours.DisplayMember = "Hour";
                 this.comboBoxHours.DisplayMember = "Hour";
+                this.comboBoxHour2.DataSource = hour2;
+                this.comboBoxHour2.DisplayMember = "Hour";
+                this.comboBoxHour2.DisplayMember = "Hour";
 
                 var minute = new List<int>();
+                var minute2 = new List<int>();
                 for (int i = 0; i <= 59; i++)
                 {
                     minute.Add(i);
+                    minute2.Add(i);
                 }
                 this.comboBoxMinutes.DataSource = minute;
                 this.comboBoxMinutes.DisplayMember = "Minute";
                 this.comboBoxMinutes.DisplayMember = "Minute";
-                
+                this.comboBoxMinute2.DataSource = minute2;
+                this.comboBoxMinute2.DisplayMember = "Minute";
+                this.comboBoxMinute2.DisplayMember = "Minute";
+
                 btnParkPercentage.Enabled = true;
                 btnParkSpots.Enabled = true;
                 btnParkSensors.Enabled = true;
                 comboBoxHours.Enabled = true;
                 comboBoxMinutes.Enabled = true;
                 btnFreeSpotsForPark.Enabled = true;
+                comboBoxSpots.Enabled = true;
+                comboBoxParks.Enabled = true;
+                comboBoxDay2.Enabled = true;
+                comboBoxMonth2.Enabled = true;
+                comboBoxYear2.Enabled = true;
+                comboBoxHour2.Enabled = true;
+                comboBoxMinute2.Enabled = true;
+                btnGetStatusForSpotInParkInATimeInterval.Enabled = true;
             }
             else
             {
@@ -392,6 +426,74 @@ namespace ParkDashboard
                 configurations = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Configuration>>(json);
 
                 richTextBoxConfs.AppendText(ShowFullConfiguration(configurations[1]));
+            }
+        }
+
+        private void btnGetStatusForSpotInParkInATimeInterval_Click(object sender, EventArgs e)
+        {
+            richTextBoxSpots.Text = "";
+
+            client = new HttpClient();
+            client.BaseAddress = new Uri(baseURI);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            string id = comboBoxParks.SelectedValue.ToString();
+            string timespampS = comboBoxDay.SelectedValue.ToString() + "-" + comboBoxMonth.SelectedValue.ToString() + "-" +
+                comboBoxYear.SelectedValue.ToString() + "_" + comboBoxHours.SelectedValue.ToString() + "," + comboBoxMinutes.SelectedValue.ToString() + ",00";
+            string timespampE = comboBoxDay2.SelectedValue.ToString() + "-" + comboBoxMonth2.SelectedValue.ToString() + "-" +
+                comboBoxYear2.SelectedValue.ToString() + "_" + comboBoxHour2.SelectedValue.ToString() + "," + comboBoxMinute2.SelectedValue.ToString() + ",00";
+
+
+            HttpResponseMessage response = client.GetAsync($"api/logspots/parks/{id}/{timespampS}/{timespampE}").Result;
+
+            response.EnsureSuccessStatusCode();
+            if (response.IsSuccessStatusCode)
+            {
+                string json = response.Content.ReadAsStringAsync().Result;
+                parkingSpots = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ParkingSpot>>(json);
+
+                foreach (ParkingSpot parkingSpot in parkingSpots)
+                {
+                    richTextBoxSpots.AppendText(ShowFullParkingSpot(parkingSpot));
+                }
+            }
+            else
+            {
+                richTextBoxSpots.AppendText($"Error connecting to API {response.StatusCode} with message {response.ReasonPhrase}.");
+            }
+           
+        }
+
+        private void btnGetStatusForSpotInATimeInterval_Click(object sender, EventArgs e)
+        {
+            richTextBoxSpots.Text = "";
+
+            client = new HttpClient();
+            client.BaseAddress = new Uri(baseURI);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+            string id = comboBoxSpots.SelectedValue.ToString();
+            string timespampS = comboBoxDay.SelectedValue.ToString() + "-" + comboBoxMonth.SelectedValue.ToString() + "-" +
+                comboBoxYear.SelectedValue.ToString() + "_" + comboBoxHours.SelectedValue.ToString() + "," + comboBoxMinutes.SelectedValue.ToString() + ",00";
+            string timespampE = comboBoxDay2.SelectedValue.ToString() + "-" + comboBoxMonth2.SelectedValue.ToString() + "-" +
+                comboBoxYear2.SelectedValue.ToString() + "_" + comboBoxHour2.SelectedValue.ToString() + "," + comboBoxMinute2.SelectedValue.ToString() + ",00";
+            HttpResponseMessage response = client.GetAsync($"api/logspots/parks/{id}/{timespampS}/{timespampE}").Result;
+
+            response.EnsureSuccessStatusCode();
+            if (response.IsSuccessStatusCode)
+            {
+                string json = response.Content.ReadAsStringAsync().Result;
+                parkingSpots = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ParkingSpot>>(json);
+
+                foreach (ParkingSpot parkingSpot in parkingSpots)
+                {
+                    richTextBoxSpots.AppendText(ShowFullParkingSpot(parkingSpot));
+                }
+            }
+            else
+            {
+                richTextBoxSpots.AppendText($"Error connecting to API {response.StatusCode} with message {response.ReasonPhrase}.");
             }
         }
 

@@ -52,6 +52,18 @@
             this.richTextBoxConfs = new System.Windows.Forms.RichTextBox();
             this.btnDLLConfig = new System.Windows.Forms.Button();
             this.btnSoapConfig = new System.Windows.Forms.Button();
+            this.comboBoxDay2 = new System.Windows.Forms.ComboBox();
+            this.comboBoxMonth2 = new System.Windows.Forms.ComboBox();
+            this.comboBoxYear2 = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.comboBoxHour2 = new System.Windows.Forms.ComboBox();
+            this.comboBoxMinute2 = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.btnGetStatusForSpotInParkInATimeInterval = new System.Windows.Forms.Button();
+            this.btnGetStatusForSpotInATimeInterval = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnAllSpots
@@ -86,6 +98,7 @@
             // 
             // comboBoxSpots
             // 
+            this.comboBoxSpots.Enabled = false;
             this.comboBoxSpots.FormattingEnabled = true;
             this.comboBoxSpots.Location = new System.Drawing.Point(304, 12);
             this.comboBoxSpots.Name = "comboBoxSpots";
@@ -105,6 +118,7 @@
             // 
             // comboBoxParks
             // 
+            this.comboBoxParks.Enabled = false;
             this.comboBoxParks.FormattingEnabled = true;
             this.comboBoxParks.Location = new System.Drawing.Point(449, 14);
             this.comboBoxParks.Name = "comboBoxParks";
@@ -262,6 +276,7 @@
             // 
             // btnDLLConfig
             // 
+            this.btnDLLConfig.Enabled = false;
             this.btnDLLConfig.Location = new System.Drawing.Point(209, 105);
             this.btnDLLConfig.Name = "btnDLLConfig";
             this.btnDLLConfig.Size = new System.Drawing.Size(75, 23);
@@ -272,6 +287,7 @@
             // 
             // btnSoapConfig
             // 
+            this.btnSoapConfig.Enabled = false;
             this.btnSoapConfig.Location = new System.Drawing.Point(304, 105);
             this.btnSoapConfig.Name = "btnSoapConfig";
             this.btnSoapConfig.Size = new System.Drawing.Size(88, 23);
@@ -280,11 +296,134 @@
             this.btnSoapConfig.UseVisualStyleBackColor = true;
             this.btnSoapConfig.Click += new System.EventHandler(this.btnSoapConfig_Click);
             // 
+            // comboBoxDay2
+            // 
+            this.comboBoxDay2.Enabled = false;
+            this.comboBoxDay2.FormattingEnabled = true;
+            this.comboBoxDay2.Location = new System.Drawing.Point(628, 184);
+            this.comboBoxDay2.Name = "comboBoxDay2";
+            this.comboBoxDay2.Size = new System.Drawing.Size(42, 21);
+            this.comboBoxDay2.TabIndex = 24;
+            // 
+            // comboBoxMonth2
+            // 
+            this.comboBoxMonth2.Enabled = false;
+            this.comboBoxMonth2.FormattingEnabled = true;
+            this.comboBoxMonth2.Location = new System.Drawing.Point(677, 183);
+            this.comboBoxMonth2.Name = "comboBoxMonth2";
+            this.comboBoxMonth2.Size = new System.Drawing.Size(39, 21);
+            this.comboBoxMonth2.TabIndex = 25;
+            // 
+            // comboBoxYear2
+            // 
+            this.comboBoxYear2.Enabled = false;
+            this.comboBoxYear2.FormattingEnabled = true;
+            this.comboBoxYear2.Location = new System.Drawing.Point(722, 184);
+            this.comboBoxYear2.Name = "comboBoxYear2";
+            this.comboBoxYear2.Size = new System.Drawing.Size(48, 21);
+            this.comboBoxYear2.TabIndex = 26;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(628, 162);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(26, 13);
+            this.label6.TabIndex = 27;
+            this.label6.Text = "Day";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(679, 162);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(37, 13);
+            this.label7.TabIndex = 28;
+            this.label7.Text = "Month";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(722, 162);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(29, 13);
+            this.label8.TabIndex = 29;
+            this.label8.Text = "Year";
+            // 
+            // comboBoxHour2
+            // 
+            this.comboBoxHour2.Enabled = false;
+            this.comboBoxHour2.FormattingEnabled = true;
+            this.comboBoxHour2.Location = new System.Drawing.Point(628, 231);
+            this.comboBoxHour2.Name = "comboBoxHour2";
+            this.comboBoxHour2.Size = new System.Drawing.Size(63, 21);
+            this.comboBoxHour2.TabIndex = 30;
+            // 
+            // comboBoxMinute2
+            // 
+            this.comboBoxMinute2.Enabled = false;
+            this.comboBoxMinute2.FormattingEnabled = true;
+            this.comboBoxMinute2.Location = new System.Drawing.Point(715, 231);
+            this.comboBoxMinute2.Name = "comboBoxMinute2";
+            this.comboBoxMinute2.Size = new System.Drawing.Size(55, 21);
+            this.comboBoxMinute2.TabIndex = 31;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(628, 216);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(35, 13);
+            this.label9.TabIndex = 32;
+            this.label9.Text = "Hours";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(712, 215);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(44, 13);
+            this.label10.TabIndex = 33;
+            this.label10.Text = "Minutes";
+            // 
+            // btnGetStatusForSpotInParkInATimeInterval
+            // 
+            this.btnGetStatusForSpotInParkInATimeInterval.Enabled = false;
+            this.btnGetStatusForSpotInParkInATimeInterval.Location = new System.Drawing.Point(625, 259);
+            this.btnGetStatusForSpotInParkInATimeInterval.Name = "btnGetStatusForSpotInParkInATimeInterval";
+            this.btnGetStatusForSpotInParkInATimeInterval.Size = new System.Drawing.Size(142, 36);
+            this.btnGetStatusForSpotInParkInATimeInterval.TabIndex = 34;
+            this.btnGetStatusForSpotInParkInATimeInterval.Text = "Status for spot in a Park in a time interval";
+            this.btnGetStatusForSpotInParkInATimeInterval.UseVisualStyleBackColor = true;
+            this.btnGetStatusForSpotInParkInATimeInterval.Click += new System.EventHandler(this.btnGetStatusForSpotInParkInATimeInterval_Click);
+            // 
+            // btnGetStatusForSpotInATimeInterval
+            // 
+            this.btnGetStatusForSpotInATimeInterval.Location = new System.Drawing.Point(625, 302);
+            this.btnGetStatusForSpotInATimeInterval.Name = "btnGetStatusForSpotInATimeInterval";
+            this.btnGetStatusForSpotInATimeInterval.Size = new System.Drawing.Size(142, 34);
+            this.btnGetStatusForSpotInATimeInterval.TabIndex = 35;
+            this.btnGetStatusForSpotInATimeInterval.Text = "Get Status for Spot in a Time Interval";
+            this.btnGetStatusForSpotInATimeInterval.UseVisualStyleBackColor = true;
+            this.btnGetStatusForSpotInATimeInterval.Click += new System.EventHandler(this.btnGetStatusForSpotInATimeInterval_Click);
+            // 
             // FormParkDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(816, 366);
+            this.ClientSize = new System.Drawing.Size(779, 366);
+            this.Controls.Add(this.btnGetStatusForSpotInATimeInterval);
+            this.Controls.Add(this.btnGetStatusForSpotInParkInATimeInterval);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.comboBoxMinute2);
+            this.Controls.Add(this.comboBoxHour2);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.comboBoxYear2);
+            this.Controls.Add(this.comboBoxMonth2);
+            this.Controls.Add(this.comboBoxDay2);
             this.Controls.Add(this.btnSoapConfig);
             this.Controls.Add(this.btnDLLConfig);
             this.Controls.Add(this.richTextBoxConfs);
@@ -344,6 +483,18 @@
         private System.Windows.Forms.RichTextBox richTextBoxConfs;
         private System.Windows.Forms.Button btnDLLConfig;
         private System.Windows.Forms.Button btnSoapConfig;
+        private System.Windows.Forms.ComboBox comboBoxDay2;
+        private System.Windows.Forms.ComboBox comboBoxMonth2;
+        private System.Windows.Forms.ComboBox comboBoxYear2;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox comboBoxHour2;
+        private System.Windows.Forms.ComboBox comboBoxMinute2;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button btnGetStatusForSpotInParkInATimeInterval;
+        private System.Windows.Forms.Button btnGetStatusForSpotInATimeInterval;
     }
 }
 

@@ -142,7 +142,7 @@ namespace Smart_Park.Controllers
                 conn = new SqlConnection(connectionString);
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand("SELECT * FROM LogSpots WHERE Id LIKE '%'+@id+'%' AND FORMAT(Timestamp, 'dd/MM/YYYY HH:mm') = FORMAT(@timespamp, 'dd/MM/YYYY HH:mm')", conn);
+                SqlCommand cmd = new SqlCommand("SELECT DISTINCT * FROM LogSpots WHERE Id LIKE '%'+@id+'%' AND FORMAT(Timestamp, 'dd/MM/YYYY HH:mm') = FORMAT(@timespamp, 'dd/MM/YYYY HH:mm')", conn);
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@timespamp", DateTime.Parse(timespamp));
 
@@ -241,7 +241,7 @@ namespace Smart_Park.Controllers
                 conn = new SqlConnection(connectionString);
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand("SELECT * FROM LogSpots WHERE Id LIKE '%'+@id+'%' AND FORMAT(Timestamp,'yyyy-MM-dd HH:mm') = FORMAT(@timestamp,'yyyy-MM-dd HH:mm')", conn);
+                SqlCommand cmd = new SqlCommand("SELECT DISTINCT * FROM LogSpots WHERE Id LIKE '%'+@id+'%' AND FORMAT(Timestamp,'yyyy-MM-dd HH:mm') = FORMAT(@timespamp,'yyyy-MM-dd HH:mm')", conn);
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@timespamp", DateTime.Parse(timestamp));
 
