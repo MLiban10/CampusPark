@@ -193,7 +193,7 @@ namespace Smart_Park.Controllers
                 conn = new SqlConnection(connectionString);
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand("SELECT * FROM LogSpots WHERE Id LIKE '%'+@id+'%' AND FORMAT(Timestamp,'yyyy-MM-dd HH:mm') >= FORMAT(@timespampS,'yyyy-MM-dd HH:mm') AND FORMAT(Timestamp,'yyyy-MM-dd HH:mm') <= FORMAT(@timespampE,'yyyy-MM-dd HH:mm')", conn);
+                SqlCommand cmd = new SqlCommand("SELECT DISTINCT * FROM LogSpots WHERE Id LIKE '%'+@id+'%' AND Timestamp >= @timespampS AND Timestamp <= @timespampE", conn);
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@timespampS", DateTime.Parse(timespampS));
                 cmd.Parameters.AddWithValue("@timespampE", DateTime.Parse(timespampE));

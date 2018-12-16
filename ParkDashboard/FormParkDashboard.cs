@@ -26,7 +26,7 @@ namespace ParkDashboard
 
         public String ShowParkingSpotsAll(ParkingSpot p)
         {
-            return $"{p.Id} \n";
+            return $"ID: { p.Id}\nValue:" + turnValue(p.Value.ToString()) + "\n\n";
         }
 
         private void btnAllSpots_Click(object sender, EventArgs e)
@@ -64,10 +64,10 @@ namespace ParkDashboard
                 this.comboBoxParks.DataSource = dataSource;
                 this.comboBoxParks.DisplayMember = "Name";
                 this.comboBoxParks.ValueMember = "Name";
-                
-                var day  = new List<int>();
+
+                var day = new List<int>();
                 var day2 = new List<int>();
-                for(int i = 1; i <= 31; i++)
+                for (int i = 1; i <= 31; i++)
                 {
                     day.Add(i);
                     day2.Add(i);
@@ -83,7 +83,7 @@ namespace ParkDashboard
                 var month = new List<int>();
                 var month2 = new List<int>();
 
-                for (int i = 0; i <= 12; i++)
+                for (int i = 1; i <= 12; i++)
                 {
                     month.Add(i);
                     month2.Add(i);
@@ -97,7 +97,7 @@ namespace ParkDashboard
 
                 var year = new List<int>();
                 var year2 = new List<int>();
-                for (int i = 2017; i <= 2019; i++)
+                for (int i = 2018; i <= 2019; i++)
                 {
                     year.Add(i);
                     year2.Add(i);
@@ -151,6 +151,9 @@ namespace ParkDashboard
                 comboBoxHour2.Enabled = true;
                 comboBoxMinute2.Enabled = true;
                 btnGetStatusForSpotInParkInATimeInterval.Enabled = true;
+                btnAllSpots.Visible = true;
+                btnDLLConfig.Enabled = true;
+                btnSoapConfig.Enabled = true;
             }
             else
             {
@@ -193,7 +196,7 @@ namespace ParkDashboard
 
         public String ShowFullParkingSpot(ParkingSpot p)
         {
-            return $"ID :{p.Id}\nValue: {p.Value}\nName: {p.Name}\nLocation: {p.Location}\nType: {p.Type}\nBattery Status: {p.BateryStatus}\nTime: {p.Timestamp}\n---------------------------------------------------------\n";
+            return $"ID :{p.Id}\nValue:" + turnValue(p.Value.ToString()) + "\nName: {p.Name}\nLocation: {p.Location}\nType: {p.Type}\nBattery Status: {p.BateryStatus}\nTime: {p.Timestamp}\n---------------------------------------------------------\n";
         }
 
         private void btnSpotInfo_Click(object sender, EventArgs e)
@@ -237,7 +240,7 @@ namespace ParkDashboard
             if (response.IsSuccessStatusCode)
             {
                 string json = response.Content.ReadAsStringAsync().Result;
-                
+
                 richTextBoxSpots.AppendText(json);
             }
             else
@@ -305,7 +308,7 @@ namespace ParkDashboard
                         richTextBoxSpots.AppendText(ShowParkingSpotsBatteryReplacement(parkingSpot));
                     }
                 }
-                
+
             }
             else
             {
@@ -322,8 +325,8 @@ namespace ParkDashboard
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             string id = comboBoxParks.SelectedValue.ToString();
-            string timestamp = comboBoxDay.SelectedValue.ToString() + "-"+comboBoxMonth.SelectedValue.ToString()+ "-"+
-                comboBoxYear.SelectedValue.ToString()+"_"+comboBoxHours.SelectedValue.ToString()+","+comboBoxMinutes.SelectedValue.ToString()+",00";
+            string timestamp = comboBoxDay.SelectedValue.ToString() + "-" + comboBoxMonth.SelectedValue.ToString() + "-" +
+                comboBoxYear.SelectedValue.ToString() + "_" + comboBoxHours.SelectedValue.ToString() + "," + comboBoxMinutes.SelectedValue.ToString() + ",00";
 
             HttpResponseMessage response = client.GetAsync($"api/logspots/free/{id}/{timestamp}").Result;
 
@@ -461,7 +464,7 @@ namespace ParkDashboard
             {
                 richTextBoxSpots.AppendText($"Error connecting to API {response.StatusCode} with message {response.ReasonPhrase}.");
             }
-           
+
         }
 
         private void btnGetStatusForSpotInATimeInterval_Click(object sender, EventArgs e)
@@ -495,6 +498,11 @@ namespace ParkDashboard
             {
                 richTextBoxSpots.AppendText($"Error connecting to API {response.StatusCode} with message {response.ReasonPhrase}.");
             }
+        }
+
+        public string turnValue(string Value)
+        {
+            return Value.Equals("True") ? "Livre" : "Ocupado";
         }
 
         /*
