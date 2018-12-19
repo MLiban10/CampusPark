@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Net.Http;
@@ -196,7 +197,7 @@ namespace ParkDashboard
 
         public String ShowFullParkingSpot(ParkingSpot p)
         {
-            return $"ID :{p.Id}\nValue:" + turnValue(p.Value.ToString()) + "\nName: {p.Name}\nLocation: {p.Location}\nType: {p.Type}\nBattery Status: {p.BateryStatus}\nTime: {p.Timestamp}\n---------------------------------------------------------\n";
+            return $"ID :{p.Id}\nValue: { turnValue(p.Value.ToString())} \nName: {p.Name}\nLocation: {p.Location}\nType: {p.Type}\nBattery Status: {p.BateryStatus}\nTime: {p.Timestamp}\n---------------------------------------------------------\n";
         }
 
         private void btnSpotInfo_Click(object sender, EventArgs e)
@@ -406,13 +407,20 @@ namespace ParkDashboard
             {
                 string json = response.Content.ReadAsStringAsync().Result;
                 configurations = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Configuration>>(json);
-                richTextBoxConfs.AppendText(ShowFullConfiguration(configurations[0]));
+                try
+                {
+                    richTextBoxConfs.AppendText(ShowFullConfiguration(configurations[0]));
+                }
+                catch (Exception)
+                {
+                    throw new Exception();
+                }
 
             }
         }
 
         private void btnSoapConfig_Click(object sender, EventArgs e)
-        {
+        { 
             richTextBoxConfs.Text = "";
 
             client = new HttpClient();
@@ -428,7 +436,14 @@ namespace ParkDashboard
                 string json = response.Content.ReadAsStringAsync().Result;
                 configurations = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Configuration>>(json);
 
-                richTextBoxConfs.AppendText(ShowFullConfiguration(configurations[1]));
+                try
+                { 
+                    richTextBoxConfs.AppendText(ShowFullConfiguration(configurations[1]));
+                }
+                catch (Exception)
+                {
+                    throw new Exception();
+                }
             }
         }
 
