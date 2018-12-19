@@ -291,7 +291,7 @@ namespace ParkSS_SS
 
         private void buttonChangeIP_Click(object sender, EventArgs e)
         {
-
+            client = new MqttClient(textBoxIP.Text);
         }
 
         private void timerStore_Tick(object sender, EventArgs e)
