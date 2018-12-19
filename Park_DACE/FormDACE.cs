@@ -130,7 +130,7 @@ namespace Park_DACE
 
         private void buttonSOAP_Click(object sender, EventArgs e)
         {
-            richTextBoxConfig.Text = HandlerXML.getSOAPConfigurationToSend().ToString();
+            richTextBoxConfig.Text = HandlerXML.getSOAPConfiguration().ToString();
         }
 
         private void readSpot(int index)

@@ -117,7 +117,26 @@ namespace Park_DACE
             }
             return null;
         }
-        
+
+        public static String getSOAPConfiguration()
+        {
+            foreach (Configuration configuration in configurations)
+            {
+                if (configuration.connectionType.Equals("SOAP"))
+                {
+                    return ("Connection Type: " + configuration.connectionType.ToString() + "\n"
+                        + "Endpoint: " + configuration.endpoint.ToString() + "\n"
+                        + "Id: " + configuration.id.ToString() + "\n"
+                        + "Description: " + configuration.description.ToString() + "\n"
+                        + "Number Of Spots: " + configuration.numberOfSpots.ToString() + "\n"
+                        + "Operating Hours: " + configuration.operatingHours.ToString() + "\n"
+                        + "Number Of Special Spots: " + configuration.numberOfSpecialSpots.ToString() + "\n"
+                        + "GeoLocation File: " + configuration.geoLocationFile.ToString() + "\n");
+                }
+            }
+            return null;
+        }
+
         public static String getSOAPConfigurationToSend()
         {
             foreach (Configuration configuration in configurations)
