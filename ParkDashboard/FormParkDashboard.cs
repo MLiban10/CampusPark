@@ -196,7 +196,7 @@ namespace ParkDashboard
 
         public String ShowFullParkingSpot(ParkingSpot p)
         {
-            return $"ID :{p.Id}\nValue:" + turnValue(p.Value.ToString()) + "\nName: {p.Name}\nLocation: {p.Location}\nType: {p.Type}\nBattery Status: {p.BateryStatus}\nTime: {p.Timestamp}\n---------------------------------------------------------\n";
+            return $"ID :{p.Id}\nValue: { turnValue(p.Value.ToString())} \nName: {p.Name}\nLocation: {p.Location}\nType: {p.Type}\nBattery Status: {p.BateryStatus}\nTime: {p.Timestamp}\n---------------------------------------------------------\n";
         }
 
         private void btnSpotInfo_Click(object sender, EventArgs e)
