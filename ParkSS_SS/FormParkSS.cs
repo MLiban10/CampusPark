@@ -68,7 +68,7 @@ namespace ParkSS_SS
                 receivedData = Encoding.UTF8.GetString(e.Message);
                 //richTextBoxSS.Clear();
 
-                if (receivedData.Length < 90)//Quer dizer que e um spot
+                if (e.Topic.Equals("Spots"))//Quer dizer que e um spot
                 {
                     //richTextBoxSS.Clear();
                     richTextBoxSS.AppendText($"{e.Topic}: {receivedData}");
