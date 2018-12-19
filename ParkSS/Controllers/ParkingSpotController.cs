@@ -11,8 +11,8 @@ namespace Smart_Park.Controllers
 {
     public class SpotsController : ApiController
     {
-        string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ParkDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-        //string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["Smart_Park.Properties.Settings.ConnStr"].ConnectionString;
+        //string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ParkDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ParkSS.Properties.Settings.ConnStr"].ConnectionString;
 
         // GET: api/spots
         [Route("api/spots")]
@@ -347,7 +347,7 @@ namespace Smart_Park.Controllers
             return parks;
         }
 
-        // GET: api/spots/{id}
+        // GET: api/logspots/{id}/{timespamp:dateTime}
         [Route("api/logspots/{id}/{timespamp:dateTime}")] //specifies that the id parameter is an integer
         public IHttpActionResult GetSpotAtMoment(string id, DateTime timespamp)
         {
